@@ -41,19 +41,30 @@
 
             utm-arm = nixpkgs.lib.nixosSystem {
                 # specialArgs = { inherit inputs; };
+
                 # system = "x86_64-linux";
                 system = "aarch64-linux";
+
                 modules = [
 
-                    ./configuration.nix
-                    # home-manager.nixosModules.home-manager
-                    # agenix.nixosModules.age
+                    ./hosts/utm-arm/hardware-configuration.nix
+                    ./modules/server.nix
+                    ./modules/users.nix
+
+                    {
+                      networking.hostName = "nixos";
+                      networking.domain = "utm";
+                      system.stateVersion = "23.05";
+                    }
 
                     # {
                     #   environment.etc.flake.source = self;
                     #   nix.registry.nixpkgs.flake = nixpkgs;
                     # }
 
+                    # agenix.nixosModules.age
+
+                    # home-manager.nixosModules.home-manager
                     # home-manager.nixosModule
                     # {
                     #   home-manager = {
