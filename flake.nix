@@ -39,9 +39,10 @@
         # nixosModules = import ./modules { lib = nixpkgs.lib; };
         nixosConfigurations = {
 
-            serverA = nixpkgs.lib.nixosSystem {
+            utm-arm = nixpkgs.lib.nixosSystem {
                 # specialArgs = { inherit inputs; };
-                system = "x86_64-linux";
+                # system = "x86_64-linux";
+                system = "aarch64-linux";
                 modules = [
 
                     ./configuration.nix
