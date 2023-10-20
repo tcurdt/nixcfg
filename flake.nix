@@ -54,6 +54,7 @@
                     ./hosts/utm-arm/hardware-configuration.nix
                     ./modules/server.nix
                     ./modules/users.nix
+                    ./modules/container.nix
 
                     {
                       networking.hostName = "nixos";
