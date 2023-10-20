@@ -1,13 +1,13 @@
 {
     description = "a very basic flake";
 
-    # nixConfig = {
-    #     experimental-features = [ "nix-command" "flakes" ];
-    # };
+    #nixConfig = {
+    #    experimental-features = [ "nix-command" "flakes" ];
+    #};
     # nix.extraOptions = ''
     #     experimental-features = nix-command flakes
     # '';
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    #nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
