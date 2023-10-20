@@ -120,6 +120,7 @@
   environment.systemPackages = with pkgs; [
     git
     curl
+    file
   ];
 
 

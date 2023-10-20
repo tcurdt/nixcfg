@@ -31,6 +31,7 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
+    podman-compose
   ];
   environment.extraInit = ''
     if [ -z "$DOCKER_HOST" -a -n "$XDG_RUNTIME_DIR" ]; then
