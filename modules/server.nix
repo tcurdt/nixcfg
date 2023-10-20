@@ -97,16 +97,19 @@
 
   systemd = {
     services.clear-log = {
-      description = "clear >1 month-old logs every week";
+      description = "clear logs older than 14d";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=30d";
+        ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=14d";
       };
     };
     timers.clear-log = {
       wantedBy = [ "timers.target" ];
       partOf = [ "clear-log.service" ];
-      timerConfig.OnCalendar = "weekly UTC";
+      timerConfig.OnCalendar = [
+        "*-*-* 03:00:00"
+        # "daily"
+      ];
     };
   };
 
@@ -116,7 +119,6 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     git
-    # docker-compose
   ];
 
 
