@@ -10,4 +10,6 @@ nix develop nixpks#foo
 nix profile install nixpks#foo
 nix profile install .#foo
 nix eval .#foo
+nix flake lock --update-input nixpkgs
+nix build --update-input nixpkgs
 ```
