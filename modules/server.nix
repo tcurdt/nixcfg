@@ -105,7 +105,6 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    tmux
     git
     # docker-compose
   ];
