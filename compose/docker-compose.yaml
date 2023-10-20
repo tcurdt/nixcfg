@@ -1,0 +1,8 @@
+version: '3.6'
+
+services:
+
+  echo:
+    image: ealen/echo-server
+    ports:
+      - 8080:80

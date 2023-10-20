@@ -13,3 +13,8 @@ nix eval .#foo
 nix flake lock --update-input nixpkgs
 nix build --update-input nixpkgs
 ```
+
+```
+docker-compose -p pc_prod up -d
+docker-compose -p pc_test up -d
+```
