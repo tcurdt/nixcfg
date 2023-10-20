@@ -1,0 +1,21 @@
+name: update-flake-lock
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '5 4 * * 0' # runs weekly on Sunday at 04:05
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: install nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          pr-title: "update flake.lock" # Title of PR to be created
+          pr-labels: |                  # Labels to be set on the PR
+            dependencies
+            automated
