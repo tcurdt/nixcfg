@@ -15,6 +15,10 @@
     oci-containers.backend = "podman";
   };
 
+  environment.systemPackages = with pkgs; [
+    docker-compose
+  ];
+
   # virtualisation.oci-containers.containers = {
   #    echo = {
   #       image = "ealen/echo-server";
