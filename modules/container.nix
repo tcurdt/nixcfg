@@ -24,8 +24,6 @@
   # https://carjorvaz.com/posts/rootless-podman-and-docker-compose-on-nixos/
   virtualisation = {
 
-    graphics = false;
-
     containers.enable = true;
     containers.storage.settings = {
       storage = {
