@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inptus, ... }:
 {
 
   zramSwap.enable = false;
