@@ -82,14 +82,14 @@
     enable = true;
     dates = "04:00";
     allowReboot = true;
-    # flake = inputs.self.outPath;
-    # flags = [
-    #   "--update-input"
-    #   "nixpkgs"
-    #   "--no-write-lock-file"
-    #   "-L" # print build logs
-    # ];
-    # randomizedDelaySec = "15min";
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--no-write-lock-file"
+      "-L" # print build logs
+    ];
+    randomizedDelaySec = "15min";
   };
 
 
