@@ -7,3 +7,10 @@ services:
     image: ealen/echo-server
     ports:
       - 8080:80
+
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
