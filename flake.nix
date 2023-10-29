@@ -44,6 +44,7 @@
         nixosConfigurations = {
 
             utm-arm = nixpkgs.lib.nixosSystem {
+                # https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/
                 specialArgs = { inherit inputs; };
 
                 # system = "x86_64-linux";
