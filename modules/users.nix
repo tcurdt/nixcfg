@@ -11,8 +11,10 @@
   # };
 
   security.sudo.wheelNeedsPassword = false;
+
   users.mutableUsers = false;
   # users.root.hashedPassword = "*"; # disable root
+
   # nix.settings = {
   #   trusted-users = [ "@wheel" ];
   #   allowed-users = [ "@wheel" ];
