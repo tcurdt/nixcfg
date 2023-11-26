@@ -11,6 +11,7 @@
         tls internal
       '';
       serverAlias = [ "old.example.org" ];
+    };
   };
 
 }
