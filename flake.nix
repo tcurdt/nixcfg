@@ -56,6 +56,7 @@
           ./modules/server.nix
           ./modules/users.nix
           ./modules/docker.nix
+          ./modules/caddy.nix
 
           {
             networking.hostName = "nixos";
