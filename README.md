@@ -4,7 +4,20 @@ curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect |
 ```
 
 ```
-nix build .#foo
+nixos-rebuild switch --flake git+ssh://git@github.com/tcurdt/nixcfg.git#utm-arm
+```
+
+or
+
+```
+git clone git@github.com:tcurdt/nixcfg.git
+nixos-rebuild switch --flake '.#utm-arm'
+```
+
+
+
+````
+nix build .#utm-arm
 nix shell nixpks#foo
 nix develop nixpks#foo
 nix profile install nixpks#foo
@@ -17,4 +30,8 @@ nix build --update-input nixpkgs
 ```
 docker-compose -p pc_prod up -d
 docker-compose -p pc_test up -d
+```
+
+```
+--extra-experimental-features "nix-command flakes"
 ```

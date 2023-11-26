@@ -63,20 +63,20 @@
             system.stateVersion = "23.05";
           }
 
-          # {
-          #   virtualisation.oci-containers.containers = {
-          #     echo = {
-          #     image = "ealen/echo-server";
-          #     ports = [ "127.0.0.1:8080:80" ];
-          #     # volumes = [
-          #     #   "a:b"
-          #     # ];
-          #     # environment = {
-          #     # };
-          #     # extraOptions = [ "--pod=live-pc" ];
-          #     };
-          #   };
-          # }
+          {
+            virtualisation.oci-containers.containers = {
+              echo = {
+              image = "ealen/echo-server";
+              ports = [ "127.0.0.1:8080:80" ];
+              # volumes = [
+              #   "a:b"
+              # ];
+              # environment = {
+              # };
+              # extraOptions = [ "--pod=live-pc" ];
+              };
+            };
+          }
 
 
           # {
