@@ -4,7 +4,7 @@ curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect |
 ```
 
 ```
-nixos-rebuild switch --flake git+ssh://git@github.com/tcurdt/nixcfg.git#utm-arm
+nixos-rebuild switch --option "tarball-ttl 0" --flake git+ssh://git@github.com/tcurdt/nixcfg.git#utm-arm
 ```
 
 or
