@@ -14,6 +14,10 @@ git clone git@github.com:tcurdt/nixcfg.git
 nixos-rebuild switch --flake '.#utm-arm'
 ```
 
+```
+nix run github:numtide/nixos-anywhere -- --flake '.#mysystem' root@foo.com
+nix run github:numtide/nixos-anywhere -- --flake '.#mysystem' --vm-test
+```
 
 
 ````
