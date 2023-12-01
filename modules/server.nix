@@ -60,8 +60,8 @@
   networking.firewall.enable = false;
   networking.firewall.allowPing = true;
   networking.firewall.logRefusedConnections = false;
-  networking.useNetworkd = true;
-  networking.useDHCP = false;
+  # networking.useNetworkd = true;
+  # networking.useDHCP = false;
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ];
   # networking.firewall.trustedInterfaces = [ "docker0" ];
