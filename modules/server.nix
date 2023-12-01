@@ -48,6 +48,7 @@
     "net.ipv4.tcp_congestion_control" = "bbr";
     # requires >= 4.19
     "net.core.default_qdisc" = "cake";
+    #"net.core.default_qdisc" = "fq";
     # note that inotify watches consume 1kB on 64-bit machines.
     # "fs.inotify.max_user_watches"   = 1048576;   # default:  8192
     # "fs.inotify.max_user_instances" =    1024;   # default:   128
@@ -57,10 +58,15 @@
   # networking
 
   networking.firewall.enable = false;
+  networking.firewall.allowPing = true;
+  networking.firewall.logRefusedConnections = false;
+  networking.useNetworkd = true;
+  networking.useDHCP = false;
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ];
   # networking.firewall.trustedInterfaces = [ "docker0" ];
   # networking.networkmanager.enable = true;
+
 
   # networking = {
   #   # domain = "foo.local";
@@ -121,7 +127,23 @@
   # networking.hostName = "myhostname";
   # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
 
+
   systemd = {
+
+    network.wait-online.enable = false;
+    services.NetworkManager-wait-online.enable = false;
+    services.systemd-networkd.stopIfChanged = false;
+    services.systemd-resolved.stopIfChanged = false; 
+
+    enableEmergencyMode = false;
+    watchdog = {
+      runtimeTime = "20s";
+      rebootTime = "30s";
+    };
+    sleep.extraConfig = ''
+      AllowSuspend=no
+      AllowHibernation=no
+    '';
 
     # update system
     # # https://github.com/Infinisil/nixbot/blob/feefc301bbe44742570bce0974005a2714a950e6/module.nix#L84-L113
@@ -181,13 +203,22 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    git
+    gitMinimal
     curl
     file
+    dnsutils
+    jq
     # vulnix
     # nix-output-monitor
   ];
 
+  documentation.enable = false;
+  documentation.info.enable = false;
+  documentation.man.enable = false;
+  documentation.nixos.enable = false;
+
+  fonts.fontconfig.enable = false;
+  sound.enable = false;
 
   # ssh
 
