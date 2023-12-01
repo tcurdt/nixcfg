@@ -5,7 +5,8 @@
 
   boot.tmp.cleanOnBoot = true;
 
-  time.timeZone = "Europe/Berlin";
+  # time.timeZone = "Europe/Berlin";
+  time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
 
   # kernel
@@ -61,6 +62,19 @@
   # networking.firewall.trustedInterfaces = [ "docker0" ];
   # networking.networkmanager.enable = true;
 
+  # networking = {
+  #   # domain = "foo.local";
+  #   # enableIPv6 = false;
+  #   firewall = {
+  #     # enable = true;
+  #     allowPing = true;
+  #     allowedTCPPorts = [ 22 ];
+  #   };
+  #   # timeServers = [
+  #   #   "10.7.89.1"
+  #   #   "ch.pool.ntp.org"
+  #   # ];
+  # };
 
   # maintenance
 
@@ -79,6 +93,14 @@
   # '';
 
   # system.autoUpgrade = {
+  #   enabled = true;
+  #   flake = "github:YourUser/yourRepo";
+  #   date = "hourly";
+  #   # date = "minutely";
+  #   # date = "*:0/5";
+  # }
+
+  # system.autoUpgrade = {
   #   enable = true;
   #   dates = "04:00";
   #   allowReboot = true;
@@ -93,9 +115,49 @@
   # };
 
 
-  # log files
+  # You’ll first need to populate /etc/cachix-agent.token with the previously generated agent token with the contents:CACHIX_AGENT_TOKEN=XXX.
+  # services.cachix-agent.enable = true;
+  # # agent name is inferred from the hostname
+  # networking.hostName = "myhostname";
+  # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
 
   systemd = {
+
+    # update system
+    # # https://github.com/Infinisil/nixbot/blob/feefc301bbe44742570bce0974005a2714a950e6/module.nix#L84-L113
+    # services.git-updater = {
+    #   description = "pull from git";
+    #   serviceConfig = {
+    #     Type = "oneshot";
+    #     User = "nixbot";
+    #     WorkingDirectory = "/var/lib/nixbot/nixpkgs/master";
+    #   };
+    #   path = [ pkgs.git ];
+    #   script = ''
+    #     git -C repo config gc.autoDetach false
+    #     if [ -d repo ]; then
+    #       git -C repo fetch
+    #       old=$(git -C repo rev-parse @)
+    #       new=$(git -C repo rev-parse @{u})
+    #       if [ $old != $new ]; then
+    #         git -C repo rebase --autostash
+    #         echo "Updated from $old to $new"
+    #       fi
+    #     else
+    #       git clone https://github.com/NixOS/nixpkgs repo
+    #       git -C repo remote add channels https://github.com/NixOS/nixpkgs-channels
+    #       echo "Initialized at $(git -C repo rev-parse @)"
+    #     fi
+    #   '';
+    # };
+    # timers.git-updater = {
+    #   wantedBy = [ "timers.target" ];
+    #   partOf = [ "git-updater.service" ];
+    #   timerConfig.OnUnitInactiveSec = 60;
+    # };
+
+    # log files
+
     services.clear-log = {
       description = "clear logs older than 14d";
       serviceConfig = {
@@ -111,6 +173,7 @@
         # "daily"
       ];
     };
+
   };
 
 
@@ -121,12 +184,32 @@
     git
     curl
     file
+    # vulnix
+    # nix-output-monitor
   ];
 
 
-  # services
+  # ssh
 
+  # programs.mosh.enable = true;
+  # programs.ssh.startAgent = true;
   services.openssh.enable = true;
+
+  # services.openssh = {
+  #   enable = true;
+  #   settings = {
+  #     PermitRootLogin = "no";
+  #     PasswordAuthentication = false;
+  #     KbdInteractiveAuthentication = false;
+  #   };
+  #   extraConfig = ''
+  #     AllowTcpForwarding yes
+  #     X11Forwarding no
+  #     AllowAgentForwarding no
+  #     AllowStreamLocalForwarding no
+  #     AuthenticationMethods publickey
+  #   '';
+  # };
 
   # services.influxdb2.enable = true;
   # services.grafana.enable = true;
@@ -145,6 +228,16 @@
   #       files = [ "/tmp/metrics.out" ];
   #     };
   #   };
+  # };
+
+  # https://github.com/maralorn/nix-output-monitor
+  # system.activationScripts.diff = {
+  #   supportsDryActivation = true;
+  #   text = ''
+  #     if [[ -e /run/current-system ]]; then
+  #        ${pkgs.nix}/bin/nix store diff-closures /run/current-system "$systemConfig"
+  #     fi
+  #   '';
   # };
 
 }

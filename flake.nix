@@ -1,5 +1,5 @@
 {
-  description = "a very basic flake";
+  description = "my servers";
 
   #nixConfig = {
   #    experimental-features = [ "nix-command" "flakes" ];
@@ -31,6 +31,9 @@
     # zig = {
     #     url = "github:mitchellh/zig-overlay";
     # };
+
+    # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
+    # flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
