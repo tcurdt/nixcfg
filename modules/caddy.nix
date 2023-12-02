@@ -1,23 +1,17 @@
 { config, pkgs, ... }:
 {
 
-  # environment.systemPackages = with pkgs; [
-  #   nss.tools
-  # ];
-
   services.caddy = {
     enable = true;
 
-    # curl localhost -i -H "Host: example.org"
-    # reverse_proxy http://127.0.0.1:8080
+    # curl -k --resolve example.org:443:127.0.0.1 https://example.org
     virtualHosts."example.org" = {
       extraConfig = ''
-        respond "OK"
-        tls internal
+        reverse_proxy http://127.0.0.1:8080
+        # respond "OK"
+        # tls internal
       '';
     };
   };
 
 }
-
-
