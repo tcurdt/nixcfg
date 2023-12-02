@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 {
 
+  environment.systemPackages = with pkgs; [
+    nss.tools
+  ];
+
   services.caddy = {
     enable = true;
 
