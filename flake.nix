@@ -37,64 +37,17 @@
     # , home-manager
     # , darwin
     , ...
-    } @ inputs: {
-    # nixosModules = import ./modules { lib = nixpkgs.lib; };
-    nixosConfigurations = {
+    } @ inputs:
 
-      utm-arm = nixpkgs.lib.nixosSystem {
-        # https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/
-        specialArgs = { inherit inputs; };
+    let
+      mkHost = import ./lib/mkHost.nix { inherit nixpkgs; };
+    in {
 
-        # system = "x86_64-linux";
-        system = "aarch64-linux";
-
-        modules = [
-
-          ./hosts/utm-arm/hardware-configuration.nix
-          ./modules/server.nix
-          ./modules/users.nix
-          ./modules/docker.nix
-          ./modules/caddy.nix
-
-          {
-            networking.hostName = "nixos";
-            networking.domain = "utm";
-            system.stateVersion = "23.05";
-          }
-
-          {
-            virtualisation.oci-containers.containers = {
-              echo = {
-              image = "ealen/echo-server";
-              ports = [ "127.0.0.1:8080:80" ];
-              # volumes = [
-              #   "a:b"
-              # ];
-              # environment = {
-              # };
-              # extraOptions = [ "--pod=live-pc" ];
-              };
-            };
-          }
-
-          # {
-          #   environment.etc.flake.source = self;
-          #   nix.registry.nixpkgs.flake = nixpkgs;
-          # }
-
-          # agenix.nixosModules.age
-
-          # home-manager.nixosModules.home-manager
-          # home-manager.nixosModule
-          # {
-          #   home-manager = {
-          #       useGlobalPkgs = true;
-          #   };
-          # }
-
-        ];
+      nixosConfigurations.utm-arm = mkHost {
+        hardware = "utm";
+        hostPlatform = "aarch64-linux";
+        hostName = "nixos";
       };
 
     };
-  };
 }

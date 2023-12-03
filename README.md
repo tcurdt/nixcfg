@@ -32,6 +32,21 @@ nix build --update-input nixpkgs
 ```
 
 ```
+$ nix-channel --list | grep nixos
+nixos https://nixos.org/channels/nixos-23.05
+
+$ nix-channel --add https://channels.nixos.org/nixos-23.11 nixos
+
+$ nixos-rebuild boot --upgrade
+$ nixos-rebuild switch --upgrade
+$ nixos-rebuild switch --upgrade-all
+
+$ shutdown -r now
+```
+
+
+
+```
 docker-compose -p pc_prod up -d
 docker-compose -p pc_test up -d
 ```
