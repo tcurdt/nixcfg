@@ -1,4 +1,4 @@
-{ nixpkgs }:
+{ nixpkgs, ... }:
 {
   hardware,
   hostPlatform,

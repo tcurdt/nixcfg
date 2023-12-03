@@ -40,7 +40,7 @@
     } @ inputs:
 
     let
-      mkHost = import ./lib/mkHost.nix { inherit nixpkgs; };
+      mkHost = import ./lib/mkHost.nix inputs;
     in {
 
       nixosConfigurations.utm-arm = mkHost {
