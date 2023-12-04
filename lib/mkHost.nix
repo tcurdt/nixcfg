@@ -1,4 +1,4 @@
-{ nixpkgs, ... }:
+{ nixpkgs, myfoo, ... }:
 {
   hardware,
   hostPlatform,
@@ -7,6 +7,7 @@
 
   modules = [
     ../hardware/${hardware}.nix
+    myfoo.nixosModules
 
     {
       nixpkgs.hostPlatform = hostPlatform;
@@ -14,5 +15,6 @@
       networking.domain = "utm";
       system.stateVersion = "23.05";
     }
+
   ];
 }
