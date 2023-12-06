@@ -1,45 +1,12 @@
 {
   "nodes": {
-    "myfoo": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "dirtyRev": "3abe53ad202360fa7734ab03436f71b21980f6ad-dirty",
-        "dirtyShortRev": "3abe53a-dirty",
-        "lastModified": 1701651758,
-        "narHash": "sha256-o+yGJUnAR3Tf2Pc98irfPyYjylxEVB6qFzVIGUAJxuQ=",
-        "type": "git",
-        "url": "file:///Users/tcurdt/Desktop/nix/flake-sshhook/"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:///Users/tcurdt/Desktop/nix/flake-sshhook/"
-      }
-    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1701253981,
-        "narHash": "sha256-ztaDIyZ7HrTAfEEUt9AtTDNoCYxUdSd6NrRHaYOIxtk=",
+        "lastModified": 1701436327,
+        "narHash": "sha256-tRHbnoNI8SIM5O5xuxOmtSLnswEByzmnQcGGyNRjxsE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e92039b55bcd58469325ded85d4f58dd5a4eaf58",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1701253981,
-        "narHash": "sha256-ztaDIyZ7HrTAfEEUt9AtTDNoCYxUdSd6NrRHaYOIxtk=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e92039b55bcd58469325ded85d4f58dd5a4eaf58",
+        "rev": "91050ea1e57e50388fa87a3302ba12d188ef723a",
         "type": "github"
       },
       "original": {
@@ -51,8 +18,7 @@
     },
     "root": {
       "inputs": {
-        "myfoo": "myfoo",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

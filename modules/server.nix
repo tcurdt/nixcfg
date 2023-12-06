@@ -57,30 +57,21 @@
 
   # networking
 
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedUDPPorts = [ ];
   networking.firewall.allowPing = true;
   networking.firewall.logRefusedConnections = false;
+  # networking.firewall.trustedInterfaces = [ "docker0" ];
   # networking.useNetworkd = true;
   # networking.useDHCP = false;
-  # networking.firewall.allowedTCPPorts = [ 22 ];
-  # networking.firewall.allowedUDPPorts = [ ];
-  # networking.firewall.trustedInterfaces = [ "docker0" ];
   # networking.networkmanager.enable = true;
 
-
-  # networking = {
-  #   # domain = "foo.local";
-  #   # enableIPv6 = false;
-  #   firewall = {
-  #     # enable = true;
-  #     allowPing = true;
-  #     allowedTCPPorts = [ 22 ];
-  #   };
-  #   # timeServers = [
-  #   #   "10.7.89.1"
-  #   #   "ch.pool.ntp.org"
-  #   # ];
-  # };
+  # networking.enableIPv6 = false;
+  # networking.timeServers = [
+  #   "10.7.89.1"
+  #   "ch.pool.ntp.org"
+  # ];
 
   # maintenance
 
@@ -133,7 +124,7 @@
     network.wait-online.enable = false;
     services.NetworkManager-wait-online.enable = false;
     services.systemd-networkd.stopIfChanged = false;
-    services.systemd-resolved.stopIfChanged = false; 
+    services.systemd-resolved.stopIfChanged = false;
 
     enableEmergencyMode = false;
     watchdog = {
@@ -191,7 +182,7 @@
       wantedBy = [ "timers.target" ];
       partOf = [ "clear-log.service" ];
       timerConfig.OnCalendar = [
-        "*-*-* 03:00:00"
+        "*-*-* 03:00:00" # daily at 3am
         # "daily"
       ];
     };
