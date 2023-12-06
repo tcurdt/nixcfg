@@ -1,4 +1,5 @@
-{ nixpkgs, myfoo, ... }:
+{ nixpkgs, sshhook, ... }:
+#name:
 {
   hardware,
   hostPlatform,
@@ -7,7 +8,7 @@
 
   modules = [
     ../hardware/${hardware}.nix
-    myfoo.nixosModules
+    # sshhook.nixosModules.default
 
     {
       nixpkgs.hostPlatform = hostPlatform;
