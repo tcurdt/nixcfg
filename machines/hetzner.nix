@@ -12,9 +12,9 @@
 
 { nixpkgs, ... }: let
 
-  hardware = "utm";
-  hostPlatform = "aarch64-linux";
-  hostName = "foo";
+  hardware = "hetzner";
+  hostPlatform = "x86_64-linux";
+  hostName = "nixos";
 
 in nixpkgs.lib.nixosSystem {
 
@@ -26,8 +26,8 @@ in nixpkgs.lib.nixosSystem {
     {
       nixpkgs.hostPlatform = hostPlatform;
       networking.hostName = hostName;
-      networking.domain = "utm";
-      system.stateVersion = "23.05";
+      networking.domain = "nixos";
+      system.stateVersion = "23.11";
     }
 
   ];

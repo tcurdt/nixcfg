@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    #sshhook.url = "github:tcurdt/myfoo";
+    # sshhook.url = "github:tcurdt/myfoo";
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
 
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
@@ -36,41 +36,14 @@
     } @ inputs:
 
     {
-      nixosConfigurations.utm-arm = import ./machines/foo.nix inputs;
+      nixosConfigurations.utm = import ./machines/utm.nix inputs;
+      nixosConfigurations.hetzner = import ./machines/hetzner.nix inputs;
     };
-
-
-    # caddy
-    #   www.paleocoran.de -> port
-    #   www.cc.de -> port
-
-    # https://github.com/marxmichael/paleocoran
-    # path = docker-compose.yml
-    # ref = live
-
-    # {
-    #   virtualisation.oci-containers.containers = {
-    #     echo = {
-    #     image = "ealen/echo-server";
-    #     ports = [ "127.0.0.1:8080:80" ];
-    #     # volumes = [
-    #     #   "a:b"
-    #     # ];
-    #     # environment = {
-    #     # };
-    #     # extraOptions = [ "--pod=live-pc" ];
-    #     };
-    #   };
-    # }
-
-
-    # https://github.com/marxmichael/paleocoran/blob/live/docker-compose.yml
-    # https://github.com/marxmichael/cc
 
     # let
     #   mkHost = import ./lib/mkHost.nix inputs;
     # in {
-    #   nixosConfigurations.utm-arm = mkHost {
+    #   nixosConfigurations.utm = mkHost {
     #     hardware = "utm";
     #     hostPlatform = "aarch64-linux";
     #     hostName = "nixos";
