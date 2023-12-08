@@ -22,6 +22,7 @@ in nixpkgs.lib.nixosSystem {
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/k3s.nix
+    ../modules/users.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;
