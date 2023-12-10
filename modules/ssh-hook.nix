@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 	let
 
@@ -47,7 +47,12 @@
       extraRules = [{
         commands = [
           {
-            command = "${hookScript}/bin/hook";
+            #command = "${hookScript}/bin/hook";
+            command = lib.getExe hookScript;
+            options = [ "NOPASSWD" ];
+          }
+          {
+            command = "/etc/profiles/per-user/hook/bin/hook";
             options = [ "NOPASSWD" ];
           }
         ];
