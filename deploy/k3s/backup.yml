@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+spec:
+  schedule: "*/5 * * * *"
+  # successfulJobsHistoryLimit: 0
+  # failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: postgres-backup
+            image: postgres:latest
+            command: ["sh", "-c"]
+            env:
+            - name: PGHOST
+              value: postgres-service
+            - name: PGDATABASE
+              value: bluesky
+            - name: PGPASSWORD
+              value: secret
+            - name: PGUSER
+              value: postgres
+            args:
+            - pg_dump > /backup/postgres-bluesky-dump-$(date +\%Y\%m\%d).sql
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-volume
+            hostPath:
+              path: /backup
+              type: DirectoryOrCreate

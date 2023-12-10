@@ -1,24 +1,25 @@
+# utm
 
-```
-curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIX_CHANNEL=nixos-23.05 bash -x
-```
+curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIX_CHANNEL=nixos-22.11 bash -x
+
+nix-shell -p gitMinimal
+cd && git clone git@github.com:tcurdt/nixcfg.git && cd nixcfg
+nixos-rebuild switch --flake .#utm
+
+# hetzner
+
+
+
+# misc
 
 ```
 nixos-rebuild switch --option "tarball-ttl 0" --flake git+ssh://git@github.com/tcurdt/nixcfg.git#utm-arm
-```
-
-or
-
-```
-git clone git@github.com:tcurdt/nixcfg.git
-nixos-rebuild switch --flake '.#utm-arm'
 ```
 
 ```
 nix run github:numtide/nixos-anywhere -- --flake '.#mysystem' root@foo.com
 nix run github:numtide/nixos-anywhere -- --flake '.#mysystem' --vm-test
 ```
-
 
 ````
 nix build .#utm-arm
@@ -44,13 +45,7 @@ $ nixos-rebuild switch --upgrade-all
 $ shutdown -r now
 ```
 
-
-
 ```
 docker-compose -p pc_prod up -d
 docker-compose -p pc_test up -d
-```
-
-```
---extra-experimental-features "nix-command flakes"
 ```

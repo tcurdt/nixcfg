@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: firehose
+spec:
+  containers:
+  - name: skyguard
+    image: ghcr.io/tcurdt/skyguard:latest
+    env:
+      - name: PGHOST
+        value: db
+      - name: PGDATABASE
+        value: bluesky
+      - name: PGUSER
+        value: postgres
+      - name: PGPASSWORD
+        value: secret
+      - name: SERVICE
+        value: dev.vafer.org
+    ports:
+      - containerPort: 2015
+  - name: db
+    image: postgres
+    env:
+      - name: POSTGRES_DB
+        value: bluesky
+      - name: POSTGRES_USER
+        value: postgres
+      - name: POSTGRES_PASSWORD
+        value: secret
+    ports:
+      - containerPort: 5432

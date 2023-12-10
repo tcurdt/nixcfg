@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+
+  skyguard:
+    container_name: skyguard
+    image: ghcr.io/tcurdt/skyguard:latest
+    env:
+      - PGHOST=db
+      - PGDATABASE=bluesky
+      - PGUSER=postgres
+      - PGPASSWORD=secret
+      - SERVICE=dev.vafer.org
+    ports:
+      - 2015:2015
+
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_DB=bluesky
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_USER=postgres
+    ports:
+      - 5432:5432

@@ -1,0 +1,75 @@
+hcloud context active
+
+hcloud ssh-key create --name tcurdt --public-key-from-file $HOME/.ssh/id_rsa.pub
+
+# --type cx11 # 2GB
+# --type cx21 # 4GB
+# --type cx31 # 8GB
+# --type cx41 # 16GB
+# https://github.com/hetznercloud/cli/issues/83
+
+
+hcloud server create \
+  --image debian-12 \
+  --name nixos \
+  --location fsn1 \
+  --ssh-key tcurdt \
+  --user-data-from-file cloudinit.yml \
+  --type cx21
+
+hcloud server list
+
+ssh -A root@116.202.22.104
+nix-shell -p gitMinimal
+
+cd && git clone git@github.com:tcurdt/nixcfg.git && cd nixcfg
+nixos-rebuild switch --flake .#hetzner
+
+kubectl get nodes
+
+# nc -zv 116.202.22.104 10250
+
+source .env
+nix-shell -p envsubst
+
+cd && git clone git@github.com:askblaker/k3s.rocks.git && cd k3s.rocks/manifests
+
+
+kubectl apply -f ./whoami/whoami-deployment.yaml
+kubectl apply -f ./whoami/whoami-service.yaml
+kubectl apply -f ./whoami/whoami-ingress.yaml
+
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+kubectl get pods --namespace cert-manager
+
+nslookup whoami.$DOMAIN
+
+cat letsencrypt-prod.yaml | envsubst | kubectl apply -f -
+cat traefik-https-redirect-middleware.yaml | envsubst | kubectl apply -f -
+cat ./whoami/whoami-ingress-tls.yaml | envsubst | kubectl apply -f -
+
+curl https://whoami.$DOMAIN
+
+kubectl create secret docker-registry github \
+--docker-server=https://ghcr.io \
+--docker-username=$GITHUB_USER \
+--docker-password=$GITHUB_TOKEN \
+--docker-email=tcurdt@vafer.org
+
+
+kubectl apply -f ./deploy.yml
+
+kubectl get pod
+
+kubectl logs -f skyguard-669cbb87cc-cvkd4
+
+kubectl apply -f ./backup.yml
+
+kubectl get cronjob
+kubectl get job
+kubectl get pod
+
+
+rm -rf /var/lib/rancher/k3s
+
+hcloud server delete nixos

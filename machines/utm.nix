@@ -1,15 +1,3 @@
-# #{ config, nodes, self, ... }:
-# #{ config, pkgs, ... }:
-# { nixpkgs, ... }:
-# {
-#   # nixpkgs.lib.nixosSystem {
-#     networking.hostName = "nixos";
-#     networking.domain = "utm";
-#     #system.stateVersion = "23.05";
-#     system = "aarch64-linux";
-#   # };
-# }
-
 { nixpkgs, ... }: let
 
   hardware = "utm";
@@ -21,8 +9,9 @@ in nixpkgs.lib.nixosSystem {
   modules = [
     ../hardware/${hardware}.nix
     ../modules/server.nix
-    ../modules/k3s.nix
+    # ../modules/k3s.nix
     ../modules/users.nix
+    ../modules/ssh-hook.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;

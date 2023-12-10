@@ -1,0 +1,5 @@
+$ escaped=$(systemd-escape ~/guestbook.yaml)
+$ systemctl --user start podman-kube@$escaped.service
+$ systemctl --user is-active podman-kube@$escaped.service
+$ podman pod ps
+$ systemctl --user stop podman-kube@$escaped.service
