@@ -44,8 +44,6 @@
     #     ForceCommand <module>/bin/hook
     # '';
 
-    nixosModules.default = {
-
       users.users.hook = {
         isNormalUser = true;
       };
@@ -58,14 +56,13 @@
               command = "/run/current-system/sw/bin/whoami";
               options = [ "NOPASSWD" ];
             }
-            {
-              command = "nixos-rebuild build --flake .#utm";
-              options = [ "NOPASSWD" ];
-            }
+            #{
+            #  command = "nixos-rebuild build --flake .#utm";
+            #  options = [ "NOPASSWD" ];
+            #}
           ];
           groups = [ "wheel" ]; # FIXME only the user "foo"
         }];
       };
 
-    };
 }
