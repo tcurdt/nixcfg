@@ -39,6 +39,7 @@
 
     users.users.hook = {
       isNormalUser = true;
+      packages = [ hookScript ];
     };
 
     security.sudo = {
@@ -50,7 +51,7 @@
             options = [ "NOPASSWD" ];
           }
         ];
-        groups = [ "wheel" ]; # FIXME only the user "foo"
+        users = [ "hook" ];
       }];
     };
 
