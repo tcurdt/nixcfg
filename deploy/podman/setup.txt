@@ -1,3 +1,11 @@
+podman login -v --tls-verify \
+ ghcr.io \
+ -u $GITHUB_USER \
+ -p $GITHUB_TOKEN
+
+podman play kube ./firehose.yml
+
+
 $ escaped=$(systemd-escape ~/guestbook.yaml)
 $ systemctl --user start podman-kube@$escaped.service
 $ systemctl --user is-active podman-kube@$escaped.service
