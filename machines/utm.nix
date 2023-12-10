@@ -11,7 +11,8 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     # ../modules/k3s.nix
     ../modules/users.nix
-    ../modules/ssh-hook.nix
+    # ../modules/ssh-hook.nix
+    ../modules/web-hook.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;

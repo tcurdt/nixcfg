@@ -15,7 +15,7 @@
       [[ -z "''${SSH_ORIGINAL_COMMAND:-}" ]] && exit 1
       case "''${SSH_ORIGINAL_COMMAND}" in
         "hook"*)
-          exec sudo ${lib.getExe hookScript} $*
+          exec sudo ${lib.getExe hookScript}
           ;;
         *)
           echo "invalid command"
@@ -50,7 +50,6 @@
       extraRules = [{
         commands = [
           {
-            #command = "${hookScript}/bin/hook";
             command = lib.getExe hookScript;
             options = [ "NOPASSWD" ];
           }
