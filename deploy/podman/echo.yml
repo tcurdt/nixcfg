@@ -4,11 +4,11 @@ metadata:
   name: echo-live
 spec:
   containers:
-  - name: echo-frontend
-    image: traefik/whoami:v1.9.0
+  - name: frontend
+    image: docker.io/traefik/whoami:v1.9.0
     ports:
       - containerPort: 80
-  - name: echo-db
+  - name: db
     image: docker.io/library/postgres:latest
     env:
       - name: POSTGRES_DB
