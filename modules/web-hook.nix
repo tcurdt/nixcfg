@@ -34,6 +34,8 @@
       };
       deploy = {
         execute-command = lib.getExe hookScript;
+        include-command-output-in-response = true;
+        # include-command-output-in-response-on-error = true;
         # command-working-directory = "/var/webhook";
         # pass-arguments-to-command = [
         #   {
