@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: echo-live
+spec:
+  containers:
+  - name: echo-frontend
+    image: traefik/whoami:v1.9.0
+    ports:
+      - containerPort: 80
+  - name: echo-db
+    image: docker.io/library/postgres:latest
+    env:
+      - name: POSTGRES_DB
+        value: echo-live
+      - name: POSTGRES_USER
+        value: postgres
+      - name: POSTGRES_PASSWORD
+        value: secret
+    ports:
+      - containerPort: 5432

@@ -20,7 +20,7 @@ spec:
     ports:
       - containerPort: 2015
   - name: db
-    image: postgres
+    image: docker.io/library/postgres:latest
     env:
       - name: POSTGRES_DB
         value: bluesky
