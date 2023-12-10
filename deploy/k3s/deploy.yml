@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skyguard
+spec:
+  selector:
+    matchLabels:
+      app: skyguard
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: skyguard
+    spec:
+      containers:
+      - name: skyguard
+        image: ghcr.io/tcurdt/skyguard:latest
+        env:
+          - name: PGDATABASE
+            value: bluesky
+          - name: PGHOST
+            value: db
+          - name: PGPASSWORD
+            value: secret
+          - name: PGUSER
+            value: postgres
+          - name: SERVICE
+            value: dev.vafer.org
+        ports:
+          - containerPort: 2015
+      imagePullSecrets:
+        - name: github
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        env:
+          - name: POSTGRES_DB
+            value: bluesky
+          - name: POSTGRES_PASSWORD
+            value: secret
+          - name: POSTGRES_USER
+            value: postgres
+        ports:
+          - containerPort: 5432
