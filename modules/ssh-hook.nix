@@ -5,7 +5,6 @@
     hookScript = pkgs.writeScriptBin "hook" ''
       #!${pkgs.bash}/bin/bash
       echo "hello $1"
-      echo "$out"
       whoami
     '';
 
@@ -16,7 +15,7 @@
       [[ -z "''${SSH_ORIGINAL_COMMAND:-}" ]] && exit 1
       case "''${SSH_ORIGINAL_COMMAND}" in
         "hook"*)
-          exec sudo $out/bin/hook
+          exec sudo ${hookScript}/bin/hook
           ;;
         *)
           echo "invalid command"
@@ -35,7 +34,7 @@
         AllowAgentForwarding no
         AllowTcpForwarding no
         X11Forwarding no
-        ForceCommand $out/bin/ssh-hook
+        ForceCommand ${sshScript}/bin/ssh-hook
     '';
 
     users.users.hook = {
@@ -47,7 +46,7 @@
       extraRules = [{
         commands = [
           {
-            command = "$out/bin/hook";
+            command = "${hookScript}/bin/hook";
             options = [ "NOPASSWD" ];
           }
         ];
