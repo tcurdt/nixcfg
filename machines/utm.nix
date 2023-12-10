@@ -10,9 +10,10 @@ in nixpkgs.lib.nixosSystem {
     ../hardware/${hardware}.nix
     ../modules/server.nix
     # ../modules/k3s.nix
+    ../modules/podman.nix
     ../modules/users.nix
     # ../modules/ssh-hook.nix
-    ../modules/web-hook.nix
+    # ../modules/web-hook.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;
