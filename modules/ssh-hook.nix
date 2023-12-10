@@ -15,7 +15,7 @@
       [[ -z "''${SSH_ORIGINAL_COMMAND:-}" ]] && exit 1
       case "''${SSH_ORIGINAL_COMMAND}" in
         "hook"*)
-          exec sudo ${hookScript}/bin/hook
+          exec sudo ${lib.getExe hookScript} $*
           ;;
         *)
           echo "invalid command"
