@@ -9,8 +9,9 @@
 
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
-    # flake-utils.url = "github:numtide/flake-utils";
     # nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    # flake-utils.url = "github:numtide/flake-utils";
     # agenix.url = "github:ryantm/agenix";
     # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
     # home-manager.url = "github:nix-community/home-manager";
@@ -31,7 +32,6 @@
   outputs =
     { self
     , nixpkgs
-    # , sshhook
     , ...
     } @ inputs:
 
@@ -49,4 +49,15 @@
     #     hostName = "nixos";
     #   };
     # };
+
+    # let
+    #   mkHost = import ./lib/mkHost2.nix inputs;
+    # in {
+    #   nixosConfigurations.utm = mkHost {
+    #     hardware = "utm";
+    #     hostPlatform = "aarch64-linux";
+    #     hostName = "nixos";
+    #   };
+    # };
+
 }
