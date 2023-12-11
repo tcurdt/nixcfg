@@ -73,6 +73,9 @@
   #   "ch.pool.ntp.org"
   # ];
 
+  # networking.networkmanager.dns = "systemd-resolved";
+  # services.resolved.enable = true;
+
   # maintenance
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -117,7 +120,6 @@
   # # agent name is inferred from the hostname
   # networking.hostName = "myhostname";
   # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
-
 
   systemd = {
 
