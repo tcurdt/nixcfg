@@ -7,8 +7,8 @@ podman play kube ./firehose.yml
 
 
 podman network create live-echo
-podman pod create live-echo
-podman run --pod live-echo --network live-echo --name live-frontend -dt docker.io/traefik/whoami:v1.9.0
+podman pod create --network live-echo live-echo
+podman run --pod live-echo --name live-frontend -dt docker.io/traefik/whoami:v1.9.0
 
 podman run --network live-echo --rm alpine cat /etc/hosts
 podman run --network live-echo --rm alpine nslookup live-frontend
@@ -18,11 +18,19 @@ podman run --pod live-echo --network live-echo --rm alpine nslookup live-fronten
 
 docker inspect live-frontend | grep IPAddress
 
+podman run --pod live-echo --rm alpine cat /etc/hosts
+podman run --pod live-echo --rm alpine nslookup live-frontend
+
+podman run --pod live-echo --rm -it quay.io/curl/curl:latest curl live-frontend
+podman run --network live-echo --network live-echo -it quay.io/curl/curl:latest curl live-frontend
+
 podman run -dt --pod live-echo --name test-postgres --network live-echo \
   -e POSTGRES_DB=bluesky \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=secret \
   docker.io/library/postgres:latest
+
+
 
 podman run -it --network live-echo --network live-echo quay.io/curl/curl:latest sh
 
