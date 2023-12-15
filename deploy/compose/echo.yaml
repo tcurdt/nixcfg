@@ -7,6 +7,9 @@ services:
     image: docker.io/traefik/whoami:v1.9.0
     ports:
       - 8080:80
+    # deploy:
+    #   mode: replicated
+    #   replicas: 2
 
   db:
     container_name: postgres
