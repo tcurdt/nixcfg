@@ -1,0 +1,30 @@
+# https://www.reddit.com/r/podman/comments/16aerhq/rootless_reverse_proxy/
+version: "3.7"
+services:
+  caddy:
+    image: docker.io/lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
+      - CADDY_DOCKER_NO_SCOPE=true
+    networks:
+      - caddy
+    volumes:
+      - /run/user/1000/podman/podman.sock:/var/run/docker.sock:z
+      - ./data:/data:z
+    restart: unless-stopped
+
+  whoami:
+    image: docker.io/containous/whoami
+    networks:
+      - caddy
+    labels:
+      caddy: whoami.example.com
+      caddy.reverse_proxy: "{{upstreams 80}}"
+      caddy.tls: "internal"
+
+networks:
+  caddy:
+    external: true
