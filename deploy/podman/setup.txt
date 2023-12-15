@@ -3,8 +3,74 @@ podman login -v --tls-verify \
  -u $GITHUB_USER \
  -p $GITHUB_TOKEN
 
-podman play kube ./firehose.yml
+podman network create foo
+podman pod create --network foo foo
+podman run --pod foo --name foo-frontend -dt docker.io/traefik/whoami:v1.9.0
 
+podman network create bar
+podman pod create --network bar bar
+podman run --pod bar --name bar-frontend -dt docker.io/traefik/whoami:v1.9.0
+
+podman run --pod foo --rm alpine cat /etc/hosts
+10.89.0.2 foo 0e3d1b504ad3-infra
+127.0.0.1 foo-frontend
+podman run --pod foo --rm alpine nslookup foo # FAILS
+podman run --pod foo --rm -it quay.io/curl/curl:latest curl foo
+
+podman run --pod bar --rm alpine cat /etc/hosts
+10.89.1.2 bar 5e9118f60145-infra
+127.0.0.1 bar-frontend
+podman run --pod bar --rm alpine nslookup bar # FAILS
+podman run --pod bar --rm -it quay.io/curl/curl:latest curl bar
+
+podman run --pod foo --pod bar --rm -it quay.io/curl/curl:latest curl bar # OK
+podman run --pod foo --pod bar --rm -it quay.io/curl/curl:latest curl foo # FAILS
+podman run --pod bar --pod foo --rm -it quay.io/curl/curl:latest curl bar # FAILS
+podman run --pod bar --pod foo --rm -it quay.io/curl/curl:latest curl foo # OK
+
+podman run --network bar --network foo --rm -it quay.io/curl/curl:latest curl foo # FAILS
+podman run --network foo --network bar --rm -it quay.io/curl/curl:latest curl foo # FAILS
+podman run --network bar --network foo --rm -it quay.io/curl/curl:latest curl bar # FAILS
+podman run --network foo --network bar --rm -it quay.io/curl/curl:latest curl bar # FAILS
+
+cat /etc/resolv.conf
+nameserver 192.168.69.1
+
+ping foo # FAILS
+ping bar # FAILS
+nslookup foo # FAILS
+nslookup bar # FAILS
+ping foo-frontend # FAILS
+ping bar-frontend # FAILS
+nslookup foo-frontend # FAILS
+nslookup bar-frontend # FAILS
+
+ss -ntulp | grep aardvark-dns
+10.89.1.1:53        0.0.0.0:*    users:(("aardvark-dns",pid=2617,fd=13))
+10.89.0.1:53        0.0.0.0:*    users:(("aardvark-dns",pid=2617,fd=12))
+
+nslookup bar 10.89.1.1 # OK
+nslookup foo 10.89.1.1 # FAILS
+nslookup bar-frontend 10.89.1.1 # FAILS
+nslookup foo-frontend 10.89.1.1 # FAILS
+
+nslookup bar 10.89.0.1 # OK
+nslookup foo 10.89.0.1 # FAILS
+nslookup bar-frontend 10.89.0.1 # FAILS
+nslookup foo-frontend 10.89.0.1 # FAILS
+
+docker inspect foo-frontend | grep IPAddress
+     "IPAddress": "10.89.0.2",
+curl 10.89.0.2 # OK
+
+docker inspect bar-frontend | grep IPAddress
+     "IPAddress": "10.89.1.2",
+curl 10.89.1.2 # OK
+
+
+https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md
+
+podman play kube ./firehose.yml
 
 podman network create live-echo
 podman pod create --network live-echo live-echo
