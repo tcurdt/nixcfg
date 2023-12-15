@@ -1,1 +1,3 @@
 docker compose -f echo.yaml up -d
+
+docker compose --compatibility -f echo.yaml up -d
