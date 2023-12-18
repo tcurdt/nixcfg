@@ -1,2 +1,3 @@
 result
 .env
+secrets/age.key
