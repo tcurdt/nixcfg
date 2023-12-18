@@ -1,4 +1,4 @@
-{ nixpkgs, ... }: let
+{ nixpkgs, agenix, ... }: let
 
   hardware = "utm";
   hostPlatform = "aarch64-linux";
@@ -17,6 +17,7 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/docker.nix
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
+    agenix.nixosModules.default
 
     {
       nixpkgs.hostPlatform = hostPlatform;
@@ -43,7 +44,8 @@ in nixpkgs.lib.nixosSystem {
       virtualisation.oci-containers.containers = {
         whoami = {
           image = "docker.io/traefik/whoami:v1.9.0";
-          # image = "ealen/echo-server";
+          # image = "ghcr.io/tcurdt/foo:live";
+          # image = "ghcr.io/tcurdt/foo:test";
           ports = [ "127.0.0.1:8080:80" ];
           # volumes = [
           #   "a:b"
@@ -51,6 +53,11 @@ in nixpkgs.lib.nixosSystem {
           # environment = {
           # };
           # extraOptions = [ "--pod=foo" ];
+          login = {
+            registry = "ghcr.io";
+            username = "tcurdt";
+            passwordFile = "";
+          };
         };
       };
     }

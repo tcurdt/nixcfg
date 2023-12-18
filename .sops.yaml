@@ -1,0 +1,7 @@
+keys:
+  - &tcurdt age1eg8z5vwa03ht7tfhsz9ce223wt8ppgyj5h9c80vrx2nalfknludqvge504
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|sops)$
+    key_groups:
+    - age:
+      - *tcurdt

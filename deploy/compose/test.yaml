@@ -1,0 +1,6 @@
+version: '3.6'
+
+services:
+  go:
+    container_name: release-go
+    image: tcurdt/release-go:production

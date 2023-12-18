@@ -34,3 +34,25 @@ source .env
 rm -rf /var/lib/rancher/k3s
 
 hcloud server delete nixos
+
+
+
+
+
+mkdir -p ~/.config/sops/age
+
+# new key
+age-keygen -o ~/.config/sops/age/keys.txt
+
+# re-use ssh (no pass phrase)
+ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
+
+# public key
+grep public ~/.config/sops/age/keys.txt
+
+ssh-to-age -i ~/.ssh/id_ed25519.pub -o pub.txt
+# curl https://github.com/benjojo.keys | age -R - example.jpg > example.jpg.age
+age -c age-keygen -y ~/.config/sops/age/keys.txt
+
+
+sops -e -i secrets/utm.yaml
