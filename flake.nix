@@ -11,12 +11,15 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    impermanence.url = "github:nix-community/impermanence";
+    # impermanence.inputs.nixpkgs.follows = "nixpkgs";
+
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
-    #agenix.inputs.nixpkgs.follows = "nixpkgs";
-    #agenix.inputs.darwin.follows = "";
+    # agenix.inputs.nixpkgs.follows = "nixpkgs";
+    # agenix.inputs.darwin.follows = "";
 
     # sshhook.url = "github:tcurdt/myfoo";
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
@@ -28,6 +31,7 @@
   outputs =
     { self
     , nixpkgs
+    , impermanence
     , darwin
     , home-manager
     , agenix

@@ -1,4 +1,4 @@
-{ nixpkgs, agenix, ... }: let
+{ nixpkgs, agenix, impermanence, ... }: let
 
   hardware = "utm";
   hostPlatform = "aarch64-linux";
@@ -9,6 +9,7 @@
 in nixpkgs.lib.nixosSystem {
 
   modules = [
+    impermanence.nixosModules.impermanence
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/users.nix

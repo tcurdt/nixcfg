@@ -1,6 +1,8 @@
 { config, pkgs, inputs, ... }:
 {
 
+  # https://xeiaso.net/blog/paranoid-nixos-2021-07-18/
+
   zramSwap.enable = false;
 
   boot.tmp.cleanOnBoot = true;
@@ -195,15 +197,41 @@
   # packages
 
   nixpkgs.config.allowUnfree = true;
+  environment.defaultPackages = pkgs.lib.mkForce [];
   environment.systemPackages = with pkgs; [
     gitMinimal
     curl
     file
     dnsutils
     jq
+    nano
     # vulnix
     # nix-output-monitor
+    # clamav (PCI compliance :-)
   ];
+
+  environment.persistence."/nix/persist" = {
+    directories = [
+      "/etc/nixos" # nixos system config files, can be considered optional
+      "/srv"       # service data
+      "/var/lib"   # system service persistent data
+      "/var/log"   # the place that journald dumps it logs to
+    ];
+  };
+  environment.etc."ssh/ssh_host_rsa_key".source
+    = "/nix/persist/etc/ssh/ssh_host_rsa_key";
+  environment.etc."ssh/ssh_host_rsa_key.pub".source
+    = "/nix/persist/etc/ssh/ssh_host_rsa_key.pub";
+  environment.etc."ssh/ssh_host_ed25519_key".source
+    = "/nix/persist/etc/ssh/ssh_host_ed25519_key";
+  environment.etc."ssh/ssh_host_ed25519_key.pub".source
+    = "/nix/persist/etc/ssh/ssh_host_ed25519_key.pub";
+
+  # security.auditd.enable = true;
+  # security.audit.enable = true;
+  # security.audit.rules = [
+  #   "-a exit,always -F arch=b64 -S execve"
+  # ];
 
   documentation.enable = false;
   documentation.info.enable = false;
@@ -226,6 +254,19 @@
   #     PasswordAuthentication = false;
   #     KbdInteractiveAuthentication = false;
   #   };
+  #   extraConfig = ''
+  #     AllowTcpForwarding yes
+  #     X11Forwarding no
+  #     AllowAgentForwarding no
+  #     AllowStreamLocalForwarding no
+  #     AuthenticationMethods publickey
+  #   '';
+  # };
+
+  # services.openssh = {
+  #   passwordAuthentication = false;
+  #   allowSFTP = false; # Don't set this if you need sftp
+  #   challengeResponseAuthentication = false;
   #   extraConfig = ''
   #     AllowTcpForwarding yes
   #     X11Forwarding no
