@@ -80,10 +80,18 @@ in nixpkgs.lib.nixosSystem {
         ensureDatabases = [
           "bluesky"
         ];
-        authentication = pkgs.lib.mkOverride 10 ''
-          #type database  DBuser  auth-method
-          local all       all     trust
+        ensureUsers = [{
+          name = "postgres";
+          # ensureDBOwnership = true;
+        }];
+        initialScript = pkgs.writeText "setup.sql" ''
+          ALTER USER postgres PASSWORD 'secret';
+          GRANT ALL PRIVILEGES ON DATABASE "bluesky" to postgres;
         '';
+        # authentication = pkgs.lib.mkOverride 10 ''
+        #   #type database  DBuser auth-method
+        #   local all       all    trust
+        # '';
         # enableTCPIP = true;
       };
     }
