@@ -53,11 +53,22 @@ in nixpkgs.lib.nixosSystem {
           # environment = {
           # };
           # extraOptions = [ "--pod=foo" ];
-          # login = {
-          #   registry = "ghcr.io";
-          #   username = "tcurdt";
-          #   passwordFile = "";
-          # };
+        };
+        skyguard = {
+          image = "ghcr.io/tcurdt/skyguard:latest";
+          ports = [ "127.0.0.1:8081:2015" ];
+          environment = {
+            PGHOST = "127.0.0.1";
+            PGDATABASE = "bluesky";
+            PGUSER = "postgres";
+            PGPASSWORD = "secret";
+            SERVICE = "dev.vafer.org";
+          };
+          login = {
+            registry = "ghcr.io";
+            username = "tcurdt";
+            passwordFile = "/run/secrets/registry.github";
+          };
         };
       };
     }
@@ -66,7 +77,7 @@ in nixpkgs.lib.nixosSystem {
       services.postgresql = {
         enable = true;
         ensureDatabases = [
-          "foo"
+          "bluesky"
         ];
         authentication = pkgs.lib.mkOverride 10 ''
           #type database  DBuser  auth-method
