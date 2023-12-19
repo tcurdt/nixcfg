@@ -17,7 +17,7 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/docker.nix
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
-    agenix.nixosModules.default
+    # agenix.nixosModules.default
 
     {
       nixpkgs.hostPlatform = hostPlatform;
@@ -53,11 +53,11 @@ in nixpkgs.lib.nixosSystem {
           # environment = {
           # };
           # extraOptions = [ "--pod=foo" ];
-          login = {
-            registry = "ghcr.io";
-            username = "tcurdt";
-            passwordFile = "";
-          };
+          # login = {
+          #   registry = "ghcr.io";
+          #   username = "tcurdt";
+          #   passwordFile = "";
+          # };
         };
       };
     }
