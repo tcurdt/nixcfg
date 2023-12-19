@@ -1,4 +1,4 @@
-{ nixpkgs, ... }: let
+{ nixpkgs, impermanence, ... }: let
 
   hardware = "hetzner";
   hostPlatform = "x86_64-linux";
@@ -7,6 +7,7 @@
 in nixpkgs.lib.nixosSystem {
 
   modules = [
+    impermanence.nixosModules.impermanence
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/k3s.nix
