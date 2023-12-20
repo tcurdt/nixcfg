@@ -103,10 +103,9 @@ in nixpkgs.lib.nixosSystem {
       services.mysql = {
         enable = true;
         package = pkgs.mariadb;
-        # settings.mysqld = {
-        #   bind-address = "localhost";
-        # };
-        # bind = "localhost";
+        settings.mysqld = {
+          bind-address = "127.0.0.1";
+        };
         ensureDatabases = [
           "bluesky"
         ];
