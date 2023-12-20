@@ -213,10 +213,10 @@
   environment.persistence."/nix/persist" = {
     directories = [
       { directory = "/etc/nixos"; mode="0755"; } # nixos system config files, can be considered optional
-      { directory = "/secrets";   mode="0700"; } # secrets
-      { directory = "/srv";       mode="0755"; } # service data
-      { directory = "/var/lib";   mode="0755"; } # system service persistent data
-      { directory = "/var/log";   mode="0755"; } # the place that journald dumps it logs to
+      { directory = "/secrets";   mode="0755"; } # secrets
+      # { directory = "/srv";       mode="0755"; } # service data
+      # { directory = "/var/lib";   mode="0755"; } # system service persistent data
+      # { directory = "/var/log";   mode="0755"; } # the place that journald dumps it logs to
     ];
   };
   environment.etc."ssh/ssh_host_rsa_key".source
