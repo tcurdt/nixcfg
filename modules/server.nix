@@ -212,21 +212,21 @@
 
   environment.persistence."/nix/persist" = {
     directories = [
-      { directory = "/etc/nixos"; mode="0755"; } # nixos system config files, can be considered optional
+      # { directory = "/etc/nixos"; mode="0755"; } # nixos system config files, can be considered optional
       { directory = "/secrets";   mode="0755"; } # secrets
       # { directory = "/srv";       mode="0755"; } # service data
       # { directory = "/var/lib";   mode="0755"; } # system service persistent data
       # { directory = "/var/log";   mode="0755"; } # the place that journald dumps it logs to
     ];
   };
-  environment.etc."ssh/ssh_host_rsa_key".source
-    = "/nix/persist/etc/ssh/ssh_host_rsa_key";
-  environment.etc."ssh/ssh_host_rsa_key.pub".source
-    = "/nix/persist/etc/ssh/ssh_host_rsa_key.pub";
-  environment.etc."ssh/ssh_host_ed25519_key".source
-    = "/nix/persist/etc/ssh/ssh_host_ed25519_key";
-  environment.etc."ssh/ssh_host_ed25519_key.pub".source
-    = "/nix/persist/etc/ssh/ssh_host_ed25519_key.pub";
+  # environment.etc."ssh/ssh_host_rsa_key".source
+  #   = "/nix/persist/etc/ssh/ssh_host_rsa_key";
+  # environment.etc."ssh/ssh_host_rsa_key.pub".source
+  #   = "/nix/persist/etc/ssh/ssh_host_rsa_key.pub";
+  # environment.etc."ssh/ssh_host_ed25519_key".source
+  #   = "/nix/persist/etc/ssh/ssh_host_ed25519_key";
+  # environment.etc."ssh/ssh_host_ed25519_key.pub".source
+  #   = "/nix/persist/etc/ssh/ssh_host_ed25519_key.pub";
 
   # security.auditd.enable = true;
   # security.audit.enable = true;
