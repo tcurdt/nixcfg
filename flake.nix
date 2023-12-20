@@ -43,7 +43,7 @@
       nixosConfigurations.hetzner = import ./machines/hetzner.nix inputs;
 
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
-      darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
+      # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
     };
 
     # let
