@@ -1,4 +1,4 @@
-{ nixpkgs, agenix, impermanence, ... }: let
+{ nixpkgs, impermanence, ... }@inputs: let
 
   hardware = "utm";
   hostPlatform = "aarch64-linux";
@@ -8,8 +8,13 @@
 
 in nixpkgs.lib.nixosSystem {
 
+  specialArgs = { inherit inputs; };
+
+  # https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/
   modules = [
-    impermanence.nixosModules.impermanence
+    # { _module.args = {inherit impermanence; }; }
+    # impermanence.nixosModules.impermanence
+    # agenix.nixosModules.default
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/users.nix
@@ -18,7 +23,7 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/k3s.nix
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
-    # agenix.nixosModules.default
+    # ../modules/backup.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;
