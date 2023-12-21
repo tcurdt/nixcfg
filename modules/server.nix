@@ -1,7 +1,7 @@
-{ config, pkgs, impermanence, ... }:
+{ config, pkgs, inputs, ... }:
 {
 
-  imports = [ impermanence.nixosModules.impermanence ];
+  imports = [ inputs.impermanence.nixosModules.impermanence ];
 
   # https://xeiaso.net/blog/paranoid-nixos-2021-07-18/
 
