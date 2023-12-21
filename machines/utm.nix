@@ -8,9 +8,9 @@
 
 in nixpkgs.lib.nixosSystem {
 
-  specialArgs = inputs;
+  # specialArgs = inputs;
   # specialArgs = { inherit inputs; };
-  # specialArgs = { inherit inputs; } // inputs;
+  specialArgs = { inherit inputs; } // inputs;
 
   # https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/
   modules = [
