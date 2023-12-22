@@ -8,14 +8,9 @@
 
 in nixpkgs.lib.nixosSystem {
 
-  # specialArgs = inputs;
-  # specialArgs = { inherit inputs; };
-  specialArgs = { inherit inputs; } // inputs;
+  specialArgs = { inherit inputs; };
 
-  # https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/
   modules = [
-    # { _module.args = {inherit impermanence; }; }
-    # impermanence.nixosModules.impermanence
     # agenix.nixosModules.default
     ../hardware/${hardware}.nix
     ../modules/server.nix
