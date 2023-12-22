@@ -1,4 +1,4 @@
-{ nixpkgs, impermanence, ... }: let
+{ nixpkgs, impermanence, ... }@inputs: let
 
   hardware = "hetzner";
   hostPlatform = "x86_64-linux";
@@ -6,8 +6,9 @@
 
 in nixpkgs.lib.nixosSystem {
 
+  specialArgs = { inherit inputs; };
+
   modules = [
-    impermanence.nixosModules.impermanence
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/k3s.nix
