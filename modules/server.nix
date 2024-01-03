@@ -12,6 +12,17 @@
   # time.timeZone = "Europe/Berlin";
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
+  # i18n.extraLocaleSettings = {
+  #   LC_ADDRESS = "";
+  #   LC_IDENTIFICATION = "";
+  #   LC_MEASUREMENT = "";
+  #   LC_MONETARY = "";
+  #   LC_NAME = "";
+  #   LC_NUMERIC = "";
+  #   LC_PAPER = "";
+  #   LC_TELEPHONE = "";
+  #   LC_TIME = "";
+  # };
 
   # kernel
   boot.kernelPackages = pkgs.linuxPackages_hardened;
@@ -143,6 +154,9 @@
     '';
 
     # update system
+
+
+
     # # https://github.com/Infinisil/nixbot/blob/feefc301bbe44742570bce0974005a2714a950e6/module.nix#L84-L113
     # services.git-updater = {
     #   description = "pull from git";
@@ -201,6 +215,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.defaultPackages = pkgs.lib.mkForce [];
   environment.systemPackages = with pkgs; [
+    # (import ../scripts/foo.nix { inherit pkgs; })
     gitMinimal
     curl
     file
@@ -212,10 +227,17 @@
     # clamav (PCI compliance :-)
   ];
 
+  # environment.variables = {
+  #   PATH = [
+  #     "\${HOME}/.bin"
+  #     "\$/usr/local/bin"
+  #   ];
+  # };
+
   environment.persistence."/nix/persist" = {
     directories = [
-      # { directory = "/etc/nixos"; mode="0755"; } # nixos system config files, can be considered optional
       { directory = "/secrets";   mode="0755"; } # secrets
+      # { directory = "/etc/nixos"; mode="0755"; } # nixos system config files, can be considered optional
       # { directory = "/srv";       mode="0755"; } # service data
       # { directory = "/var/lib";   mode="0755"; } # system service persistent data
       # { directory = "/var/log";   mode="0755"; } # the place that journald dumps it logs to
@@ -243,6 +265,8 @@
 
   fonts.fontconfig.enable = false;
   sound.enable = false;
+
+  # services.fstrim.enable = true;
 
   # ssh
 

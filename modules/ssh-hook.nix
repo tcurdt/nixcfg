@@ -12,16 +12,12 @@
       #!${pkgs.bash}/bin/bash
       set -eu
       set -o pipefail
-      [[ -z "''${SSH_ORIGINAL_COMMAND:-}" ]] && exit 1
-      case "''${SSH_ORIGINAL_COMMAND}" in
-        "hook"*)
-          exec sudo ${lib.getExe hookScript}
-          ;;
-        *)
-          echo "invalid command"
-          exit 1
-          ;;
-      esac
+      [[ -z "''${SSH_ORIGINAL_COMMAND:-}" ]] && { echo "Missing command"; exit 1; }
+      IFS=' ' read -r -a ARGS <<< "${SSH_ORIGINAL_COMMAND}"
+      CMD="${ARGS[0]}"
+      ARG="${ARGS[1]}"
+      [[ "$CMD" != "hook" ]] && { echo "Invalid command"; exit 2; }
+      exec sudo ${lib.getExe hookScript} "$ARG"
     '';
 
   in {
@@ -53,10 +49,10 @@
             command = lib.getExe hookScript;
             options = [ "NOPASSWD" ];
           }
-          {
-            command = "/etc/profiles/per-user/hook/bin/hook";
-            options = [ "NOPASSWD" ];
-          }
+          # {
+          #   command = "/etc/profiles/per-user/hook/bin/hook";
+          #   options = [ "NOPASSWD" ];
+          # }
         ];
         users = [ "hook" ];
       }];
