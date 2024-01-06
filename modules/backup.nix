@@ -1,22 +1,25 @@
 
 { config, pkgs, inputs, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    #(import ../scripts/foo.nix { inherit pkgs; })
+    curl
+  ];
 
-  systemd.user.services.restore = {
-    enable = true;
+  # systemd.user.services.backup = {
+  #   enable = true;
 
-    description = "restore missing databases";
+  #   description = "backup persistence";
 
-    startAt = "minutely";
+  #   startAt = "minutely";
 
-    # serviceConfig = {
-    #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
-    # };
+  #   # serviceConfig = {
+  #   #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
+  #   # };
 
-    requires = [ "postgres" ];
-    after = [ "postgres" ];
-  };
-
+  #   requires = [ "postgres" ];
+  #   after = [ "postgres" ];
+  # };
 
 
   # systemd.user.services.backup = {

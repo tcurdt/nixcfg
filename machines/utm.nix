@@ -20,7 +20,7 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/k3s.nix
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
-    # ../modules/backup.nix
+    ../modules/backup.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;

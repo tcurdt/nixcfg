@@ -1,5 +1,7 @@
 { pkgs }:
+{
+  pkgs.writeShellScriptsBin "foo" ''
+    echo "foo"
+  ''
 
-pkgs.writeShellScriptsBin "foo" ''
-  ${pkgs.bar}/bin/bar
-''
+}
