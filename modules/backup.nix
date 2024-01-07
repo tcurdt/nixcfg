@@ -1,8 +1,21 @@
 
 { config, pkgs, inputs, ... }:
-{
+let
+
+  xxx = pkgs.writeScriptBin "xxx" ''
+      #!${pkgs.bash}/bin/bash
+      echo "hello $1"
+      whoami
+    '';
+
+
+in {
+
+  imports = [ ../scripts/bar.nix ];
+
   environment.systemPackages = with pkgs; [
     (import ../scripts/foo.nix { inherit pkgs; })
+    xxx
     curl
   ];
 
