@@ -2,7 +2,7 @@
 { config, pkgs, inputs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    #(import ../scripts/foo.nix { inherit pkgs; })
+    (import ../scripts/foo.nix { inherit pkgs; })
     curl
   ];
 
