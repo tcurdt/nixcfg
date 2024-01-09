@@ -2,11 +2,15 @@
 {
 
   programs.bash = {
+    # shellInit =
+    # loginShellInit =
     interactiveShellInit = builtins.readFile ../home/bash.sh;
     shellAliases = {
       la = "ls -la";
     };
   };
+
+  # environment.interactiveShellInit = builtins.readFile ../home/bash.sh;
   environment.shellAliases = {
     ll = "ls -la";
   };
