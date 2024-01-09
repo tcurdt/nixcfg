@@ -19,21 +19,47 @@ in {
     curl
   ];
 
-  # systemd.user.services.backup = {
-  #   enable = true;
+  systemd.user.services.stage1 = {
+    enable = true;
 
-  #   description = "backup persistence";
+    description = "stage 1";
 
-  #   startAt = "minutely";
+    script = "${pkgs.writeText "stage1" ''#!/usr/bin/env bash
+      echo "stage1"
+      whoami
+      ''}";
 
-  #   # serviceConfig = {
-  #   #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
-  #   # };
+    startAt = "minutely";
 
-  #   requires = [ "postgres" ];
-  #   after = [ "postgres" ];
-  # };
+    # serviceConfig = {
+    #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
+    # };
 
+    # requires = [ "postgres" ];
+    # after = [ "postgres" ];
+  };
+
+  systemd.user.services.stage2 = {
+    enable = true;
+
+    description = "stage 2";
+
+    script = "${pkgs.writeText "stage2" ''#!/usr/bin/env bash
+      echo "stage2"
+      whoami
+      ''}";
+
+    # startAt = "minutely";
+
+    # serviceConfig = {
+    #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
+    # };
+
+    # requires = [ "postgres" ];
+    # after = [ "postgres" ];
+
+    wantedBy = [ "stage1.service" ];
+  };
 
   # systemd.user.services.backup = {
   #   enable = true;
