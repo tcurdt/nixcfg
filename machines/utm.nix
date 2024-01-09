@@ -29,6 +29,8 @@ in nixpkgs.lib.nixosSystem {
       system.stateVersion = "23.11";
     }
 
+    # ../users/tcurdt.nix
+
     {
       services.caddy = {
         enable = true;
