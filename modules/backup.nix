@@ -30,11 +30,13 @@ in {
       sleep 5
       whoami
       echo "stage1 stop"
-      exit 1
+      exit 0
       ''}";
 
     serviceConfig.Type = "oneshot";
     startAt = "minutely";
+
+    onSuccess = [ "stage2.service" ];
   };
 
   systemd.services.stage2 = {
@@ -51,8 +53,8 @@ in {
       ''}";
 
     serviceConfig.Type = "oneshot";
-    after = [ "stage1.service" ];
-    wantedBy = [ "stage1.service" ];
+    #after = [ "stage1.service" ];
+    #wantedBy = [ "stage1.service" ];
   };
 
   # systemd.tmpfiles.rules = [
