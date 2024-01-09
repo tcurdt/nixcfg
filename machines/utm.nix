@@ -16,7 +16,7 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     ../modules/users.nix
     # ../modules/docker.nix
-    ../modules/podman.nix
+    # ../modules/podman.nix
     # ../modules/k3s.nix
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
