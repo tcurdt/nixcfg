@@ -19,79 +19,45 @@ in {
     curl
   ];
 
-  systemd.user.services.stage1 = {
+  systemd.services.stage1 = {
     enable = true;
 
     description = "stage 1";
 
-    script = "${pkgs.writeText "stage1" ''#!/usr/bin/env bash
-      echo "stage1"
+    script = "${pkgs.writeScript "stage1" ''
+      #!${pkgs.bash}/bin/bash
+      echo "stage1 start"
+      sleep 5
       whoami
+      echo "stage1 stop"
+      exit 1
       ''}";
 
+    serviceConfig.Type = "oneshot";
     startAt = "minutely";
-
-    # serviceConfig = {
-    #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
-    # };
-
-    # requires = [ "postgres" ];
-    # after = [ "postgres" ];
   };
 
-  systemd.user.services.stage2 = {
+  systemd.services.stage2 = {
     enable = true;
 
     description = "stage 2";
 
-    script = "${pkgs.writeText "stage2" ''#!/usr/bin/env bash
-      echo "stage2"
+    script = "${pkgs.writeScript "stage2" ''
+      #!${pkgs.bash}/bin/bash
+      echo "stage2 start"
+      sleep 1
       whoami
+      echo "stage2 stop"
       ''}";
 
-    # startAt = "minutely";
-
-    # serviceConfig = {
-    #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
-    # };
-
-    # requires = [ "postgres" ];
-    # after = [ "postgres" ];
-
+    serviceConfig.Type = "oneshot";
+    after = [ "stage1.service" ];
     wantedBy = [ "stage1.service" ];
   };
-
-  # systemd.user.services.backup = {
-  #   enable = true;
-
-  #   description = "backup databases";
-
-  #   startAt = "daily";
-
-
-  #   wantedBy = ["multi-user.target"];
-  # };
 
   # systemd.tmpfiles.rules = [
   #   "d /var/www"
   #   "d /var/www/example.org 0750 example example"
   # ];
-
-  # unitConfig = {
-  #   ConditionPathExists = "/var/www/example.org/.env";
-  #   ConditionDirectoryNotEmpty = "/var/www/example.org/vendor";
-  # };
-
-  # serviceConfig = {
-  #   ExecStart = "${pkgs.pnmixer}/bin/pnmixer";
-  # };
-  # serviceConfig = {
-  #   Type = "oneshot";
-  #   User = "example";
-  #   Group = "example";
-  #   SyslogIdentifier = "example-laravel-scheduler";
-  #   WorkingDirectory = "/var/www/example.org";
-  #   ExecStart = "${php'}/bin/php artisan schedule:run -v";
-  # };
 
 }
