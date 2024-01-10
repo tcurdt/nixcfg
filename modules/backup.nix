@@ -17,6 +17,7 @@ in {
     (import ../scripts/foo.nix { inherit pkgs; })
     xxx
     curl
+    age
   ];
 
   systemd.services.stage1 = {
