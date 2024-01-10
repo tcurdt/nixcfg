@@ -21,5 +21,8 @@ in nixpkgs.lib.nixosSystem {
       system.stateVersion = "23.11";
     }
 
+    ../users/root.nix
+    ../users/tcurdt.nix
+
   ];
 }
