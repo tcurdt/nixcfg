@@ -108,18 +108,14 @@
   # '';
 
   # system.autoUpgrade = {
-  #   enabled = true;
-  #   flake = "github:YourUser/yourRepo";
-  #   date = "hourly";
-  #   # date = "minutely";
-  #   # date = "*:0/5";
-  # }
-
-  # system.autoUpgrade = {
   #   enable = true;
   #   dates = "04:00";
+  #   # date = "hourly";
+  #   # date = "minutely";
+  #   # date = "*:0/5";
   #   allowReboot = true;
   #   flake = inputs.self.outPath;
+  #   flake = "github:YourUser/yourRepo";
   #   flags = [
   #     "--update-input"
   #     "nixpkgs"
@@ -288,20 +284,11 @@
   #     AllowStreamLocalForwarding no
   #     AuthenticationMethods publickey
   #   '';
-  # };
-
-  # services.openssh = {
   #   passwordAuthentication = false;
   #   allowSFTP = false; # Don't set this if you need sftp
   #   challengeResponseAuthentication = false;
-  #   extraConfig = ''
-  #     AllowTcpForwarding yes
-  #     X11Forwarding no
-  #     AllowAgentForwarding no
-  #     AllowStreamLocalForwarding no
-  #     AuthenticationMethods publickey
-  #   '';
   # };
+
 
   # services.influxdb2.enable = true;
   # services.grafana.enable = true;
