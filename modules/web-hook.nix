@@ -14,9 +14,21 @@
       packages = [ hookScript ];
     };
 
+    # systemd.services.webhook.serviceConfig.EnvironmentFile = config.age.secrets."foo".path;
+    # systemd.services.webhook.serviceConfig.EnvironmentFile = /run/secrets/webhook
+
     services.webhook.enable = true;
     services.webhook.openFirewall = true;
     services.webhook.port = 19191;
+    # services.webhook.hooksTemplated = {
+    #   deploy = ''
+    #     {
+    #       "id": "deploy",
+    #       "execute-command": "echo",
+    #       "response-message": "{{ getenv "MESSAGE" }}"
+    #     }
+    #   '';
+    # };
     services.webhook.hooks = {
       echo = {
         execute-command = "echo";
