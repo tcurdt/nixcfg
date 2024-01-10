@@ -6,8 +6,8 @@
         ./tcurdt.pub
       ];
 
-      # promptInitialPassword = true;
       # password = "secret";
+      # promptInitialPassword = true;
       # hashedPassword = "*"; # no password allowed
     };
   };
