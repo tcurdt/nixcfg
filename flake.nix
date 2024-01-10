@@ -8,6 +8,8 @@
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     # nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    # deploy-rs.url = "github:serokell/deploy-rs";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -33,6 +35,7 @@
     , nixpkgs
     , impermanence
     , home-manager
+    # , deploy-rs
     # , darwin
     # , agenix
     , ...
@@ -45,6 +48,17 @@
 
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
+
+      # deploy.nodes.utm = {
+      #   hostname = "127.0.0.1";
+      #   remoteBuild = true;
+      #   profiles.system = {
+      #     user = "root";
+      #     path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
+      #   };
+      # };
+
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 
     # let
