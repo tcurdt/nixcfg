@@ -40,12 +40,6 @@
 
     {
 
-      # colmena = {
-      #   meta = {
-      #   };
-      #   utm = import ./machines/utm.nix inputs;
-      # };
-
       nixosConfigurations.utm = import ./machines/utm.nix inputs;
       nixosConfigurations.hetzner = import ./machines/hetzner.nix inputs;
 
