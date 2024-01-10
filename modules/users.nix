@@ -4,13 +4,13 @@
   programs.bash = {
     # shellInit =
     # loginShellInit =
-    interactiveShellInit = builtins.readFile ../home/bash.sh;
+    interactiveShellInit = builtins.readFile ../shells/bash.sh;
     shellAliases = {
       la = "ls -la";
     };
   };
 
-  # environment.interactiveShellInit = builtins.readFile ../home/bash.sh;
+  # environment.interactiveShellInit = builtins.readFile ../shells/bash.sh;
   environment.shellAliases = {
     ll = "ls -la";
   };
@@ -46,7 +46,11 @@
   # };
   # nix.allowedUsers = [ "@wheel" ];
 
+  # not working:
   # users.users = {
   #   "*".hashedPassword = "*"; # no passwords
+  # };
+  # users.users = {
+  #   hashedPassword = mkOption { default = "*"; readOnly = true; };
   # };
 }
