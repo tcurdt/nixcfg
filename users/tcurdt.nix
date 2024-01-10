@@ -12,7 +12,7 @@
         htop
       ];
 
-      # hashedPassword = "*"; # no password allowed
+      hashedPassword = "*"; # no password allowed
     };
   };
 }
