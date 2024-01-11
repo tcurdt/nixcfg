@@ -11,8 +11,8 @@ in nixpkgs.lib.nixosSystem {
   modules = [
     ../hardware/${hardware}.nix
     ../modules/server.nix
-    ../modules/k3s.nix
     ../modules/users.nix
+    # ../modules/k3s.nix
     # ../modules/backup.nix
 
     {

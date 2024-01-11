@@ -49,6 +49,11 @@
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
 
+      # colema = {
+      #   meta.specialArgs.inputs = inputs;
+      #   utm = import ./machines/utm.nix inputs;
+      # };
+
       # deploy.nodes.utm = {
       #   hostname = "127.0.0.1";
       #   remoteBuild = true;
@@ -57,28 +62,7 @@
       #     path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
       #   };
       # };
-
       # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
-
-    # let
-    #   mkHost = import ./lib/mkHost.nix inputs;
-    # in {
-    #   nixosConfigurations.utm = mkHost {
-    #     hardware = "utm";
-    #     hostPlatform = "aarch64-linux";
-    #     hostName = "nixos";
-    #   };
-    # };
-
-    # let
-    #   mkHost = import ./lib/mkHost2.nix inputs;
-    # in {
-    #   nixosConfigurations.utm = mkHost {
-    #     hardware = "utm";
-    #     hostPlatform = "aarch64-linux";
-    #     hostName = "nixos";
-    #   };
-    # };
 
 }
