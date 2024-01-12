@@ -11,6 +11,7 @@
   ];
   environment.systemPackages = with pkgs; [
     k3s
+    k9s
     kubectx
   ];
 
