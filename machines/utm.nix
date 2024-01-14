@@ -15,7 +15,7 @@ in nixpkgs.lib.nixosSystem {
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/users.nix
-    # ../modules/docker.nix
+    ../modules/docker.nix
     # ../modules/podman.nix
     # ../modules/k3s.nix
     # ../modules/ssh-hook.nix
@@ -34,6 +34,26 @@ in nixpkgs.lib.nixosSystem {
 
     {
       users.users.root.password = "secret";
+    }
+
+    {
+      virtualisation.oci-containers.containers = {
+        test = {
+          image = "ghcr.io/tcurdt/test-project";
+          ports = [ "127.0.0.1:2015:2015" ];
+          environment = {
+            PASSWORD = "foo";
+          };
+          environmentFiles = [
+            /run/credentials/live.password
+          ];
+          login = {
+            registry = "ghcr.io";
+            username = "tcurdt";
+            passwordFile = "/run/credentials/registry.github";
+          };
+        };
+      };
     }
 
   ];
