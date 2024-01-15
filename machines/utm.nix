@@ -38,6 +38,7 @@ in nixpkgs.lib.nixosSystem {
 
     {
       virtualisation.oci-containers.containers = {
+
         test = {
           image = "ghcr.io/tcurdt/test-project";
           ports = [ "127.0.0.1:2015:2015" ];
@@ -53,8 +54,24 @@ in nixpkgs.lib.nixosSystem {
             passwordFile = "/run/credentials/registry.github";
           };
         };
+
+        test2 = {
+          image = "ghcr.io/tcurdt/test-project";
+          ports = [ "127.0.0.1:2016:2016" ];
+          environment = {
+            URL = "https://127.0.0.1:2015/version";
+          };
+          environmentFiles = [
+            /run/credentials/live.password
+          ];
+          login = {
+            registry = "ghcr.io";
+            username = "tcurdt";
+            passwordFile = "/run/credentials/registry.github";
+          };
+        };
+
       };
     }
-
   ];
 }
