@@ -10,6 +10,7 @@
       enable = true;
       # dockerCompat = true;
       # defaultNetwork.settings.dns_enabled = true; # required for podman-compose
+      # defaultNetwork.settings.dns_enabled = false;
       autoPrune = {
         enable = true;
         dates = "Monday 02:00";
