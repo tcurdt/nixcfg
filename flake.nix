@@ -2,19 +2,20 @@
   description = "my machines";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
-    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05"; # stable
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11"; # stable
+
     # nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # deploy-rs.url = "github:serokell/deploy-rs";
 
+    impermanence.url = "github:nix-community/impermanence";
+    impermanence.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    impermanence.url = "github:nix-community/impermanence";
-    # impermanence.inputs.nixpkgs.follows = "nixpkgs";
 
     # darwin.url = "github:LnL7/nix-darwin";
     # darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -23,7 +24,6 @@
     # agenix.inputs.nixpkgs.follows = "nixpkgs";
     # agenix.inputs.darwin.follows = "";
 
-    # sshhook.url = "github:tcurdt/myfoo";
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
 
     # flake-utils.url = "github:numtide/flake-utils";
