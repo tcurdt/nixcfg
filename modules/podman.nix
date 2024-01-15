@@ -8,7 +8,7 @@
 
     podman = {
       enable = true;
-      dockerCompat = true;
+      # dockerCompat = true;
       # defaultNetwork.settings.dns_enabled = true; # required for podman-compose
       autoPrune = {
         enable = true;
@@ -17,19 +17,20 @@
       };
     };
 
-    containers.storage.settings = {
-      storage = {
-        driver = "overlay";
-        runroot = "/run/containers/storage";
-        graphroot = "/var/lib/containers/storage";
-        rootless_storage_path = "/tmp/containers-$USER";
-        options.overlay.mountopt = "nodev,metacopy=on";
-      };
-    };
+    # containers.storage.settings = {
+    #   storage = {
+    #     driver = "overlay";
+    #     runroot = "/run/containers/storage";
+    #     graphroot = "/var/lib/containers/storage";
+    #     rootless_storage_path = "/tmp/containers-$USER";
+    #     options.overlay.mountopt = "nodev,metacopy=on";
+    #   };
+    # };
   };
 
   environment.systemPackages = with pkgs; [
-    podman-compose
+    podman-tui
+    # podman-compose
   ];
 
   # https://carjorvaz.com/posts/rootless-podman-and-docker-compose-on-nixos/
