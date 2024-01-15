@@ -3,7 +3,7 @@
   users.users = {
     tcurdt = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "docker" ];
       openssh.authorizedKeys.keyFiles = [ ./tcurdt.pub ];
 
       # shell = pkgs.nushell;
