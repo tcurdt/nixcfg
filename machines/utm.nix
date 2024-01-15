@@ -41,9 +41,9 @@ in nixpkgs.lib.nixosSystem {
         test = {
           image = "ghcr.io/tcurdt/test-project";
           ports = [ "127.0.0.1:2015:2015" ];
-          environment = {
-            PASSWORD = "foo";
-          };
+          #environment = {
+          #  PASSWORD = "foo";
+          #};
           environmentFiles = [
             /run/credentials/live.password
           ];
