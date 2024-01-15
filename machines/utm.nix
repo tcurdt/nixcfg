@@ -48,6 +48,9 @@ in nixpkgs.lib.nixosSystem {
           environmentFiles = [
             /run/credentials/live.password
           ];
+          # extraOptions = [ 
+          #   "--network=testing"
+          # ];
           login = {
             registry = "ghcr.io";
             username = "tcurdt";
@@ -64,6 +67,9 @@ in nixpkgs.lib.nixosSystem {
           environmentFiles = [
             /run/credentials/live.password
           ];
+          # extraOptions = [ 
+          #  "--network=testing"
+          # ];
           login = {
             registry = "ghcr.io";
             username = "tcurdt";
