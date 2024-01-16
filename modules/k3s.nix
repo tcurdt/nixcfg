@@ -9,8 +9,12 @@
     "--disable=traefik"
   ];
 
-  environment.shellAliases = {
-    k9 = "k9s --kubeconfig /etc/rancher/k3s/k3s.yaml";
+  # environment.shellAliases = {
+  #   k9 = "k9s --kubeconfig /etc/rancher/k3s/k3s.yaml";
+  # };
+
+  environment.variables = {
+    KUBECONFIG=/etc/rancher/k3s/k3s.yaml;
   };
 
   environment.systemPackages = with pkgs; [

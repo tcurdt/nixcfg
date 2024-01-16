@@ -5,9 +5,9 @@
     # shellInit =
     # loginShellInit =
     interactiveShellInit = builtins.readFile ../shells/bash.sh;
-    shellAliases = {
-      la = "ls -la";
-    };
+    # shellAliases = {
+    #   la = "ls -la";
+    # };
   };
 
   # environment.interactiveShellInit = builtins.readFile ../shells/bash.sh;
