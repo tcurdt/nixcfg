@@ -16,8 +16,8 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     ../modules/users.nix
     # ../modules/docker.nix
-    ../modules/podman.nix
-    # ../modules/k3s.nix
+    # ../modules/podman.nix
+    ../modules/k3s.nix
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
     # ../modules/backup.nix
@@ -37,47 +37,63 @@ in nixpkgs.lib.nixosSystem {
     }
 
     {
-      virtualisation.oci-containers.containers = {
+      services.caddy = {
+        enable = true;
 
-        test = {
-          image = "ghcr.io/tcurdt/test-project";
-          ports = [ "127.0.0.1:2015:2015" ];
-          #environment = {
-          #  PASSWORD = "foo";
-          #};
-          environmentFiles = [
-            /run/credentials/live.password
-          ];
-          # extraOptions = [ 
-          #   "--network=testing"
-          # ];
-          login = {
-            registry = "ghcr.io";
-            username = "tcurdt";
-            passwordFile = "/run/credentials/registry.github";
-          };
-        };
-
-        test2 = {
-          image = "ghcr.io/tcurdt/test-project";
-          ports = [ "127.0.0.1:2016:2016" ];
-          environment = {
-            URL = "https://127.0.0.1:2015/version";
-          };
-          environmentFiles = [
-            /run/credentials/live.password
-          ];
-          # extraOptions = [ 
-          #  "--network=testing"
-          # ];
-          login = {
-            registry = "ghcr.io";
-            username = "tcurdt";
-            passwordFile = "/run/credentials/registry.github";
-          };
+        # curl -k --resolve whoami.vafer.work:443:127.0.0.1 https://whoami.vafer.work
+        virtualHosts."whoami.vafer.work" = {
+          extraConfig = ''
+            reverse_proxy http://10.43.1.101:5678
+            tls internal
+          '';
         };
 
       };
     }
+
+    # {
+    #   virtualisation.oci-containers.containers = {
+
+    #     test = {
+    #       image = "ghcr.io/tcurdt/test-project";
+    #       ports = [ "127.0.0.1:2015:2015" ];
+    #       #environment = {
+    #       #  PASSWORD = "foo";
+    #       #};
+    #       environmentFiles = [
+    #         /run/credentials/live.password
+    #       ];
+    #       # extraOptions = [
+    #       #   "--network=testing"
+    #       # ];
+    #       login = {
+    #         registry = "ghcr.io";
+    #         username = "tcurdt";
+    #         passwordFile = "/run/credentials/registry.github";
+    #       };
+    #     };
+
+    #     test2 = {
+    #       image = "ghcr.io/tcurdt/test-project";
+    #       ports = [ "127.0.0.1:2016:2016" ];
+    #       environment = {
+    #         URL = "https://127.0.0.1:2015/version";
+    #       };
+    #       environmentFiles = [
+    #         /run/credentials/live.password
+    #       ];
+    #       # extraOptions = [
+    #       #  "--network=testing"
+    #       # ];
+    #       login = {
+    #         registry = "ghcr.io";
+    #         username = "tcurdt";
+    #         passwordFile = "/run/credentials/registry.github";
+    #       };
+    #     };
+
+    #   };
+    # }
+
   ];
 }
