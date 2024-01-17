@@ -29,6 +29,10 @@
     # };
   };
 
+  environment.shellAliases = {
+    p = "podman";
+  };
+
   environment.systemPackages = with pkgs; [
     podman-tui
     # podman-compose
