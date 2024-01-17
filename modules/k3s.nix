@@ -21,7 +21,9 @@
     k3s
     k9s
     regclient
-    kubectx
+    kustomize
+    envsubst
+    # kubectx
   ];
 
 }
