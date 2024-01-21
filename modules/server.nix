@@ -220,13 +220,13 @@
     jq
     sd # sed
     fd # find
-    exa # ls
+    eza # ls
     bat # cat
     procs # ps
-    dust # du
+    # dust # du
     ripgrep # grep
     hyperfine # progress
-    ytop # top
+    # ytop # top
     ruplacer # find && replace
     # nix-output-monitor
     # clamav (PCI compliance)
