@@ -18,6 +18,7 @@ in {
     xxx
     curl
     age
+    # vulnix
   ];
 
   systemd.services.stage1 = {
