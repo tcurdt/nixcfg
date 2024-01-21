@@ -1,3 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
-nixos-rebuild build --flake .#$1
+nixos-rebuild build --flake .#${1:-utm}
