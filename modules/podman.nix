@@ -9,7 +9,7 @@
     podman = {
       enable = true;
       # dockerCompat = true;
-      # defaultNetwork.settings.dns_enabled = true; # required for podman-compose
+      defaultNetwork.settings.dns_enabled = true;
       # defaultNetwork.settings.dns_enabled = false;
       autoPrune = {
         enable = true;
