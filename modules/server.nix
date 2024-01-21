@@ -212,15 +212,24 @@
   environment.defaultPackages = pkgs.lib.mkForce [];
   environment.systemPackages = with pkgs; [
     # (import ../scripts/foo.nix { inherit pkgs; })
+    nano
     gitMinimal
     curl
     file
     dnsutils
     jq
-    nano
-    # vulnix
+    sd # sed
+    fd # find
+    exa # ls
+    bat # cat
+    procs # ps
+    dust # du
+    ripgrep # grep
+    hyperfine # progress
+    ytop # top
+    ruplacer # find && replace
     # nix-output-monitor
-    # clamav (PCI compliance :-)
+    # clamav (PCI compliance)
   ];
 
   # environment.variables = {
