@@ -34,8 +34,10 @@
   };
 
   environment.systemPackages = with pkgs; [
-    podman-tui
     # podman-compose
+    regclient
+    envsubst
+    podman-tui
   ];
 
   # https://carjorvaz.com/posts/rootless-podman-and-docker-compose-on-nixos/

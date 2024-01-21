@@ -19,10 +19,10 @@
 
   environment.systemPackages = with pkgs; [
     k3s
-    k9s
     regclient
     kustomize
     envsubst
+    k9s
     # kubectx
   ];
 
