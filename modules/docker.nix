@@ -15,6 +15,8 @@
   };
   environment.systemPackages = with pkgs; [
     docker-compose
+    regclient
+    envsubst
   ];
 
   # security.unprivilegedUsernsClone = true;
