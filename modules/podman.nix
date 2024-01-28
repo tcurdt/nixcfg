@@ -50,4 +50,16 @@
   # networking.firewall.trustedInterfaces = [ "podman0" ]
   # networking.firewall.interfaces.podman0.allowedUDPPorts = [ 53 ];
 
+  # systemd.services.podman-gitops = {
+  #   enable = true;
+  #   description = "update podman from git";
+  #   script = "${pkgs.writeScript "stage2" ''
+  #     #!${pkgs.bash}/bin/bash
+  #     git pull
+  #     resolve
+  #     podman play
+  #     ''}";
+  # };
+
+
 }
