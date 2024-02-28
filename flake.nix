@@ -28,6 +28,9 @@
 
     # flake-utils.url = "github:numtide/flake-utils";
     # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
+
+    release-go.url = "github:tcurdt/release-go";
+
   };
 
   outputs =
@@ -35,6 +38,7 @@
     , nixpkgs
     , impermanence
     , home-manager
+    , release-go
     # , deploy-rs
     # , darwin
     # , agenix
