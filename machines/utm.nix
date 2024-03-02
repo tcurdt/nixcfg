@@ -11,6 +11,7 @@ in nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
 
   modules = [
+    inputs.release-go.nixosModules.default
     # agenix.nixosModules.default
     ../hardware/${hardware}.nix
     ../modules/server.nix
