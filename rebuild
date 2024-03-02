@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-nixos-rebuild build --flake .#${1:-utm}
+# nixos-rebuild build --flake .#${1:-utm}
+nixos-rebuild build --show-trace --option eval-cache false --flake .#${1:-utm}
