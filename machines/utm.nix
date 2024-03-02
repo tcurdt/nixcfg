@@ -37,6 +37,12 @@ in nixpkgs.lib.nixosSystem {
     }
 
     {
+      services.release-go = {
+        enable = true;
+      };
+    }
+
+    {
       services.caddy = {
         enable = true;
 
