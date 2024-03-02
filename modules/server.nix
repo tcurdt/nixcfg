@@ -210,27 +210,33 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.defaultPackages = pkgs.lib.mkForce [];
-  environment.systemPackages = with pkgs; [
-    # (import ../scripts/foo.nix { inherit pkgs; })
-    nano
-    gitMinimal
-    curl
-    file
-    dnsutils
-    jq
-    sd # sed
-    fd # find
-    eza # ls
-    bat # cat
-    procs # ps
-    # dust # du
-    ripgrep # grep
-    hyperfine # progress
-    # ytop # top
-    ruplacer # find && replace
-    # nix-output-monitor
-    # clamav (PCI compliance)
+  environment.systemPackages = [
+    pkgs.nano
+    pkgs.gitMinimal
+    pkgs.curl
+    inputs.release-go.packages.${pkgs.system}.default
   ];
+#  environment.systemPackages = with pkgs; [
+#    # (import ../scripts/foo.nix { inherit pkgs; })
+#    nano
+#    gitMinimal
+#    curl
+#    file
+#    dnsutils
+#    jq
+#    sd # sed
+#    fd # find
+#    eza # ls
+#    bat # cat
+#    procs # ps
+#    # dust # du
+#    ripgrep # grep
+#    hyperfine # progress
+#    # ytop # top
+#    ruplacer # find && replace
+#    # nix-output-monitor
+#    # clamav (PCI compliance)
+#  ];
 
   # environment.variables = {
   #   PATH = [
