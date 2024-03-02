@@ -13,11 +13,14 @@
       # };
     };
   };
-  environment.systemPackages = with pkgs; [
-    docker-compose
-    regclient
-    envsubst
-  ];
+
+  environment.systemPackages = builtins.attrValues {
+    inherit (pkgs)
+      docker-compose
+      regclient
+      envsubst
+      ;
+  };
 
   # security.unprivilegedUsernsClone = true;
 

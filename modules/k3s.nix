@@ -17,13 +17,15 @@
     KUBECONFIG="/etc/rancher/k3s/k3s.yaml";
   };
 
-  environment.systemPackages = with pkgs; [
-    k3s
-    regclient
-    kustomize
-    envsubst
-    k9s
-    # kubectx
-  ];
+  environment.systemPackages = builtins.attrValues {
+    inherit (pkgs)
+      k3s
+      regclient
+      kustomize
+      envsubst
+      k9s
+      # kubectx
+      ;
+  };
 
 }
