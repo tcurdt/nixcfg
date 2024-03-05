@@ -16,11 +16,20 @@ in nixpkgs.lib.nixosSystem {
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/users.nix
+
     # ../modules/docker.nix
     ../modules/podman.nix
     # ../modules/k3s.nix
+
+    ../modules/ntfy.nix
+    ../modules/telegraf.nix
+    ../modules/db-postgres.nix
+    ../modules/db-influx.nix
+    ../modules/redis.nix
+
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
+
     # ../modules/backup.nix
 
     {
@@ -47,10 +56,10 @@ in nixpkgs.lib.nixosSystem {
       services.caddy = {
         enable = true;
 
-        # curl -k --resolve whoami.vafer.work:443:127.0.0.1 https://whoami.vafer.work
-        virtualHosts."whoami.vafer.work" = {
+        # curl -k --resolve ntfy.vafer.work:443:127.0.0.1 https://ntfy.vafer.work
+        virtualHosts."ntfy.vafer.work" = {
           extraConfig = ''
-            reverse_proxy http://10.43.1.101:5678
+            reverse_proxy 127.0.0.1:8080
             tls internal
           '';
         };
