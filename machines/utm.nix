@@ -49,6 +49,7 @@ in nixpkgs.lib.nixosSystem {
     {
       services.release-go = {
         enable = true;
+        port = 2020;
       };
     }
 
