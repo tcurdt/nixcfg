@@ -12,10 +12,10 @@
     # auths = {
     #   tokeFile = "";
     # };
-    # settings = {
-    #   http-bind-address = "127.0.0.1:8086";
-    #   log-level = "error";
-    # };
+    settings = {
+      http-bind-address = "127.0.0.1:8086";
+      log-level = "error";
+    };
   };
   # environment.systemPackages = builtins.attrValues {
   #   inherit (pkgs)
