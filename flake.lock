@@ -117,11 +117,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1709423635,
-        "narHash": "sha256-e3Yxwnq7/7jtzS4gDvjON4Luem+80DQinvAvQhbeU6A=",
+        "lastModified": 1709665205,
+        "narHash": "sha256-qJM7auBHT5hd9fIq4KcpbTyK4mlUPm2mk3aZsJ2eRsA=",
         "owner": "tcurdt",
         "repo": "release-go",
-        "rev": "2b9cd906024d2de00f8a51f6eaa3441aa13e9782",
+        "rev": "2678f6294507a0ffdadf9cd73d2d104e39febd76",
         "type": "github"
       },
       "original": {
