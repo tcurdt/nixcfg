@@ -36,7 +36,7 @@
           urls = [
           ];
           metric_version = 2;
-          fieldpass = [
+          fieldinclude = [
             "process_resident_memory_bytes"
           ];
         };
@@ -62,9 +62,11 @@
         # };
       };
       outputs = {
-        files = [
-          "/dev/null"
-        ];
+        file = {
+          files = [
+            "/dev/null"
+          ];
+        };
         # influxdb = {
         #   database = "telegraf";
         #   urls = [
