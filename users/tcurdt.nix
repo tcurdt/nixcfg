@@ -36,6 +36,9 @@
   # programs.home-manager.enable = true;
 
   home-manager.users.tcurdt = { pkgs, ... }: {
+
+    programs.bash.enable = true;
+
     home.sessionVariables = {
       PAGER = "less";
       EDITOR = "nano";
