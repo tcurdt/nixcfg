@@ -41,6 +41,25 @@
       EDITOR = "nano";
       CLICOLOR = 1;
     };
+
+    home.packages = [
+      pkgs.unzip
+    ];
+
+    programs.git = {
+      enable = true;
+      userName = "Torsten Curdt";
+      userEmail = "tcurdt@vafer.org";
+    };
+
+    home.file = {
+      ".foo" = {
+        text = ''
+          bar
+        '';
+      };
+    };
+
     home.stateVersion = "23.11";
   };
 
