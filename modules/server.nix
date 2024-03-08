@@ -238,6 +238,22 @@
     # (import ../scripts/foo.nix { inherit pkgs; })
   };
 
+  programs.msmtp = {
+    enable = true;
+    accounts = {
+      default = {
+        auth = true;
+        tls = true;
+        # try setting `tls_starttls` to `false` if sendmail hangs
+        from = "<from address here>";
+        host = "<hostname here>";
+        user = "<username here>";
+        passwordeval = "cat /secrets/smtp_password.txt";
+      };
+    };
+  };
+
+
   # environment.variables = {
   #   PATH = [
   #     "\${HOME}/.bin"
