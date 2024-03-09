@@ -4,7 +4,7 @@
     enable = true;
     extraConfig = {
       global_tags = {
-        dc = "vafer.org";
+        # dc = "vafer.org";
       };
       agent = {
         interval = "30s";
@@ -70,12 +70,12 @@
         # influxdb = {
         #   database = "telegraf";
         #   urls = [
-        #     "http://localhost:8086"
+        #     "http://127.0.0.1:8086"
         #   ];
         # };
         # influxdb_v2 = {
         #   urls = [
-        #     "http://localhost:8086"
+        #     "http://127.0.0.1:8086"
         #   ];
         #   organization = "vafer.org";
         #   bucket = "telegraf";
