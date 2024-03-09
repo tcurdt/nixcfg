@@ -12,7 +12,7 @@
 
   # environment.interactiveShellInit = builtins.readFile ../shells/bash.sh;
   environment.shellAliases = {
-    ll = "ls -la";
+    # ll = "ls -la";
   };
 
   security.sudo.wheelNeedsPassword = false;
