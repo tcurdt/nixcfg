@@ -91,6 +91,14 @@
   # networking.networkmanager.dns = "systemd-resolved";
   # services.resolved.enable = true;
 
+  # caching
+
+  # you’ll first need to populate /etc/cachix-agent.token with the previously generated agent token with the contents:CACHIX_AGENT_TOKEN=XXX.
+  # services.cachix-agent.enable = true;
+  # agent name is inferred from the hostname
+  # networking.hostName = "myhostname";
+  # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
+
   # maintenance
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -125,13 +133,6 @@
   #   randomizedDelaySec = "15min";
   # };
 
-
-  # You’ll first need to populate /etc/cachix-agent.token with the previously generated agent token with the contents:CACHIX_AGENT_TOKEN=XXX.
-  # services.cachix-agent.enable = true;
-  # # agent name is inferred from the hostname
-  # networking.hostName = "myhostname";
-  # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
-
   systemd = {
 
     network.wait-online.enable = false;
@@ -150,8 +151,6 @@
     '';
 
     # update system
-
-
 
     # # https://github.com/Infinisil/nixbot/blob/feefc301bbe44742570bce0974005a2714a950e6/module.nix#L84-L113
     # services.git-updater = {
@@ -210,33 +209,31 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.defaultPackages = pkgs.lib.mkForce [];
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs)
-      nano
-      gitMinimal
-      curl
-      file
-      dnsutils
-      jq
-      sd # sed
-      fd # find
-      eza # ls
-      bat # cat
-      procs # ps
-      ripgrep # grep
-      hyperfine # progress
-      ;
 
-      # ruplacer # find && replace
-      # dust # du
-      # ytop # top
-      # nix-output-monitor
-      # clamav (PCI compliance)
+  environment.systemPackages = [
+    pkgs.nano
+    pkgs.tmux
+    pkgs.curl
+    pkgs.jq
+    pkgs.unzip
+    pkgs.htop
+    pkgs.gitMinimal
+    pkgs.file
+    pkgs.dnsutils
 
-    inherit (inputs.release-go.packages.${pkgs.system}) default;
+    inputs.release-go.packages.${pkgs.system}.default
 
-    # (import ../scripts/foo.nix { inherit pkgs; })
-  };
+    (import ../scripts/foo.nix { inherit pkgs; })
+  ];
+
+  # environment.systemPackages = builtins.attrValues {
+  #   inherit (pkgs)
+  #     nix-output-monitor
+  #     clamav # PCI compliance
+  #     ;
+  #   inherit (inputs.release-go.packages.${pkgs.system}) default;
+  #   (import ../scripts/foo.nix { inherit pkgs; })
+  # };
 
   programs.msmtp = {
     enable = true;
@@ -318,26 +315,6 @@
   #   passwordAuthentication = false;
   #   allowSFTP = false; # Don't set this if you need sftp
   #   challengeResponseAuthentication = false;
-  # };
-
-
-  # services.influxdb2.enable = true;
-  # services.grafana.enable = true;
-  # services.grafana.settings = {};
-  # services.telegraf = {
-  #   enable = true;
-  #   extraConfig = {
-  #     global_tags = {
-  #       dc = "dc1";
-  #     };
-  #     agent = {
-  #       interval = "10s";
-  #     };
-  #     inputs.mem = {};
-  #     outputs.file = {
-  #       files = [ "/tmp/metrics.out" ];
-  #     };
-  #   };
   # };
 
   # https://github.com/maralorn/nix-output-monitor

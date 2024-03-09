@@ -1,4 +1,4 @@
-{ nixpkgs, impermanence, ... }@inputs: let
+{ nixpkgs, impermanence, ... } @ inputs: let
 
   hardware = "utm";
   hostPlatform = "aarch64-linux";
