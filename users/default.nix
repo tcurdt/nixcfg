@@ -4,9 +4,6 @@
     ../keys/tcurdt.pub
   ];
 
-  programs.bash.enable = true;
-  programs.zsh.enable = true;
-
-  # shell = pkgs.bash;
-  shell = pkgs.zsh;
+  shell = pkgs.bash;
+  # shell = pkgs.zsh;
 }
