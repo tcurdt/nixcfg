@@ -3,7 +3,7 @@
 
   imports = [ inputs.home-manager.nixosModules.default ];
 
-  users.users.tcurdt = import ./default.nix // {
+  users.users.tcurdt = (import ./default.nix pkgs) // {
 
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
@@ -12,7 +12,7 @@
 
   };
 
-  home-manager.users.tcurdt = import ../home/tcurdt.nix pkgs // {
+  home-manager.users.tcurdt = (import ../home/tcurdt.nix pkgs) // {
   };
 
 }

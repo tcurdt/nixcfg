@@ -3,7 +3,7 @@
 
   imports = [ inputs.home-manager.nixosModules.default ];
 
-  users.users.root = import ./default.nix // {
+  users.users.root = (import ./default.nix pkgs) // {
 
     # password = "secret";
     # promptInitialPassword = true;
@@ -11,6 +11,6 @@
 
   };
 
-  home-manager.users.root = import ../home/tcurdt.nix pkgs // {
+  home-manager.users.root = (import ../home/tcurdt.nix pkgs) // {
   };
 }
