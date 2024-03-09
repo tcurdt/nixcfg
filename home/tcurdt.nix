@@ -89,7 +89,7 @@
         r = "pull --rebase";
         rf = "pull --rebase --force";
 
-        s = "status -s";
+        st = "status -s";
 
         ci = "commit -v";
         co = "checkout";

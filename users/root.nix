@@ -13,6 +13,6 @@
     };
   };
 
-  # home-manager.users.root = import ../home/tcurdt.nix pkgs // {
-  # };
+  home-manager.users.root = import ../home/tcurdt.nix pkgs // {
+  };
 }
