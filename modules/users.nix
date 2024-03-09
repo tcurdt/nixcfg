@@ -6,14 +6,12 @@
     # loginShellInit =
     interactiveShellInit = builtins.readFile ../shells/bash.sh;
     # shellAliases = {
-    #   la = "ls -la";
     # };
   };
 
   # environment.interactiveShellInit = builtins.readFile ../shells/bash.sh;
-  environment.shellAliases = {
-    # ll = "ls -la";
-  };
+  # environment.shellAliases = {
+  # };
 
   security.sudo.wheelNeedsPassword = false;
   security.sudo.execWheelOnly = true;
@@ -39,6 +37,11 @@
   # };
 
   users.mutableUsers = false;
+
+  # home-manager = {
+  #   useGlobalPkgs = true;
+  #   useUserPkgs = true;
+  # };
 
   # nix.settings = {
   #   trusted-users = [ "@wheel" ];
