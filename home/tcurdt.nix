@@ -180,7 +180,7 @@
 
   home.packages = [
     pkgs.nano
-    pkgs.neovim
+    # pkgs.neovim
     pkgs.tmux
     pkgs.curl
     pkgs.jq
