@@ -17,9 +17,8 @@
       log-level = "error";
     };
   };
-  # environment.systemPackages = builtins.attrValues {
-  #   inherit (pkgs)
-  #     influxdb2-cli
-  #     ;
-  # };
+
+  # environment.systemPackages = [
+  #   pkgs.influxdb2-cli
+  # ];
 }

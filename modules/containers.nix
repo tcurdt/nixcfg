@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   virtualisation.oci-containers.containers = {
+
     whoami = {
       image = "docker.io/traefik/whoami:v1.9.0";
       # image = "ghcr.io/tcurdt/foo:live";
@@ -13,22 +14,24 @@
       # };
       # extraOptions = [ "--pod=foo" ];
     };
-    skyguard = {
-      image = "ghcr.io/tcurdt/skyguard:latest";
-      ports = [ "127.0.0.1:8081:2015" ];
-      environment = {
-        PGHOST = "127.0.0.1";
-        PGDATABASE = "bluesky";
-        PGUSER = "postgres";
-        PGPASSWORD = "secret";
-        SERVICE = "dev.vafer.org";
-      };
-      login = {
-        registry = "ghcr.io";
-        username = "tcurdt";
-        passwordFile = "/run/secrets/registry.github";
-      };
-    };
+
+    # skyguard = {
+    #   image = "ghcr.io/tcurdt/skyguard:latest";
+    #   ports = [ "127.0.0.1:8081:2015" ];
+    #   environment = {
+    #     PGHOST = "127.0.0.1";
+    #     PGDATABASE = "bluesky";
+    #     PGUSER = "postgres";
+    #     PGPASSWORD = "secret";
+    #     SERVICE = "dev.vafer.org";
+    #   };
+    #   login = {
+    #     registry = "ghcr.io";
+    #     username = "tcurdt";
+    #     passwordFile = "/run/secrets/registry.github";
+    #   };
+    # };
+
   };
 }
 

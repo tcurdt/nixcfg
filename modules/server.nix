@@ -212,24 +212,23 @@
 
   environment.systemPackages = [
     pkgs.nano
-    pkgs.tmux
     pkgs.curl
-    pkgs.jq
-    pkgs.unzip
-    pkgs.htop
-    pkgs.gitMinimal
     pkgs.file
     pkgs.dnsutils
+    pkgs.gitMinimal
 
     inputs.release-go.packages.${pkgs.system}.default
 
     (import ../scripts/foo.nix { inherit pkgs; })
+
+    # pkgs.vulnix # vulnerability scanner
+    # pkgs.clamav # virus scanner
+
   ];
 
   # environment.systemPackages = builtins.attrValues {
   #   inherit (pkgs)
   #     nix-output-monitor
-  #     clamav # PCI compliance
   #     ;
   #   inherit (inputs.release-go.packages.${pkgs.system}) default;
   #   (import ../scripts/foo.nix { inherit pkgs; })

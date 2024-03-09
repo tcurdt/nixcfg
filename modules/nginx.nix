@@ -31,20 +31,20 @@
       #proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
     '';
 
-    virtualHosts."example.com" =  {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:12345";
-        proxyWebsockets = true;
-        extraConfig =
-          # required when the target is also TLS server with multiple hosts
-          "proxy_ssl_server_name on;" +
-          # required when the server wants to use HTTP Authentication
-          "proxy_pass_header Authorization;"
-          ;
-      };
-    };
+    # virtualHosts."example.com" =  {
+    #   enableACME = true;
+    #   forceSSL = true;
+    #   locations."/" = {
+    #     proxyPass = "http://127.0.0.1:12345";
+    #     proxyWebsockets = true;
+    #     extraConfig =
+    #       # required when the target is also TLS server with multiple hosts
+    #       "proxy_ssl_server_name on;" +
+    #       # required when the server wants to use HTTP Authentication
+    #       "proxy_pass_header Authorization;"
+    #       ;
+    #   };
+    # };
 
     # virtualHosts = let
     #   base = locations: {

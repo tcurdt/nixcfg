@@ -13,15 +13,13 @@ in {
 
   imports = [ ../scripts/bar.nix ];
 
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs)
-      xxx
-      curl
-      age
-      # vulnix
-      ;
+  environment.systemPackages = [
+    pkgs.curl
+    pkgs.age
+
+    xxx
     # (import ../scripts/foo.nix { inherit pkgs; })
-  };
+  ];
 
   systemd.services.stage1 = {
     enable = true;
