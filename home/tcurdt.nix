@@ -148,6 +148,20 @@
 
     lazygit.enable = true;
 
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      extraConfig = ''
+      '';
+      # extraConfig = lib.fileContents ../path/to/your/init.vim;
+      # colorschemes.gruvbox.enable = true;
+      # plugins.lightline.enable = true;
+      plugins = [
+        pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+      ];
+    };
+
   };
 
   home.shellAliases = {
@@ -165,23 +179,33 @@
   };
 
   home.packages = [
+    pkgs.nano
+    pkgs.neovim
     pkgs.tmux
     pkgs.curl
     pkgs.jq
     pkgs.unzip
     pkgs.htop
     pkgs.gitMinimal
+    pkgs.mmv
     pkgs.file
-    pkgs.dnsutils
+    pkgs.dnsutils # bind dig nslookup
+    pkgs.parallel
+    pkgs.just
+    pkgs.xh # curl
+    pkgs.pv # pipe progress
+    pkgs.croc # whormhole
     pkgs.sd # sed
     pkgs.fd # find
     pkgs.eza # ls
     pkgs.bat # cat
     pkgs.procs # ps
     pkgs.ripgrep # grep
-    pkgs.hyperfine # progress
     pkgs.ruplacer # find && replace
     pkgs.du-dust # du
+    # pkgs.hyperfine # benchmarking
+    # pkgs.jo # json out
+    # pkgs.jp # json plot
   ];
 
   home.file = {
