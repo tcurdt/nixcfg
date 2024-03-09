@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 {
 
+  # programs.bash.enable = true;
+  programs.zsh.enable = true;
+
   # programs.bash = {
   #   # shellInit =
   #   # loginShellInit =
