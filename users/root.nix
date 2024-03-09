@@ -1,15 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
+
+  imports = [ inputs.home-manager.nixosModules.default ];
+
   users.users = {
     root = import ./default.nix // {
-
-      # openssh.authorizedKeys.keyFiles = [
-      #   ../keys/tcurdt.pub
-      # ];
 
       # password = "secret";
       # promptInitialPassword = true;
       # hashedPassword = "*"; # no password allowed
+
     };
   };
 
