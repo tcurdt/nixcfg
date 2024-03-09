@@ -155,10 +155,8 @@
       extraConfig = ''
       '';
       # extraConfig = lib.fileContents ../path/to/your/init.vim;
-      # colorschemes.gruvbox.enable = true;
-      # plugins.lightline.enable = true;
       plugins = [
-        pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+        # pkgs.vimPlugins.nvim-treesitter.withAllGrammars
       ];
     };
 
