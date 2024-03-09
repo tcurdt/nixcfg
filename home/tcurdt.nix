@@ -28,6 +28,8 @@
       userName = "Torsten Curdt";
       userEmail = "tcurdt@vafer.org";
 
+      package = pkgs.gitMinimal;
+
       ignores = [
         # ".SyncID"
         # ".SyncArchive"
