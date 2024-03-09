@@ -20,15 +20,66 @@
       '';
     };
 
-    # git = import ../home/git.nix;
 
+    # https://github.com/nix-community/home-manager/blob/master/modules/programs/git.nix
     git = {
       enable = true;
 
       userName = "Torsten Curdt";
       userEmail = "tcurdt@vafer.org";
 
-      # ignores = [ "*~" "*.swp" ];
+      ignores = [
+        # ".SyncID"
+        # ".SyncArchive"
+        # ".SyncIgnore"
+        ".sync"
+        ".DS_Store"
+        # ".classpath"
+        # ".settings"
+        # ".testflight"
+        # ".awestruct"
+        # ".sass-cache"
+        # ".release"
+        # ".godeps"
+        # ".idea"
+        # "target"
+        # "build"
+        # "eclipse"
+
+        # "research"
+        # "Research"
+        # "_Research"
+        "_research"
+
+        # "_site"
+        # "_tmp"
+        # "_old"
+        # "dsa_priv.pem"
+        # "node_modules"
+        # "jspm_packages"
+
+        "*~"
+        ".#*"
+        # "*.orig"
+        # "*.rej"
+        # "*.swp"
+        # "*.obj"
+        # "*.o"
+
+        # "Pods"
+        # "*.pbxproj -crlf -diff -merge"
+        # "*~.nib"
+        # "*.mode1v3"
+        # "*.mode1"
+        # "*.mode2"
+        # "*.pbxuser"
+        # "*.perspective"
+        # "*.perspectivev3"
+        # "xcuserdata"
+
+        ".env"
+        ".dev.vars"
+      ];
 
       aliases = {
         p = "push";
@@ -65,29 +116,49 @@
 
       extraConfig = {
         init.defaultBranch = "main";
-        pull.rebase = "true";
-      };
 
+        pull.rebase = 1;
+        pull.ff-only = 1;
+
+        rerere.enabled = 1;
+
+        push.default = "current";
+        push.followTags = 1;
+
+        log.oneline = 1;
+
+        gist.private = 1;
+        gits.browse = 1;
+
+        gpg.format = 1;
+
+        github.user = "tcurdt";
+
+        branch.sort = "-committerdate";
+
+        # [remote "origin"]
+        #   tagopt = --tags
+        #   prune = true
+        #   pruneTags = true
+      };
     };
 
     lazygit.enable = true;
 
   };
 
-  # home.shellAliases = import ../home/shellAliases.nix;
   home.shellAliases = {
     ll = "ls -la";
     cat = "bat";
     ls = "eza";
-    # g = "git";
-    # lg = "lazygit";
+    g = "git";
+    lg = "lazygit";
   };
 
-  # home.sessionVariables = import ../home/sessionVariables.nix;
   home.sessionVariables = {
     PAGER = "less";
     EDITOR = "nano";
-    # CLICOLOR = 1;
+    CLICOLOR = 1;
   };
 
   home.packages = [
