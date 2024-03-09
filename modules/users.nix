@@ -1,15 +1,14 @@
 { config, pkgs, ... }:
 {
 
-  # programs.bash.enable = true;
+  # programs.bash.enable = true; # always installed
   programs.zsh.enable = true;
 
   # programs.bash = {
-  #   # shellInit =
-  #   # loginShellInit =
-  #   # interactiveShellInit = builtins.readFile ../shells/bash.sh;
-  #   # shellAliases = {
-  #   # };
+  #   shellInit =
+  #   loginShellInit =
+  #   interactiveShellInit = builtins.readFile ../shells/bash.sh;
+  #   shellAliases =
   # };
 
   # environment.interactiveShellInit = builtins.readFile ../shells/bash.sh;
@@ -52,11 +51,4 @@
   # };
   # nix.allowedUsers = [ "@wheel" ];
 
-  # not working:
-  # users.users = {
-  #   "*".hashedPassword = "*"; # no passwords
-  # };
-  # users.users = {
-  #   hashedPassword = mkOption { default = "*"; readOnly = true; };
-  # };
 }

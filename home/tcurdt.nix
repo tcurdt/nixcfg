@@ -83,6 +83,7 @@
       ];
 
       aliases = {
+
         p = "push";
 
         r = "pull --rebase";
@@ -116,6 +117,7 @@
       };
 
       extraConfig = {
+
         init.defaultBranch = "main";
 
         pull.rebase = 1;
@@ -178,6 +180,8 @@
     pkgs.procs # ps
     pkgs.ripgrep # grep
     pkgs.hyperfine # progress
+    pkgs.ruplacer # find && replace
+    pkgs.du-dust # du
   ];
 
   home.file = {

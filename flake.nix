@@ -50,6 +50,14 @@
       nixosConfigurations.utm = import ./machines/utm.nix inputs;
       nixosConfigurations.hetzner = import ./machines/hetzner.nix inputs;
 
+      # utm
+      # app
+      # cnc
+      # home-goe
+      # home-ber
+      # home-boat
+      # laptop
+
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
 

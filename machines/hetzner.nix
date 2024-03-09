@@ -1,4 +1,4 @@
-{ nixpkgs, impermanence, ... }@inputs: let
+{ nixpkgs, impermanence, ... } @ inputs: let
 
   hardware = "hetzner";
   hostPlatform = "x86_64-linux";
