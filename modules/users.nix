@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
 {
 
-  programs.bash = {
-    # shellInit =
-    # loginShellInit =
-    interactiveShellInit = builtins.readFile ../shells/bash.sh;
-    # shellAliases = {
-    # };
-  };
+  # programs.bash = {
+  #   # shellInit =
+  #   # loginShellInit =
+  #   # interactiveShellInit = builtins.readFile ../shells/bash.sh;
+  #   # shellAliases = {
+  #   # };
+  # };
 
   # environment.interactiveShellInit = builtins.readFile ../shells/bash.sh;
   # environment.shellAliases = {

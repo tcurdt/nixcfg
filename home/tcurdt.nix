@@ -1,6 +1,5 @@
-{ pkgs, ... }: {
-
-  # programs.bash.enable = true;
+{ pkgs, ... }:
+{
 
   programs = {
 
