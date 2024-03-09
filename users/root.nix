@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 {
   users.users = {
-    root = {
-      openssh.authorizedKeys.keyFiles = [
-        ./tcurdt.pub
-      ];
+    root = import ./default.nix // {
+
+      # openssh.authorizedKeys.keyFiles = [
+      #   ../keys/tcurdt.pub
+      # ];
 
       # password = "secret";
       # promptInitialPassword = true;
