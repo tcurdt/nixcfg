@@ -12,4 +12,7 @@
       # hashedPassword = "*"; # no password allowed
     };
   };
+
+  # home-manager.users.root = import ../home/tcurdt.nix pkgs // {
+  # };
 }
