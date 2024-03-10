@@ -8,7 +8,7 @@
       };
       agent = {
         interval = "30s";
-        hostname = "vafer.org";
+        hostname = "\${INFLUX_HOSTNAME}";
         # round_interval = true
         # metric_batch_size = 1000
         # metric_buffer_limit = 10000
@@ -62,27 +62,27 @@
         # };
       };
       outputs = {
-        file = {
-          files = [
-            "/dev/null"
-          ];
-        };
+        # file = {
+        #   files = [
+        #     "/dev/null"
+        #   ];
+        # };
         # influxdb = {
         #   database = "telegraf";
         #   urls = [
         #     "http://127.0.0.1:8086"
         #   ];
         # };
-        # influxdb_v2 = {
-        #   urls = [
-        #     "http://127.0.0.1:8086"
-        #   ];
-        #   organization = "vafer.org";
-        #   bucket = "telegraf";
-        #   token = "SECRET";
-        # };
+        influxdb_v2 = {
+          urls = [
+            "http://127.0.0.1:8086"
+          ];
+          organization = "vafer.org";
+          bucket = "telegraf";
+          token = "\${INFLUX_TOKEN}";
+        };
       };
     };
-    environmentFiles = [];
+    environmentFiles = [ /secrets/telegraf.env ];
   };
 }

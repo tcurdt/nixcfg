@@ -4,44 +4,39 @@
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05"; # stable
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11"; # stable
-
-    # nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    # deploy-rs.url = "github:serokell/deploy-rs";
-
-    impermanence.url = "github:nix-community/impermanence";
-    # impermanence.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # darwin.url = "github:LnL7/nix-darwin";
-    # darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # agenix.url = "github:ryantm/agenix";
     # agenix.inputs.nixpkgs.follows = "nixpkgs";
     # agenix.inputs.darwin.follows = "";
 
-    # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
-
-    # flake-utils.url = "github:numtide/flake-utils";
-    # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
+    impermanence.url = "github:nix-community/impermanence";
+    # impermanence.inputs.nixpkgs.follows = "nixpkgs";
 
     release-go.url = "github:tcurdt/release-go";
+
+    # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
+    # darwin.url = "github:LnL7/nix-darwin";
+    # darwin.inputs.nixpkgs.follows = "nixpkgs";
+    # nixos-hardware.url = "github:nixos/nixos-hardware";
+    # deploy-rs.url = "github:serokell/deploy-rs";
+    # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
+    # flake-utils.url = "github:numtide/flake-utils";
 
   };
 
   outputs =
     { self
     , nixpkgs
+    # , agenix
     , impermanence
     , home-manager
     , release-go
     # , deploy-rs
     # , darwin
-    # , agenix
     , ...
     } @ inputs:
 
