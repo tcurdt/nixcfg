@@ -240,11 +240,11 @@
       default = {
         auth = true;
         tls = true;
-        # try setting `tls_starttls` to `false` if sendmail hangs
-        from = "<from address here>";
-        host = "<hostname here>";
-        user = "<username here>";
-        passwordeval = "cat /secrets/smtp_password.txt";
+        # tls_starttls = false; # if sendmail hangs
+        from = "tcurdt@vafer.org";
+        host = "email-smtp.eu-central-1.amazonaws.com";
+        user = "AKIA3V6SV2TS3MRKQBSM";
+        passwordeval = "cat /secrets/msmtp.key";
       };
     };
   };
