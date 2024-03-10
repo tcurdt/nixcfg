@@ -243,7 +243,7 @@
         # tls_starttls = false; # if sendmail hangs
         from = "tcurdt@vafer.org";
         host = "email-smtp.eu-central-1.amazonaws.com";
-        user = "AKIA3V6SV2TS3MRKQBSM";
+        user = "AKIA3V6SV2TSVUAMXT4D";
         passwordeval = "cat /secrets/msmtp.key";
       };
     };
