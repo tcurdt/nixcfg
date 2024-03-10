@@ -11,10 +11,11 @@ in nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
 
   modules = [
+    # agenix.nixosModules.default
     # inputs.home-manager.nixosModules.home-manager
     # inputs.home-manager.nixosModules.default
+
     inputs.release-go.nixosModules.default
-    # agenix.nixosModules.default
     ../hardware/${hardware}.nix
     ../modules/server.nix
     ../modules/users.nix
