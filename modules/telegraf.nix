@@ -8,7 +8,7 @@
       };
       agent = {
         interval = "30s";
-        hostname = "\${INFLUX_HOSTNAME}";
+        hostname = "\${TELEGRAF_INFLUX_HOST}";
         # round_interval = true
         # metric_batch_size = 1000
         # metric_buffer_limit = 10000
@@ -77,9 +77,9 @@
           urls = [
             "http://127.0.0.1:8086"
           ];
-          organization = "vafer.org";
-          bucket = "telegraf";
-          token = "\${INFLUX_TOKEN}";
+          organization = "\${TELEGRAF_INFLUX_ORG}";
+          bucket = "\${TELEGRAF_INFLUX_BUCKET}";
+          token = "\${TELEGRAF_INFLUX_TOKEN}";
         };
       };
     };

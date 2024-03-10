@@ -163,8 +163,8 @@
   };
 
   home.shellAliases = {
-    ll = "ls -la";
-    cat = "bat";
+    ll = "ls -lag";
+    cat = "bat --style numbers";
     ls = "eza";
     g = "git";
     lg = "lazygit";
