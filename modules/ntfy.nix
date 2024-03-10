@@ -9,6 +9,7 @@
       auth-default-access = "deny-all";
       behind-proxy = true;
       enable-login = false;
+      web-root = "disable";
     };
   };
 }
