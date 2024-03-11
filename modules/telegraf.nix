@@ -48,7 +48,7 @@
           urls = [
             "http://127.0.0.1:2019/metrics" # caddy
           ];
-          tags = [ "caddy" ];
+          tags = { service = "caddy"; };
           metric_version = 2;
           # fieldinclude = [
           #   "process_resident_memory_bytes"
@@ -57,7 +57,7 @@
           urls = [
             "http://127.0.0.1:8086/metrics" # influxdb
           ];
-          tags = [ "influxdb" ];
+          tags = { service = "influxdb"; };
           metric_version = 2;
         }];
         # fail2ban = [{}]; # needs sudo configuration
