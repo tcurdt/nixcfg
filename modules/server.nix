@@ -91,6 +91,8 @@
   # networking.networkmanager.dns = "systemd-resolved";
   # services.resolved.enable = true;
 
+  services.fail2ban.enable = true;
+
   # caching
 
   # you’ll first need to populate /etc/cachix-agent.token with the previously generated agent token with the contents:CACHIX_AGENT_TOKEN=XXX.
