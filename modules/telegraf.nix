@@ -46,9 +46,10 @@
         diskio = [{}];
         prometheus = [{
           urls = [
-            # "http://127.0.0.1:8086/metrics"
+            "http://127.0.0.1:2019/metrics" # caddy
+            "http://127.0.0.1:8086/metrics" # influxdb
           ];
-          # metric_version = 2;
+          metric_version = 2;
           # fieldinclude = [
           #   "process_resident_memory_bytes"
           # ];
