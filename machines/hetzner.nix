@@ -71,6 +71,12 @@ in nixpkgs.lib.nixosSystem {
           '';
         };
 
+        virtualHosts."dev.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:2015
+          '';
+        };
+
       };
     }
 

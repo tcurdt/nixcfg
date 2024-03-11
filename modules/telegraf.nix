@@ -19,27 +19,55 @@
         # omit_hostname = false
       };
       inputs = {
-        internal = {
-          namepass = [
-            "internal_memstats"
-            "internal_agent"
-          ];
-        };
-        mem = {};
+        # internal = {
+        #   namepass = [
+        #     "internal_memstats"
+        #     "internal_agent"
+        #   ];
+        # };
         cpu = {};
+        # linux_cpu = {};
+        mem = {};
+        swap = {};
+        kernel = {};
+        system = {};
+        # sysstat = {};
+        processes = {};
+        # procstat = {};
+        # interrupts = {};
+        # conntrack = {};
+        # net = {};
+        # netstat = {};
         disk = {
           mount_points = [
             "/"
           ];
         };
+        diskio = {};
         prometheus = {
           urls = [
+            "http://localhost:8086/metrics"
           ];
-          metric_version = 2;
-          fieldinclude = [
-            "process_resident_memory_bytes"
+          # metric_version = 2;
+          # fieldinclude = [
+          #   "process_resident_memory_bytes"
+          # ];
+        };
+        postgresql = {
+          ignored_databases = [
+            "postgres"
+            "template0"
+            "template1"
           ];
         };
+        redis = {};
+        # x509_cert = {
+        #   sources = [
+        #     tcp://api.vafer.org:443
+        #     tcp://ntfy.vafer.org:443
+        #   ];
+        # };
+        # fail2ban = {};
         # mqtt_consumer = {
         #   servers = ["tcp://foo:1883"];
         #   topics = ["sensor/"];
@@ -65,12 +93,6 @@
         # file = {
         #   files = [
         #     "/dev/null"
-        #   ];
-        # };
-        # influxdb = {
-        #   database = "telegraf";
-        #   urls = [
-        #     "http://127.0.0.1:8086"
         #   ];
         # };
         influxdb_v2 = {
