@@ -35,9 +35,9 @@
         processes = [{}];
         # procstat = [{}];
         # interrupts = [{}];
-        # conntrack = [{}];
-        # net = [{}];
-        # netstat = [{}];
+        conntrack = [{}];
+        net = [{}];
+        netstat = [{}];
         disk = [{
           mount_points = [
             "/"
@@ -53,6 +53,7 @@
           #   "process_resident_memory_bytes"
           # ];
         }];
+        # fail2ban = [{}]; # broken
         #postgresql = [{
         #  ignored_databases = [
         #    "postgres"
@@ -60,14 +61,15 @@
         #    "template1"
         #  ];
         #}];
-        redis = [{}];
+        redis = [{
+          servers = [ "tcp://127.0.0.1:6379" ];
+        }];
         # x509_cert = [{
         #   sources = [
         #     tcp://api.vafer.org:443
         #     tcp://ntfy.vafer.org:443
         #   ];
         # }];
-        # fail2ban = [{}];
         # mqtt_consumer = [{
         #   servers = ["tcp://foo:1883"];
         #   topics = ["sensor/"];
