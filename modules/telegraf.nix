@@ -53,7 +53,7 @@
           #   "process_resident_memory_bytes"
           # ];
         }];
-        # fail2ban = [{}]; # broken
+        # fail2ban = [{}]; # needs sudo configuration
         #postgresql = [{
         #  ignored_databases = [
         #    "postgres"
