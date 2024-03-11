@@ -53,7 +53,7 @@ in nixpkgs.lib.nixosSystem {
     }
 
     {
-      networking.firewall.allowedTCPPorts = [ 80 443];
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
       services.caddy = {
         enable = true;
         email = "tcurdt@vafer.org";
