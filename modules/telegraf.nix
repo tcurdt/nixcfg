@@ -47,15 +47,22 @@
         prometheus = [{
           urls = [
             "http://127.0.0.1:2019/metrics" # caddy
-            "http://127.0.0.1:8086/metrics" # influxdb
           ];
+          tags = [ "caddy" ];
           metric_version = 2;
           # fieldinclude = [
           #   "process_resident_memory_bytes"
           # ];
+        }{
+          urls = [
+            "http://127.0.0.1:8086/metrics" # influxdb
+          ];
+          tags = [ "influxdb" ];
+          metric_version = 2;
         }];
         # fail2ban = [{}]; # needs sudo configuration
         #postgresql = [{
+        #  address = "host=localhost user=postgres sslmode=disable";
         #  ignored_databases = [
         #    "postgres"
         #    "template0"
