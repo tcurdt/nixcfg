@@ -25,10 +25,10 @@
         #     "internal_agent"
         #   ];
         # };
-        cpu = [{}];
+        cpu = [{ tagpass = { cpu = [ "cpu-total" ]; }; }];
         # linux_cpu = {};
         mem = [{}];
-        swap = [{}];
+        # swap = [{}]; # covered in mem
         kernel = [{}];
         system = [{}];
         # sysstat = [{}];
@@ -36,7 +36,7 @@
         # procstat = [{}];
         # interrupts = [{}];
         conntrack = [{}];
-        net = [{}];
+        net = [{ fielddrop = [ "icmp*" "tcp*" "udp*" "ip*" ]; }];
         netstat = [{}];
         disk = [{
           mount_points = [
@@ -69,7 +69,7 @@
         #    "template1"
         #  ];
         #}];
-        redis = [{
+        redis = [{ # needs cleanup
           servers = [ "tcp://127.0.0.1:6379" ];
         }];
         # x509_cert = [{
