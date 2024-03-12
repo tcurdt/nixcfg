@@ -57,6 +57,9 @@ in nixpkgs.lib.nixosSystem {
       services.caddy = {
         enable = true;
         email = "tcurdt@vafer.org";
+        globalConfig = ''
+          servers { metrics }
+        '';
 
         # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
         virtualHosts."ntfy.vafer.org" = {
