@@ -19,13 +19,7 @@
         # omit_hostname = false
       };
       inputs = {
-        # internal = {
-        #   namepass = [
-        #     "internal_memstats"
-        #     "internal_agent"
-        #   ];
-        # };
-        cpu = [{ tagpass = { cpu = [ "cpu-total" ]; }; }];
+        cpu = [{ taginclude = { cpu = [ "cpu-total" ]; }; }];
         # linux_cpu = {};
         mem = [{}];
         # swap = [{}]; # covered in mem
@@ -36,7 +30,7 @@
         # procstat = [{}];
         # interrupts = [{}];
         conntrack = [{}];
-        net = [{ fielddrop = [ "icmp*" "tcp*" "udp*" "ip*" ]; }];
+        net = [{ fieldexclude = [ "icmp*" "tcp*" "udp*" "ip*" ]; }];
         netstat = [{}];
         disk = [{
           mount_points = [
@@ -50,15 +44,20 @@
           ];
           tags = { service = "caddy"; };
           metric_version = 2;
-          # fieldinclude = [
-          #   "process_resident_memory_bytes"
-          # ];
+          fieldinclude = [
+            "caddy_*"
+            "process_*"
+          ];
         }{
           urls = [
             "http://127.0.0.1:8086/metrics" # influxdb
           ];
           tags = { service = "influxdb"; };
           metric_version = 2;
+          fieldinclude = [
+            "boltdb_*"
+            "storage_*"
+          ];
         }];
         # fail2ban = [{}]; # needs sudo configuration
         #postgresql = [{
@@ -69,8 +68,12 @@
         #    "template1"
         #  ];
         #}];
-        redis = [{ # needs cleanup
+        redis = [{
           servers = [ "tcp://127.0.0.1:6379" ];
+          fieldinclude = [
+            "keyspace_*"
+            "used_*"
+          ];
         }];
         # x509_cert = [{
         #   sources = [
