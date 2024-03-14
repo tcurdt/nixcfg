@@ -163,7 +163,7 @@
   };
 
   home.shellAliases = {
-    ll = "ls -lag";
+    ll = "ls -la --group --octal-permissions --no-permissions --time-style long-iso";
     cat = "bat --style numbers";
     ls = "eza";
     g = "git";

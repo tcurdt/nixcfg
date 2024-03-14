@@ -41,9 +41,9 @@ in nixpkgs.lib.nixosSystem {
     ../users/root.nix
     ../users/tcurdt.nix
 
-    {
-      users.users.root.password = "secret";
-    }
+    # {
+    #   users.users.root.password = "secret";
+    # }
 
     {
       services.release-go = {
