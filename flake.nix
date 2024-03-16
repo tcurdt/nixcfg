@@ -37,7 +37,6 @@
     , nixpkgs-stable
     , home-manager-unstable
     , home-manager-stable
-    , home-manager
     , impermanence
     , release-go
     # , agenix
