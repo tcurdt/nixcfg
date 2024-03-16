@@ -1,8 +1,6 @@
-{ nixpkgs, impermanence, ... } @ inputs: let
+{ nixpkgs, impermanence, hostName, hostPlatform, ... } @ inputs: let
 
   hardware = "hetzner";
-  hostPlatform = "x86_64-linux";
-  hostName = "nixos";
 
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
@@ -36,6 +34,7 @@ in nixpkgs.lib.nixosSystem {
       networking.hostName = hostName;
       networking.domain = "nixos";
       system.stateVersion = "23.11";
+      # system.stateVersion = "24.05";
     }
 
     ../users/root.nix

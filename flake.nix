@@ -3,11 +3,14 @@
 
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11"; # stable
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-unstable.url = "github:nix-community/home-manager/master";
+    home-manager-stable.url = "github:nix-community/home-manager/release-23.11";
+
+    # home-manager.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # agenix.url = "github:ryantm/agenix";
     # agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -30,11 +33,14 @@
 
   outputs =
     { self
-    , nixpkgs
-    # , agenix
-    , impermanence
+    , nixpkgs-unstable
+    , nixpkgs-stable
+    , home-manager-unstable
+    , home-manager-stable
     , home-manager
+    , impermanence
     , release-go
+    # , agenix
     # , deploy-rs
     # , darwin
     , ...
@@ -42,8 +48,27 @@
 
     {
 
-      nixosConfigurations.utm = import ./machines/utm.nix inputs;
-      nixosConfigurations.hetzner = import ./machines/hetzner.nix inputs;
+      nixosConfigurations = {
+
+        utm = import ./machines/utm.nix {
+          hostName = "nixos";
+          hostPlatform = "aarch64-linux";
+          nixpkgs = nixpkgs-unstable;
+          home-manager = home-manager-unstable;
+          inherit impermanence;
+          inherit release-go;
+        };
+
+        hetzner = import ./machines/hetzner.nix {
+          hostName = "nixos";
+          hostPlatform = "x86_64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+          inherit release-go;
+        };
+
+      };
 
       # utm
       # app
