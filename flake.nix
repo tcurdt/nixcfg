@@ -17,7 +17,6 @@
     # agenix.inputs.darwin.follows = "";
 
     impermanence.url = "github:nix-community/impermanence";
-    impermanence.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     release-go.url = "github:tcurdt/release-go";
     release-go.inputs.nixpkgs.follows = "nixpkgs-stable";
