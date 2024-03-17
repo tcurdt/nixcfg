@@ -48,6 +48,13 @@ in nixpkgs.lib.nixosSystem {
       users.users.root.password = "secret";
     }
 
+    # {
+    #   services = {
+    #     qemuGuest.enable = true;
+    #     openssh.settings.PermitRootLogin = lib.mkForce "yes";
+    #   };
+    # }
+
     {
       services.release-go = {
         enable = true;
