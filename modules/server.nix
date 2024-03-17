@@ -30,6 +30,16 @@
   boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelModules = [ "tcp_bbr" ];
 
+  # boot.supportedFilesystems = lib.mkForce [
+  #   "btrfs"
+  #   "reiserfs"
+  #   "xfs"
+  #   "f2fs"
+  #   "vfat"
+  #   "ntfs"
+  #   "cifs"
+  # ];
+
   # sysctl
   boot.kernel.sysctl = {
     "kernel.unprivileged_userns_clone" = 1;
@@ -139,6 +149,8 @@
 
   systemd = {
 
+    # services.sshd.wantedBy = pkgs.lib.mkForce ["multi-user.target"];
+
     network.wait-online.enable = false;
     services.NetworkManager-wait-online.enable = false;
     services.systemd-networkd.stopIfChanged = false;
@@ -149,10 +161,18 @@
       runtimeTime = "20s";
       rebootTime = "30s";
     };
-    sleep.extraConfig = ''
-      AllowSuspend=no
-      AllowHibernation=no
-    '';
+
+    # sleep.extraConfig = ''
+    #   AllowSuspend=no
+    #   AllowHibernation=no
+    # '';
+
+    targets = {
+      sleep.enable = false;
+      suspend.enable = false;
+      hibernate.enable = false;
+      hybrid-sleep.enable = false;
+    };
 
     # update system
 
