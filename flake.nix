@@ -7,27 +7,33 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
 
     home-manager-unstable.url = "github:nix-community/home-manager/master";
-    home-manager-stable.url = "github:nix-community/home-manager/release-23.11";
+    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    # home-manager.inputs.nixpkgs.follows = "nixpkgs-stable";
-    # home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager-stable.url = "github:nix-community/home-manager/release-23.11";
+    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # agenix.url = "github:ryantm/agenix";
     # agenix.inputs.nixpkgs.follows = "nixpkgs";
     # agenix.inputs.darwin.follows = "";
 
     impermanence.url = "github:nix-community/impermanence";
-    # impermanence.inputs.nixpkgs.follows = "nixpkgs";
+    impermanence.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     release-go.url = "github:tcurdt/release-go";
+    release-go.inputs.nixpkgs.follows = "nixpkgs-stable";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
     # darwin.url = "github:LnL7/nix-darwin";
     # darwin.inputs.nixpkgs.follows = "nixpkgs";
     # nixos-hardware.url = "github:nixos/nixos-hardware";
-    # deploy-rs.url = "github:serokell/deploy-rs";
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
     # flake-utils.url = "github:numtide/flake-utils";
+
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
 
   };
 
@@ -37,15 +43,47 @@
     , nixpkgs-stable
     , home-manager-unstable
     , home-manager-stable
+    , nixos-generators
     , impermanence
     , release-go
+    , deploy-rs
     # , agenix
-    # , deploy-rs
     # , darwin
     , ...
     } @ inputs:
 
     {
+
+      # install-iso
+      # iso
+      # qcow
+      # qcow-efi
+      # amazon
+      # azure
+      # do
+      # gce
+
+      # packages.x86_64-linux = {
+      #   vmware = nixos-generators.nixosGenerate {
+      #     system = "x86_64-linux";
+      #     modules = [
+      #       # ./configuration.nix
+      #     ];
+      #     format = "vmware";
+
+      #     # optional arguments:
+      #     # explicit nixpkgs and lib:
+      #     # pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      #     # lib = nixpkgs.legacyPackages.x86_64-linux.lib;
+      #     # additional arguments to pass to modules:
+      #     # specialArgs = { myExtraArg = "foobar"; };
+
+      #   };
+      #   vbox = nixos-generators.nixosGenerate {
+      #     system = "x86_64-linux";
+      #     format = "virtualbox";
+      #   };
+      # };
 
       nixosConfigurations = {
 
@@ -67,6 +105,14 @@
           inherit release-go;
         };
 
+        # https://haseebmajid.dev/posts/2024-02-04-how-to-create-a-custom-nixos-iso/
+        # framework = lib.nixosSystem {
+        #   modules = [
+        #     ./hosts/framework/configuration.nix
+        #   ];
+        #   specialArgs = { inherit inputs outputs; };
+        # };
+
       };
 
       # utm
@@ -80,20 +126,39 @@
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
 
+      # nix-shell -p colmena
       # colema = {
-      #   meta.specialArgs.inputs = inputs;
-      #   utm = import ./machines/utm.nix inputs;
-      # };
-
-      # deploy.nodes.utm = {
-      #   hostname = "127.0.0.1";
-      #   remoteBuild = true;
-      #   profiles.system = {
-      #     user = "root";
-      #     path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
+      #   # meta.specialArgs.inputs = inputs;
+      #   # utm = import ./machines/utm.nix inputs;
+      #   meta = {};
+      #   utm = self.nixosConfigurations.utm // {
+      #     deployment = {
+      #       targetHost = "192.168.71.3";
+      #       targetUser = "root";
+      #       healthChecks = {
+      #         http = [
+      #           {
+      #             scheme = "http";
+      #             port = 80;
+      #             path = "/";
+      #             description = "check for http ingres";
+      #           }
+      #         ];
+      #       };
+      #     };
       #   };
       # };
-      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-    };
 
+      # nix run github:serokell/deploy-rs -- #utm
+      deploy.nodes.utm = {
+        hostname = "192.168.71.3";
+        remoteBuild = true;
+        profiles.system = {
+          user = "root";
+          path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
+        };
+      };
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+    };
 }
