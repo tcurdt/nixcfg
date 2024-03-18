@@ -73,7 +73,7 @@
           inherit release-go;
         };
 
-        hetzner = import ./machines/hetzner.nix {
+        app = import ./machines/app.nix {
           hostName = "nixos";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
