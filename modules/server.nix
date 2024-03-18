@@ -260,6 +260,7 @@
 
   programs.msmtp = {
     enable = true;
+    setSendmail = false;
     accounts = {
       default = {
         auth = true;
