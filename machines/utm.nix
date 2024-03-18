@@ -72,12 +72,12 @@ in nixpkgs.lib.nixosSystem {
         enable = true;
 
         # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
-        virtualHosts."ntfy.vafer.org" = {
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:8080
-            tls internal
-          '';
-        };
+        # virtualHosts."ntfy.vafer.org" = {
+        #   extraConfig = ''
+        #     reverse_proxy 127.0.0.1:8080
+        #     tls internal
+        #   '';
+        # };
 
         virtualHosts."api.vafer.org" = {
           extraConfig = ''
