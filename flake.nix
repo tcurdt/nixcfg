@@ -79,7 +79,6 @@
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
-          inherit nixos-generators;
           inherit release-go;
         };
 
@@ -89,7 +88,6 @@
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
-          inherit nixos-generators;
         };
 
       };
