@@ -28,8 +28,8 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/zerotierone.nix
     # ../modules/tailscale.nix
 
-    # ../modules/ssh-hook.nix
-    # ../modules/web-hook.nix
+    # ../modules/hook-ssh.nix
+    # ../modules/hook-web.nix
 
     # ../modules/backup.nix
 

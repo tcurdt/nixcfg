@@ -8,7 +8,7 @@
       whoami
     '';
 
-    sshScript = pkgs.writeScriptBin "ssh-hook" ''
+    sshScript = pkgs.writeScriptBin "ssh-forced-command" ''
       #!${pkgs.bash}/bin/bash
       set -eu
       set -o pipefail
