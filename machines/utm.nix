@@ -1,14 +1,17 @@
-{ nixpkgs, impermanence, hostName, hostPlatform, ... } @ inputs: let
+{ nixpkgs, nixos-generators, impermanence, hostName, hostPlatform, ... } @ inputs: let
 
   hardware = "utm";
 
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
+
+  imports = [ nixos-generators.nixosModules.all-formats ];
 
 in nixpkgs.lib.nixosSystem {
 
   specialArgs = { inherit inputs; };
 
   modules = [
+
     # agenix.nixosModules.default
     # inputs.home-manager.nixosModules.home-manager
     # inputs.home-manager.nixosModules.default
@@ -22,7 +25,7 @@ in nixpkgs.lib.nixosSystem {
     ../modules/podman.nix
     # ../modules/k3s.nix
 
-    ../modules/ntfy.nix
+    # ../modules/ntfy.nix
     ../modules/telegraf.nix
     ../modules/db-postgres.nix
     ../modules/db-influx.nix

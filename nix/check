@@ -1,3 +1,3 @@
 #!/bin/sh
 
-nix flake check --show-trace
+nix flake check --show-trace --all-systems

@@ -62,26 +62,38 @@
       # do
       # gce
 
+      # packages.x86_64-linux.myiso = self.nixosConfigurations.utm.formats.iso;
+
       # packages.x86_64-linux = {
+
+      #   iso = self.nixosConfigurations.myMachine.formats.iso;
+
+        # iso = nixos-generators.nixosGenerate {
+        #   system = "x86_64-linux";
+        #   # modules = [
+        #   # ];
+        #   format = "iso";
+        # };
+
       #   vmware = nixos-generators.nixosGenerate {
       #     system = "x86_64-linux";
       #     modules = [
       #       # ./configuration.nix
       #     ];
       #     format = "vmware";
-
       #     # optional arguments:
       #     # explicit nixpkgs and lib:
       #     # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       #     # lib = nixpkgs.legacyPackages.x86_64-linux.lib;
       #     # additional arguments to pass to modules:
       #     # specialArgs = { myExtraArg = "foobar"; };
-
       #   };
+
       #   vbox = nixos-generators.nixosGenerate {
       #     system = "x86_64-linux";
       #     format = "virtualbox";
       #   };
+
       # };
 
       nixosConfigurations = {
@@ -92,6 +104,7 @@
           nixpkgs = nixpkgs-unstable;
           home-manager = home-manager-unstable;
           inherit impermanence;
+          inherit nixos-generators;
           inherit release-go;
         };
 
@@ -101,6 +114,7 @@
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
+          inherit nixos-generators;
           inherit release-go;
         };
 
