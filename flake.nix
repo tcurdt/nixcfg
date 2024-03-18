@@ -62,18 +62,14 @@
       # do
       # gce
 
-      # packages.x86_64-linux.myiso = self.nixosConfigurations.utm.formats.iso;
-
       # packages.x86_64-linux = {
 
-      #   iso = self.nixosConfigurations.myMachine.formats.iso;
-
-        # iso = nixos-generators.nixosGenerate {
-        #   system = "x86_64-linux";
-        #   # modules = [
-        #   # ];
-        #   format = "iso";
-        # };
+      #   iso = nixos-generators.nixosGenerate {
+      #     system = "x86_64-linux";
+      #     # modules = [
+      #     # ];
+      #     format = "iso";
+      #   };
 
       #   vmware = nixos-generators.nixosGenerate {
       #     system = "x86_64-linux";
@@ -127,6 +123,8 @@
         # };
 
       };
+
+      packages.x86_64-linux.myiso = self.nixosConfigurations.utm.config.formats.iso;
 
       # utm
       # app

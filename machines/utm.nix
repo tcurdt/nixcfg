@@ -4,13 +4,13 @@
 
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
-  imports = [ nixos-generators.nixosModules.all-formats ];
-
 in nixpkgs.lib.nixosSystem {
 
   specialArgs = { inherit inputs; };
 
   modules = [
+
+    nixos-generators.nixosModules.all-formats
 
     # agenix.nixosModules.default
     # inputs.home-manager.nixosModules.home-manager

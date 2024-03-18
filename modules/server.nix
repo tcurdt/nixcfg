@@ -26,6 +26,8 @@
   #   LC_TIME = "";
   # };
 
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # kernel
   boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelModules = [ "tcp_bbr" ];
