@@ -34,7 +34,7 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/hook-ssh.nix
     # ../modules/hook-web.nix
 
-    ../modules/backup.nix
+    # ../modules/backup.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;

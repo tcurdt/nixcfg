@@ -310,7 +310,7 @@
       X11Forwarding = false;
     };
     extraConfig = ''
-      IgnoreRhosts yes
+      # IgnoreRhosts yes
       AllowTcpForwarding yes
       AllowAgentForwarding no
       AllowStreamLocalForwarding no

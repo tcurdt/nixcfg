@@ -6,6 +6,7 @@ let
   # backup write PUBLIC
   backupScript = pkgs.writeScriptBin "backup" ''
       #!${pkgs.bash}/bin/bash
+      set -e
 
       handle_error() {
         local exit_code="$?"
@@ -19,15 +20,15 @@ let
       backup_write() {
         echo "backup write start"
 
-        KEY=$(/secrets/backup-key)
-        /run/wrappers/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall | ${lib.getExe' pkgs.bzip2 "bzip2"} | ${lib.getExe pkgs.age} -r "$KEY" > sql.bzip2.age
+        KEY=$(cat /secrets/backup-key)
+        /run/wrappers/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall | ${lib.getExe' pkgs.bzip2 "bzip2"} | ${lib.getExe pkgs.age} -r "$KEY" > /tmp/sql.bzip2.age
 
         ${lib.getExe pkgs.rclone} copy \
           -vv \
           --no-traverse \
           --immutable \
           --config /secrets/backup-bucket \
-          "sql.bzip2.age" \
+          "/tmp/sql.bzip2.age" \
           "backup:bucket/path"
 
         echo "backup write success"
@@ -77,6 +78,9 @@ in {
 
     serviceConfig.Type = "oneshot";
     startAt = "minutely";
+
+    # RuntimeDirectory = "myService";
+    # RootDirectory = "/run/myService";
 
     # onSuccess = [ "stage2.service" ];
   };
