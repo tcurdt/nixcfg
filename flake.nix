@@ -53,6 +53,49 @@
 
     {
 
+      nixosConfigurations = {
+
+        # utm
+        # app
+        # cnc
+        # home-goe
+        # home-ber
+        # home-boat
+        # laptop
+
+        utm = import ./machines/utm.nix {
+          hostName = "nixos";
+          hostPlatform = "aarch64-linux";
+          nixpkgs = nixpkgs-unstable;
+          home-manager = home-manager-unstable;
+          inherit impermanence;
+          inherit nixos-generators;
+          inherit release-go;
+        };
+
+        hetzner = import ./machines/hetzner.nix {
+          hostName = "nixos";
+          hostPlatform = "x86_64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+          inherit nixos-generators;
+          inherit release-go;
+        };
+
+        home-goe = import ./machines/home-goe.nix {
+          hostName = "home-goe";
+          hostPlatform = "x86_64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+          inherit nixos-generators;
+        };
+
+      };
+
+      packages.x86_64-linux.utm = self.nixosConfigurations.utm.config.formats.iso;
+
       # install-iso
       # iso
       # qcow
@@ -91,48 +134,6 @@
       #   };
 
       # };
-
-      nixosConfigurations = {
-
-        utm = import ./machines/utm.nix {
-          hostName = "nixos";
-          hostPlatform = "aarch64-linux";
-          nixpkgs = nixpkgs-unstable;
-          home-manager = home-manager-unstable;
-          inherit impermanence;
-          inherit nixos-generators;
-          inherit release-go;
-        };
-
-        hetzner = import ./machines/hetzner.nix {
-          hostName = "nixos";
-          hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
-          inherit nixos-generators;
-          inherit release-go;
-        };
-
-        # https://haseebmajid.dev/posts/2024-02-04-how-to-create-a-custom-nixos-iso/
-        # framework = lib.nixosSystem {
-        #   modules = [
-        #     ./hosts/framework/configuration.nix
-        #   ];
-        #   specialArgs = { inherit inputs outputs; };
-        # };
-
-      };
-
-      packages.x86_64-linux.myiso = self.nixosConfigurations.utm.config.formats.iso;
-
-      # utm
-      # app
-      # cnc
-      # home-goe
-      # home-ber
-      # home-boat
-      # laptop
 
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;

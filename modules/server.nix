@@ -246,7 +246,7 @@
     pkgs.curl
     pkgs.gitMinimal
 
-    inputs.release-go.packages.${pkgs.system}.default
+    # inputs.release-go.packages.${pkgs.system}.default
 
     (import ../scripts/foo.nix { inherit pkgs; })
 

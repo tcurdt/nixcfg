@@ -1,6 +1,5 @@
 { nixpkgs, darwin, home-manager, ... }: let
 
-  hardware = "shodan";
   hostPlatform = "aarch64-darwin";
   hostName = "shodan";
 

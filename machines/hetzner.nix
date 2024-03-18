@@ -1,6 +1,4 @@
-{ nixpkgs, impermanence, hostName, hostPlatform, ... } @ inputs: let
-
-  hardware = "hetzner";
+{ nixpkgs, hostName, hostPlatform, impermanence, ... } @ inputs: let
 
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
@@ -9,8 +7,12 @@ in nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
 
   modules = [
+
+    # inputs.nixos-generators.nixosModules.all-formats
+
     inputs.release-go.nixosModules.default
-    ../hardware/${hardware}.nix
+
+    ../hardware/hetzner.nix
     ../modules/server.nix
     ../modules/users.nix
 
@@ -83,6 +85,50 @@ in nixpkgs.lib.nixosSystem {
 
       };
     }
+
+    # {
+    #   virtualisation.oci-containers.containers = {
+
+    #     test = {
+    #       image = "ghcr.io/tcurdt/test-project";
+    #       ports = [ "127.0.0.1:2015:2015" ];
+    #       #environment = {
+    #       #  PASSWORD = "foo";
+    #       #};
+    #       environmentFiles = [
+    #         /run/credentials/live.password
+    #       ];
+    #       # extraOptions = [
+    #       #   "--network=testing"
+    #       # ];
+    #       login = {
+    #         registry = "ghcr.io";
+    #         username = "tcurdt";
+    #         passwordFile = "/run/credentials/registry.github";
+    #       };
+    #     };
+
+    #     test2 = {
+    #       image = "ghcr.io/tcurdt/test-project";
+    #       ports = [ "127.0.0.1:2016:2016" ];
+    #       environment = {
+    #         URL = "https://127.0.0.1:2015/version";
+    #       };
+    #       environmentFiles = [
+    #         /run/credentials/live.password
+    #       ];
+    #       # extraOptions = [
+    #       #  "--network=testing"
+    #       # ];
+    #       login = {
+    #         registry = "ghcr.io";
+    #         username = "tcurdt";
+    #         passwordFile = "/run/credentials/registry.github";
+    #       };
+    #     };
+
+    #   };
+    # }
 
   ];
 }

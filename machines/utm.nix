@@ -1,6 +1,4 @@
-{ nixpkgs, nixos-generators, impermanence, hostName, hostPlatform, ... } @ inputs: let
-
-  hardware = "utm";
+{ nixpkgs, hostName, hostPlatform, impermanence, ... } @ inputs: let
 
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
@@ -10,14 +8,11 @@ in nixpkgs.lib.nixosSystem {
 
   modules = [
 
-    nixos-generators.nixosModules.all-formats
-
-    # agenix.nixosModules.default
-    # inputs.home-manager.nixosModules.home-manager
-    # inputs.home-manager.nixosModules.default
+    inputs.nixos-generators.nixosModules.all-formats
 
     inputs.release-go.nixosModules.default
-    ../hardware/${hardware}.nix
+
+    ../hardware/utm.nix
     ../modules/server.nix
     ../modules/users.nix
 
@@ -30,7 +25,9 @@ in nixpkgs.lib.nixosSystem {
     ../modules/db-postgres.nix
     ../modules/db-influx.nix
     ../modules/redis.nix
+
     # ../modules/homeassistant.nix
+
     # ../modules/zerotierone.nix
     # ../modules/tailscale.nix
 
@@ -74,6 +71,7 @@ in nixpkgs.lib.nixosSystem {
         enable = true;
 
         # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
+
         # virtualHosts."ntfy.vafer.org" = {
         #   extraConfig = ''
         #     reverse_proxy 127.0.0.1:8080
@@ -81,66 +79,22 @@ in nixpkgs.lib.nixosSystem {
         #   '';
         # };
 
-        virtualHosts."api.vafer.org" = {
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:2020
-            tls internal
-          '';
-        };
+        # virtualHosts."api.vafer.org" = {
+        #   extraConfig = ''
+        #     reverse_proxy 127.0.0.1:2020
+        #     tls internal
+        #   '';
+        # };
 
-        virtualHosts."dev.vafer.org" = {
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:2015
-            tls internal
-          '';
-        };
+        # virtualHosts."dev.vafer.org" = {
+        #   extraConfig = ''
+        #     reverse_proxy 127.0.0.1:2015
+        #     tls internal
+        #   '';
+        # };
 
       };
     }
-
-    # {
-    #   virtualisation.oci-containers.containers = {
-
-    #     test = {
-    #       image = "ghcr.io/tcurdt/test-project";
-    #       ports = [ "127.0.0.1:2015:2015" ];
-    #       #environment = {
-    #       #  PASSWORD = "foo";
-    #       #};
-    #       environmentFiles = [
-    #         /run/credentials/live.password
-    #       ];
-    #       # extraOptions = [
-    #       #   "--network=testing"
-    #       # ];
-    #       login = {
-    #         registry = "ghcr.io";
-    #         username = "tcurdt";
-    #         passwordFile = "/run/credentials/registry.github";
-    #       };
-    #     };
-
-    #     test2 = {
-    #       image = "ghcr.io/tcurdt/test-project";
-    #       ports = [ "127.0.0.1:2016:2016" ];
-    #       environment = {
-    #         URL = "https://127.0.0.1:2015/version";
-    #       };
-    #       environmentFiles = [
-    #         /run/credentials/live.password
-    #       ];
-    #       # extraOptions = [
-    #       #  "--network=testing"
-    #       # ];
-    #       login = {
-    #         registry = "ghcr.io";
-    #         username = "tcurdt";
-    #         passwordFile = "/run/credentials/registry.github";
-    #       };
-    #     };
-
-    #   };
-    # }
 
   ];
 }
