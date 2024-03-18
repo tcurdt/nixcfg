@@ -30,6 +30,7 @@ in nixpkgs.lib.nixosSystem {
     ../modules/db-postgres.nix
     ../modules/db-influx.nix
     ../modules/redis.nix
+    # ../modules/homeassistant.nix
 
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
