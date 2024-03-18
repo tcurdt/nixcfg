@@ -3,13 +3,8 @@
 
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
-  # https://xeiaso.net/blog/paranoid-nixos-2021-07-18/
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  zramSwap.enable = false;
-
-  boot.tmp.cleanOnBoot = true;
-
-  services.chrony.enable = true;
   # time.timeZone = "Europe/Berlin";
   time.timeZone = "UTC";
 
@@ -26,9 +21,14 @@
   #   LC_TIME = "";
   # };
 
+  # https://xeiaso.net/blog/paranoid-nixos-2021-07-18/
+
+  zramSwap.enable = false;
+  boot.tmp.cleanOnBoot = true;
   # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # kernel
+
   boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelModules = [ "tcp_bbr" ];
 
@@ -86,26 +86,28 @@
 
   # networking
 
+  # networking.enableIPv6 = false;
+
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [ ];
   networking.firewall.allowPing = true;
   networking.firewall.logRefusedConnections = false;
   # networking.firewall.trustedInterfaces = [ "docker0" ];
-  # networking.useNetworkd = true;
-  # networking.useDHCP = false;
-  # networking.networkmanager.enable = true;
+  services.fail2ban.enable = true;
 
-  # networking.enableIPv6 = false;
+  # networking.useDHCP = false;
+  # networking.useNetworkd = true;
+  # networking.networkmanager.enable = true;
+  # networking.networkmanager.dns = "systemd-resolved";
+  # services.resolved.enable = true;
+
+  services.chrony.enable = true;
   # networking.timeServers = [
   #   "10.7.89.1"
   #   "ch.pool.ntp.org"
   # ];
 
-  # networking.networkmanager.dns = "systemd-resolved";
-  # services.resolved.enable = true;
-
-  services.fail2ban.enable = true;
 
   # caching
 
@@ -115,12 +117,11 @@
   # networking.hostName = "myhostname";
   # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
 
+
   # maintenance
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  nix.settings.auto-optimise-store = true;
   # nix.optimise.automatic = true;
+  nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
     dates = "Monday 01:00";
@@ -163,11 +164,6 @@
       runtimeTime = "20s";
       rebootTime = "30s";
     };
-
-    # sleep.extraConfig = ''
-    #   AllowSuspend=no
-    #   AllowHibernation=no
-    # '';
 
     targets = {
       sleep.enable = false;
@@ -213,10 +209,10 @@
     # log files
 
     services.clear-log = {
-      description = "clear logs older than 14d";
+      description = "clear logs older than 7d";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=14d";
+        ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=7d";
       };
     };
     timers.clear-log = {
@@ -231,10 +227,19 @@
   };
 
 
-  # packages
+  # packages trim down
+
+  documentation.enable = false;
+  documentation.info.enable = false;
+  documentation.man.enable = false;
+  documentation.nixos.enable = false;
+
+  fonts.fontconfig.enable = false;
+  sound.enable = false;
 
   nixpkgs.config.allowUnfree = true;
-  environment.defaultPackages = pkgs.lib.mkForce [];
+
+  environment.defaultPackages = pkgs.lib.mkForce []; # no default packages
 
   environment.systemPackages = [
     pkgs.nano
@@ -249,31 +254,6 @@
     # pkgs.clamav # virus scanner
 
   ];
-
-  # environment.systemPackages = builtins.attrValues {
-  #   inherit (pkgs)
-  #     nix-output-monitor
-  #     ;
-  #   inherit (inputs.release-go.packages.${pkgs.system}) default;
-  #   (import ../scripts/foo.nix { inherit pkgs; })
-  # };
-
-  programs.msmtp = {
-    enable = true;
-    setSendmail = false;
-    accounts = {
-      default = {
-        auth = true;
-        tls = true;
-        # tls_starttls = false; # if sendmail hangs
-        from = "tcurdt@vafer.org";
-        host = "email-smtp.eu-central-1.amazonaws.com";
-        user = "AKIA3V6SV2TSVUAMXT4D";
-        passwordeval = "cat /secrets/msmtp.key";
-      };
-    };
-  };
-
 
   # environment.variables = {
   #   PATH = [
@@ -311,40 +291,51 @@
   #   "-a exit,always -F arch=b64 -S execve"
   # ];
 
-  documentation.enable = false;
-  documentation.info.enable = false;
-  documentation.man.enable = false;
-  documentation.nixos.enable = false;
-
-  fonts.fontconfig.enable = false;
-  sound.enable = false;
-
   # services.fstrim.enable = true;
+
 
   # ssh
 
   # programs.mosh.enable = true;
   # programs.ssh.startAgent = true;
-  services.openssh.enable = true;
 
-  # services.openssh = {
-  #   enable = true;
-  #   settings = {
-  #     PermitRootLogin = "no";
-  #     PasswordAuthentication = false;
-  #     KbdInteractiveAuthentication = false;
-  #   };
-  #   extraConfig = ''
-  #     AllowTcpForwarding yes
-  #     X11Forwarding no
-  #     AllowAgentForwarding no
-  #     AllowStreamLocalForwarding no
-  #     AuthenticationMethods publickey
-  #   '';
-  #   passwordAuthentication = false;
-  #   allowSFTP = false; # Don't set this if you need sftp
-  #   challengeResponseAuthentication = false;
-  # };
+  services.openssh = {
+    enable = true;
+    allowSFTP = true;
+    settings = {
+      # AllowUsers = [];
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no"; # without-password
+      X11Forwarding = false;
+    };
+    extraConfig = ''
+      IgnoreRhosts yes
+      AllowTcpForwarding yes
+      AllowAgentForwarding no
+      AllowStreamLocalForwarding no
+      AuthenticationMethods publickey
+    '';
+  };
+
+  # smtp
+
+  programs.msmtp = {
+    enable = true;
+    setSendmail = false;
+    accounts = {
+      default = {
+        auth = true;
+        tls = true;
+        # tls_starttls = false; # if sendmail hangs
+        from = "tcurdt@vafer.org";
+        host = "email-smtp.eu-central-1.amazonaws.com";
+        user = "AKIA3V6SV2TSVUAMXT4D";
+        passwordeval = "cat /secrets/msmtp.key";
+      };
+    };
+  };
+
 
   # https://github.com/maralorn/nix-output-monitor
   # system.activationScripts.diff = {

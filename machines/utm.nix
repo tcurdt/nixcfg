@@ -31,6 +31,8 @@ in nixpkgs.lib.nixosSystem {
     ../modules/db-influx.nix
     ../modules/redis.nix
     # ../modules/homeassistant.nix
+    # ../modules/zerotierone.nix
+    # ../modules/tailscale.nix
 
     # ../modules/ssh-hook.nix
     # ../modules/web-hook.nix
