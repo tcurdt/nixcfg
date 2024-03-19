@@ -34,6 +34,9 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
 
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
   };
 
   outputs =
@@ -46,6 +49,7 @@
     , impermanence
     , release-go
     , deploy-rs
+    , disko
     # , agenix
     # , darwin
     , ...
@@ -80,6 +84,7 @@
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
+          inherit disko;
         };
 
         # home-ber

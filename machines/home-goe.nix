@@ -1,4 +1,4 @@
-{ nixpkgs, hostName, hostPlatform, impermanence, ... } @ inputs: let
+{ nixpkgs, hostName, hostPlatform, impermanence, disko, ... } @ inputs: let
 
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
@@ -13,6 +13,35 @@ in nixpkgs.lib.nixosSystem {
     # inputs.release-go.nixosModules.default
 
     ../hardware/home.nix
+    disko.nixosModules.disko
+    {
+      disko.devices = {
+        disk = {
+          vdb = {
+            device = "/dev/nvme0n1";
+            type = "disk";
+            content = {
+              type = "gpt";
+              partitions = {
+                boot = {
+                  size = "1M";
+                  type = "EF02"; # for grub MBR
+                };
+                root = {
+                  size = "100%";
+                  content = {
+                    type = "filesystem";
+                    format = "ext4";
+                    mountpoint = "/";
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    }
+
     ../modules/server.nix
     ../modules/users.nix
 
