@@ -2,3 +2,4 @@ result
 .env
 secrets/age.key
 deploy/*
+setup/*

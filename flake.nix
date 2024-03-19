@@ -55,14 +55,6 @@
 
       nixosConfigurations = {
 
-        # utm
-        # app
-        # cnc
-        # home-goe
-        # home-ber
-        # home-boat
-        # laptop
-
         utm = import ./machines/utm.nix {
           hostName = "nixos";
           hostPlatform = "aarch64-linux";
@@ -90,9 +82,13 @@
           inherit impermanence;
         };
 
-      };
+        # home-ber
+        # home-boat
 
-      packages.x86_64-linux.utm = self.nixosConfigurations.utm.config.formats.iso;
+        # cnc
+        # laptop
+
+      };
 
       # install-iso
       # iso
@@ -103,38 +99,12 @@
       # do
       # gce
 
-      # packages.x86_64-linux = {
-
-      #   iso = nixos-generators.nixosGenerate {
-      #     system = "x86_64-linux";
-      #     # modules = [
-      #     # ];
-      #     format = "iso";
-      #   };
-
-      #   vmware = nixos-generators.nixosGenerate {
-      #     system = "x86_64-linux";
-      #     modules = [
-      #       # ./configuration.nix
-      #     ];
-      #     format = "vmware";
-      #     # optional arguments:
-      #     # explicit nixpkgs and lib:
-      #     # pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      #     # lib = nixpkgs.legacyPackages.x86_64-linux.lib;
-      #     # additional arguments to pass to modules:
-      #     # specialArgs = { myExtraArg = "foobar"; };
-      #   };
-
-      #   vbox = nixos-generators.nixosGenerate {
-      #     system = "x86_64-linux";
-      #     format = "virtualbox";
-      #   };
-
-      # };
+      packages.x86_64-linux.utm = self.nixosConfigurations.utm.config.formats.iso;
 
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
-      # darwinConfigurations.shodan = import ./machines/shodan.nix inputs;
+      # darwinConfigurations = {
+      #   shodan = import ./machines/shodan.nix inputs;
+      # };
 
       # nix-shell -p colmena
       # colema = {
@@ -168,7 +138,6 @@
           path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
         };
       };
-      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     };
 }
