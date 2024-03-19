@@ -3,3 +3,4 @@ result
 secrets/age.key
 deploy/*
 setup/*
+setup/setup.sh
