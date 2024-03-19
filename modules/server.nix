@@ -306,13 +306,13 @@
       # AllowUsers = [];
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no"; # without-password
-      X11Forwarding = false;
+      #PermitRootLogin = "without-password";
+      #X11Forwarding = false;
     };
     extraConfig = ''
-      # IgnoreRhosts yes
+      IgnoreRhosts yes
       AllowTcpForwarding yes
-      AllowAgentForwarding no
+      AllowAgentForwarding yes
       AllowStreamLocalForwarding no
       AuthenticationMethods publickey
     '';
