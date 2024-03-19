@@ -208,16 +208,16 @@
 
     # log files
 
-    services.clear-log = {
-      description = "clear logs older than 7d";
+    services.cleanup-logs = {
+      description = "cleanup logs older than 7d";
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=7d";
       };
     };
-    timers.clear-log = {
+    timers.cleanup-logs = {
       wantedBy = [ "timers.target" ];
-      partOf = [ "clear-log.service" ];
+      partOf = [ "cleanup-logs.service" ];
       timerConfig.OnCalendar = [
         "*-*-* 03:00:00" # daily at 3am
         # "daily"
