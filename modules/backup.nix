@@ -23,8 +23,13 @@ let
         KEY=$(cat /secrets/backup-key)
         /run/wrappers/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall | ${lib.getExe' pkgs.bzip2 "bzip2"} | ${lib.getExe pkgs.age} -r "$KEY" > /tmp/sql.bzip2.age
 
+        stat -c "backup size: %s" /tmp/sql.bzip2.age
+
         ${lib.getExe pkgs.rclone} copy \
-          -vv \
+          --dry-run \
+          --contimeout=10s \
+          --retries=2 \
+          --error-on-no-transfer \
           --no-traverse \
           --immutable \
           --config /secrets/backup-bucket \
