@@ -99,7 +99,8 @@
       # do
       # gce
 
-      packages.x86_64-linux.utm = self.nixosConfigurations.utm.config.formats.iso;
+      # nix build .#packages.x86_64-linux.utm-iso
+      packages.x86_64-linux.utm-iso = self.nixosConfigurations.utm.config.formats.iso;
 
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations = {
