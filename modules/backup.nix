@@ -19,9 +19,9 @@ let
       backup_write() {
         echo "backup write start"
 
-        sudo -u postgres pg_dumpall | bzip2 | age -r $(/secrets/backup-key) > sql.bzip2.age
+        /run/wrappers/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall | ${pkgs.bzip2} | ${pkgs.age} -r $(/secrets/backup-key) > sql.bzip2.age
 
-        rclone copy \
+        ${pkgs.rclone} copy \
           -vv \
           --no-traverse \
           --immutable \
