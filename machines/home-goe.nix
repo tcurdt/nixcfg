@@ -39,6 +39,7 @@ in nixpkgs.lib.nixosSystem {
                     type = "filesystem";
                     format = "ext4";
                     mountpoint = "/";
+                    postMountHook = "mkdir -p /mnt/nix/persist";
                   };
                 };
               };
