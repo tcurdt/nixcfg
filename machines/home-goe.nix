@@ -73,8 +73,6 @@ in nixpkgs.lib.nixosSystem {
       services.caddy = {
         enable = true;
 
-        # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
-
         # virtualHosts."homeassistant.home" = {
         #   extraConfig = ''
         #     reverse_proxy 127.0.0.1:2020

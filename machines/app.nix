@@ -24,7 +24,8 @@ in nixpkgs.lib.nixosSystem {
     ../modules/telegraf.nix
     ../modules/db-postgres.nix
     ../modules/db-influx.nix
-    ../modules/redis.nix
+    # ../modules/redis.nix
+
     # ../modules/zerotierone.nix
     # ../modules/tailscale.nix
 
