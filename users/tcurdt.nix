@@ -11,7 +11,6 @@
 
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
-
     hashedPassword = "*"; # no password allowed
 
   };

@@ -14,6 +14,10 @@ in {
         description = "...";
         # type = listOf str; # or whatever type these actually are
       };
+      home-manager = mkOption {
+        default = ../home/tcurdt.nix;
+        description = "...";
+      };
     };
   };
 
@@ -23,12 +27,15 @@ in {
 
     users.users.ops = (import ./default.nix pkgs) // {
 
-      isNormalUser = true;
       openssh.authorizedKeys.keyFiles = cfg.keyFiles;
+
+      isNormalUser = true;
+      extraGroups = [ "wheel" "docker" ];
+      hashedPassword = "*"; # no password allowed
 
     };
 
-    home-manager.users.ops = (import ../home/tcurdt.nix pkgs) // {
+    home-manager.users.ops = (import cfg.home-manager pkgs) // {
     };
   };
 }
