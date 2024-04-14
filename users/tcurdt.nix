@@ -5,6 +5,10 @@
 
   users.users.tcurdt = (import ./default.nix pkgs) // {
 
+    openssh.authorizedKeys.keyFiles = [
+      ../keys/tcurdt.pub
+    ];
+
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
 

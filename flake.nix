@@ -108,6 +108,11 @@
       # nix build .#packages.aarch64-linux.utm-iso
       packages.aarch64-linux.utm-iso = self.nixosConfigurations.utm.config.formats.iso;
 
+      # $ nix build .#packages.aarch64-linux.utm-iso
+      # error: a 'aarch64-linux' with features {} is required to build '/nix/store/srv0wy1ljxyiibv1alvn1pp9rgjs67xs-gomod2nix-symlink.drv', but I am a 'aarch64-darwin' with features {apple-virt, benchmark, big-parallel, nixos-test}
+      # 1. build the aarch64-linux image on aarch64-darwin
+      # 2. build a utm image instead of an iso
+
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       # darwinConfigurations = {
       #   shodan = import ./machines/shodan.nix inputs;

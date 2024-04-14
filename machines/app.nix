@@ -15,6 +15,7 @@ in nixpkgs.lib.nixosSystem {
     ../hardware/hetzner.nix
     ../modules/server.nix
     ../modules/users.nix
+    # ../modules/auth.nix
 
     # ../modules/docker.nix
     ../modules/podman.nix
@@ -44,6 +45,12 @@ in nixpkgs.lib.nixosSystem {
 
     ../users/root.nix
     ../users/tcurdt.nix
+    # ../users/ops.nix
+    # {
+    #   ops.keyFiles = [
+    #     ../keys/tcurdt.pub
+    #   ];
+    # }
 
     # {
     #   users.users.root.password = "secret";
@@ -72,6 +79,12 @@ in nixpkgs.lib.nixosSystem {
         #   '';
         # };
 
+        virtualHosts."auth.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:9091
+          '';
+        };
+
         virtualHosts."api.vafer.org" = {
           extraConfig = ''
             reverse_proxy 127.0.0.1:2020
@@ -80,6 +93,23 @@ in nixpkgs.lib.nixosSystem {
 
         virtualHosts."dev.vafer.org" = {
           extraConfig = ''
+            reverse_proxy 127.0.0.1:2015
+          '';
+        };
+
+        virtualHosts."foo.vafer.org" = {
+          extraConfig = ''
+            basicauth bcrypt Elasticsearch {
+              import elasticsearch.auth
+            }
+            basicauth {
+              # Username "Bob", password "hiccup"
+              Bob $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx4IjWJPDhjvG
+            }
+            forward_auth 127.0.0.1:9091 {
+              uri /api/verify?rd=https://auth.vafer.org
+              copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+            }
             reverse_proxy 127.0.0.1:2015
           '';
         };
