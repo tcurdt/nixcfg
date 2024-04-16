@@ -43,10 +43,10 @@
           fieldinclude = [ "boltdb_*" "storage_*" ];
         }];
         # fail2ban = [{ # needs sudo configuration
-        #   interval = 
+        #   interval =
         # }];
         # postgresql = [{
-        #   interval = 
+        #   interval =
         #   address = "host=localhost user=postgres sslmode=disable";
         #   ignored_databases = [
         #     "postgres"
@@ -54,12 +54,12 @@
         #     "template1"
         #   ];
         # }];
-        redis = [{
-          servers = [ "tcp://127.0.0.1:6379" ];
-          fieldinclude = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
-        }];
+        # redis = [{
+        #   servers = [ "tcp://127.0.0.1:6379" ];
+        #   fieldinclude = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
+        # }];
         # x509_cert = [{
-        #   interval = 
+        #   interval =
         #   sources = [
         #     tcp://api.vafer.org:443
         #     tcp://ntfy.vafer.org:443
@@ -76,7 +76,7 @@
         #   endpoint = "unix:///var/run/docker.sock";
         # }];
         # exec = [{
-        #   interval = 
+        #   interval =
         #   commands = [
         #     "/tmp/test.sh"
         #     "/usr/bin/mycollector --foo=bar"
