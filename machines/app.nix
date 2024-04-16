@@ -97,22 +97,22 @@ in nixpkgs.lib.nixosSystem {
           '';
         };
 
-        virtualHosts."foo.vafer.org" = {
-          extraConfig = ''
-            basicauth bcrypt Elasticsearch {
-              import elasticsearch.auth
-            }
-            basicauth {
-              # Username "Bob", password "hiccup"
-              Bob $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx4IjWJPDhjvG
-            }
-            forward_auth 127.0.0.1:9091 {
-              uri /api/verify?rd=https://auth.vafer.org
-              copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-            }
-            reverse_proxy 127.0.0.1:2015
-          '';
-        };
+        # virtualHosts."foo.vafer.org" = {
+        #   extraConfig = ''
+        #     basicauth bcrypt Elasticsearch {
+        #       import elasticsearch.auth
+        #     }
+        #     basicauth {
+        #       # Username "Bob", password "hiccup"
+        #       Bob $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx4IjWJPDhjvG
+        #     }
+        #     forward_auth 127.0.0.1:9091 {
+        #       uri /api/verify?rd=https://auth.vafer.org
+        #       copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+        #     }
+        #     reverse_proxy 127.0.0.1:2015
+        #   '';
+        # };
 
       };
     }
