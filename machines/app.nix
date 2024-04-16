@@ -12,7 +12,7 @@ in nixpkgs.lib.nixosSystem {
 
     inputs.release-go.nixosModules.default
 
-    ../hardware/hetzner.nix
+    ../hardware/contabo.nix
     ../modules/server.nix
     ../modules/users.nix
     # ../modules/auth.nix
