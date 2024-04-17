@@ -10,21 +10,19 @@ in nixpkgs.lib.nixosSystem {
 
     # inputs.nixos-generators.nixosModules.all-formats
 
-    inputs.release-go.nixosModules.default
+    # inputs.release-go.nixosModules.default
 
     ../hardware/contabo.nix
     ../modules/server.nix
     ../modules/users.nix
-    # ../modules/auth.nix
 
     # ../modules/docker.nix
     ../modules/podman.nix
     # ../modules/k3s.nix
 
-    # ../modules/ntfy.nix
     ../modules/telegraf.nix
-    ../modules/db-postgres.nix
     ../modules/db-influx.nix
+    ../modules/db-postgres.nix
     # ../modules/redis.nix
 
     # ../modules/zerotierone.nix
@@ -56,12 +54,12 @@ in nixpkgs.lib.nixosSystem {
     #   users.users.root.password = "secret";
     # }
 
-    {
-      services.release-go = {
-        enable = true;
-        port = 2020;
-      };
-    }
+    # {
+    #   services.release-go = {
+    #     enable = true;
+    #     port = 2020;
+    #   };
+    # }
 
     {
       networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -72,28 +70,55 @@ in nixpkgs.lib.nixosSystem {
           servers { metrics }
         '';
 
-        # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
-        # virtualHosts."ntfy.vafer.org" = {
-        #   extraConfig = ''
-        #     reverse_proxy 127.0.0.1:8080
-        #   '';
-        # };
-
-        virtualHosts."auth.vafer.org" = {
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:9091
-          '';
-        };
-
-        virtualHosts."api.vafer.org" = {
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:2020
-          '';
-        };
+        # public
 
         virtualHosts."dev.vafer.org" = {
           extraConfig = ''
             reverse_proxy 127.0.0.1:2015
+          '';
+        };
+
+        virtualHosts."list.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
+          '';
+        };
+
+        virtualHosts."airtable.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
+          '';
+        };
+
+        virtualHosts."nodered.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
+          '';
+        };
+
+        # private
+
+        virtualHosts."analytics.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
+          '';
+        };
+
+        virtualHosts."trello.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
+          '';
+        };
+
+        virtualHosts."serp.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
+          '';
+        };
+
+        virtualHosts."changes.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8000
           '';
         };
 

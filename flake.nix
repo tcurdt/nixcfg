@@ -60,7 +60,7 @@
       nixosConfigurations = {
 
         utm = import ./machines/utm.nix {
-          hostName = "nixos";
+          hostName = "utm";
           hostPlatform = "aarch64-linux";
           nixpkgs = nixpkgs-unstable;
           home-manager = home-manager-unstable;
@@ -70,7 +70,7 @@
         };
 
         app = import ./machines/app.nix {
-          hostName = "nixos";
+          hostName = "app";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
