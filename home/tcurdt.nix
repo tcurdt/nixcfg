@@ -146,6 +146,25 @@
       };
     };
 
+    bat.config = {
+      enable = true;
+
+      # map-syntax = [
+      #   "*.jenkinsfile:Groovy"
+      #   "*.props:Java Properties"
+      # ];
+
+      # pager = "less -FR";
+      # theme = "TwoDark";
+
+      # bat-extras = [
+      #   pkgs.bat-extras.batdiff
+      #   pkgs.bat-extras.batman
+      #   pkgs.bat-extras.batgrep
+      #   pkgs.bat-extras.batwatch
+      # ];
+    };
+
     lazygit.enable = true;
 
     neovim = {
@@ -164,7 +183,8 @@
 
   home.shellAliases = {
     ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
-    cat = "bat --style numbers";
+    cat = "bat --style plain --paging=never";
+    bat = "bat --style numbers --paging=never";
     ls = "eza";
     g = "git";
     lg = "lazygit";
@@ -190,6 +210,7 @@
     pkgs.dnsutils # bind dig nslookup
     pkgs.parallel
     pkgs.just
+    pkgs.diceware
     pkgs.xh # curl
     pkgs.pv # pipe progress
     pkgs.croc # whormhole
