@@ -246,14 +246,21 @@
     pkgs.curl
     pkgs.gitMinimal
 
-    # inputs.release-go.packages.${pkgs.system}.default
+    # pkgs.nh # not yet in stable
+    pkgs.nix-output-monitor
+    pkgs.nvd
 
-    (import ../scripts/foo.nix { inherit pkgs; })
+    # inputs.release-go.packages.${pkgs.system}.default
+    # (import ../scripts/foo.nix { inherit pkgs; })
 
     # pkgs.vulnix # vulnerability scanner
     # pkgs.clamav # virus scanner
 
   ];
+
+  environment.sessionVariables = {
+    FLAKE = "/etc/nixos/flake";
+  };
 
   # environment.variables = {
   #   PATH = [
