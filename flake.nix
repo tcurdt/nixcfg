@@ -106,7 +106,7 @@
 
 
       # nix build .#packages.aarch64-linux.utm-iso
-      packages.aarch64-linux.utm-iso = self.nixosConfigurations.utm.config.formats.iso;
+      # packages.aarch64-linux.utm-iso = self.nixosConfigurations.utm.config.formats.iso;
 
       # $ nix build .#packages.aarch64-linux.utm-iso
       # error: a 'aarch64-linux' with features {} is required to build '/nix/store/srv0wy1ljxyiibv1alvn1pp9rgjs67xs-gomod2nix-symlink.drv', but I am a 'aarch64-darwin' with features {apple-virt, benchmark, big-parallel, nixos-test}
@@ -142,14 +142,14 @@
       # };
 
       # nix run github:serokell/deploy-rs -- #utm
-      deploy.nodes.utm = {
-        hostname = "192.168.71.3";
-        remoteBuild = true;
-        profiles.system = {
-          user = "root";
-          path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
-        };
-      };
+      # deploy.nodes.utm = {
+      #   hostname = "192.168.71.3";
+      #   remoteBuild = true;
+      #   profiles.system = {
+      #     user = "root";
+      #     path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm;
+      #   };
+      # };
 
     };
 }
