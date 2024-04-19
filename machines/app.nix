@@ -17,8 +17,9 @@ in nixpkgs.lib.nixosSystem {
     ../modules/users.nix
 
     # ../modules/docker.nix
-    ../modules/podman.nix
+    # ../modules/podman.nix
     # ../modules/k3s.nix
+    ../modules/rke2.nix
 
     ../modules/telegraf.nix
     ../modules/db-influx.nix

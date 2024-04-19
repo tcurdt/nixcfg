@@ -17,8 +17,9 @@ in nixpkgs.lib.nixosSystem {
     ../modules/users.nix
 
     # ../modules/docker.nix
-    ../modules/podman.nix
+    # ../modules/podman.nix
     # ../modules/k3s.nix
+    ../modules/rke2.nix
 
     ../modules/telegraf.nix
     ../modules/db-influx.nix
@@ -33,7 +34,7 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/hook-ssh.nix
     # ../modules/hook-web.nix
 
-    ../modules/backup.nix
+    # ../modules/backup.nix
 
     {
       nixpkgs.hostPlatform = hostPlatform;
@@ -57,12 +58,12 @@ in nixpkgs.lib.nixosSystem {
     #   };
     # }
 
-    {
-      services.release-go = {
-        enable = true;
-        port = 2020;
-      };
-    }
+    # {
+    #   services.release-go = {
+    #     enable = true;
+    #     port = 2020;
+    #   };
+    # }
 
     {
       networking.firewall.allowedTCPPorts = [ 80 443 ];
