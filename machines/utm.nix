@@ -8,9 +8,8 @@ in nixpkgs.lib.nixosSystem {
 
   modules = [
 
-    inputs.nixos-generators.nixosModules.all-formats
-
-    inputs.release-go.nixosModules.default
+    # inputs.nixos-generators.nixosModules.all-formats
+    # inputs.release-go.nixosModules.default
 
     ../hardware/utm.nix
     ../modules/server.nix
@@ -18,8 +17,8 @@ in nixpkgs.lib.nixosSystem {
 
     # ../modules/docker.nix
     # ../modules/podman.nix
-    # ../modules/k3s.nix
-    ../modules/rke2.nix
+    ../modules/k3s.nix
+    # ../modules/rke2.nix
 
     ../modules/telegraf.nix
     ../modules/db-influx.nix
@@ -65,22 +64,22 @@ in nixpkgs.lib.nixosSystem {
     #   };
     # }
 
-    {
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
-      services.caddy = {
-        enable = true;
+    # {
+    #   networking.firewall.allowedTCPPorts = [ 80 443 ];
+    #   services.caddy = {
+    #     enable = true;
 
-        # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
+    #     # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
 
-        # virtualHosts."dev.vafer.org" = {
-        #   extraConfig = ''
-        #     reverse_proxy 127.0.0.1:2015
-        #     tls internal
-        #   '';
-        # };
+    #     # virtualHosts."dev.vafer.org" = {
+    #     #   extraConfig = ''
+    #     #     reverse_proxy 127.0.0.1:2015
+    #     #     tls internal
+    #     #   '';
+    #     # };
 
-      };
-    }
+    #   };
+    # }
 
   ];
 }
