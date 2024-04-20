@@ -26,7 +26,7 @@
         # interrupts = [{}];
         conntrack = [{}];
         net = [{
-          fieldexclude = [ "icmp*" "tcp*" "udp*" "ip*" ];
+          # fieldexclude = [ "icmp*" "tcp*" "udp*" "ip*" ];
         }];
         netstat = [{}];
         disk = [{ mount_points = [ "/" ]; }];
@@ -35,12 +35,12 @@
           urls = [ "http://127.0.0.1:2019/metrics" ]; # caddy
           tags = { service = "caddy"; };
           metric_version = 2;
-          fieldinclude = [ "caddy_*" "process_*" ];
+          # fieldinclude = [ "caddy_*" "process_*" ];
         }{
           urls = [ "http://127.0.0.1:8086/metrics" ]; # influxdb
           tags = { service = "influxdb"; };
           metric_version = 2;
-          fieldinclude = [ "boltdb_*" "storage_*" ];
+          # fieldinclude = [ "boltdb_*" "storage_*" ];
         }];
         # fail2ban = [{ # needs sudo configuration
         #   interval =
