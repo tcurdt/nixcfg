@@ -6,9 +6,11 @@
   services.k3s.enable = true;
   services.k3s.role = "server";
   services.k3s.extraFlags = toString [
-    "--disable=traefik"
+    # "--disable=traefik"
     # "--disable servicelb"
   ];
+
+  networking.nameservers = [ "10.43.0.10" ];
 
   environment.shellAliases = {
     k = "kubectl";
