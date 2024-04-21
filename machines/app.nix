@@ -72,13 +72,13 @@ in nixpkgs.lib.nixosSystem {
 
         virtualHosts."whoami.vafer.org" = {
           extraConfig = ''
-            reverse_proxy echo1.default.svc.cluster.local
+            reverse_proxy echo1.default.svc.cluster.local:80
           '';
         };
 
         virtualHosts."dev.vafer.org" = {
           extraConfig = ''
-            reverse_proxy echo2.default.svc.cluster.local
+            reverse_proxy echo2.default.svc.cluster.local:80
           '';
         };
 
