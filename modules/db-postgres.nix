@@ -30,4 +30,23 @@
     # '';
     # enableTCPIP = true;
   };
+
+  # https://github.com/NixOS/nixpkgs/blob/2230a20f2b5a14f2db3d7f13a2dc3c22517e790b/nixos/modules/services/databases/pgbouncer.nix
+  # services.pgbouncer = {
+  #   enabled = true;
+  #   # listenAddress = "127.0.0.1";
+  #   # maxClientConn = 100;
+  #   # defaultPoolSize = 20;
+  #   # maxDbConnections = 0;
+  #   # maxUserConnections = 0;
+  #   # databases = {};
+  #   # users = {};
+  #   # peers = {};
+  #   # authType = "trust";
+  #   # authFile = "/secrets"
+  #   # authUser
+  #   # authQuery
+  #   # authDbname
+  # };
+
 }
