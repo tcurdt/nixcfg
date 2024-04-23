@@ -15,14 +15,14 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     ../modules/users.nix
 
-    # ../modules/docker.nix
+    ../modules/docker.nix
     # ../modules/podman.nix
-    ../modules/k3s.nix
+    # ../modules/k3s.nix
     # ../modules/rke2.nix
 
-    ../modules/telegraf.nix
-    ../modules/db-influx.nix
-    ../modules/db-postgres.nix
+    # ../modules/telegraf.nix
+    # ../modules/db-influx.nix
+    # ../modules/db-postgres.nix
     # ../modules/redis.nix
 
     # ../modules/homeassistant.nix
@@ -63,6 +63,10 @@ in nixpkgs.lib.nixosSystem {
     #     port = 2020;
     #   };
     # }
+
+    {
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
+    }
 
     # {
     #   networking.firewall.allowedTCPPorts = [ 80 443 ];
