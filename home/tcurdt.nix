@@ -202,6 +202,7 @@
     pkgs.tmux
     pkgs.curl
     pkgs.jq
+    pkgs.openssl
     pkgs.unzip
     pkgs.htop
     pkgs.gitMinimal
