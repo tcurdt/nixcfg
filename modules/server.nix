@@ -84,6 +84,8 @@
     # "fs.inotify.max_queued_events"  =   32768;   # default: 16384
     "net.core.rmem_max" = 2500000;
     "net.core.wmem_max" = 2500000;
+    # "net.core.somaxconn" = 4096;
+    # "vm.overcommit_memory" = 1;
   };
 
   # networking

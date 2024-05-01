@@ -124,6 +124,7 @@
         pull.ff-only = 1;
 
         rerere.enabled = 1;
+        rebase.updateRefs = true;
 
         push.default = "current";
         push.followTags = 1;
