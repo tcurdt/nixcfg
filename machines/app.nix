@@ -88,7 +88,7 @@ in nixpkgs.lib.nixosSystem {
           '';
         };
 
-        virtualHosts."mailings.vafer.org" = {
+        virtualHosts."mails.vafer.org" = {
           extraConfig = ''
             reverse_proxy http://127.0.0.1:4000
           '';
@@ -113,7 +113,7 @@ in nixpkgs.lib.nixosSystem {
         # virtualHosts."metrics.vafer.org" = {
         #   extraConfig = ''
         #     import auth
-        #     reverse_proxy http://influxdb:8086
+        #     reverse_proxy http://127.0.0.1:8086
         #   '';
         # };
 
@@ -228,28 +228,27 @@ in nixpkgs.lib.nixosSystem {
               fieldpass = [ "caddy_*" "process_*" ];
             }];
 
-            # postgresql = [{
-            #   interval =
-            #   address = "host=localhost user=postgres sslmode=disable";
-            #   ignored_databases = [
-            #     "postgres"
-            #     "template0"
-            #     "template1"
-            #   ];
-            # }];
+            postgresql = [{
+              address = "host=127.0.0.1 user=postgres sslmode=disable";
+              # address = "postgres://telegraf:\${POSTGRES_TELEGRAF_PASSWORD}@127.0.0.1:5432[/dbname]?sslmode=disable";
+              ignored_databases = [
+                "postgres"
+                "template0"
+                "template1"
+              ];
+            }];
 
             redis = [{
               servers = [ "tcp://127.0.0.1:6379" ];
-              # fieldinclude = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
+              # fieldpass = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
             }];
 
-            # x509_cert = [{
-            #   interval =
-            #   sources = [
-            #     tcp://api.vafer.org:443
-            #     tcp://ntfy.vafer.org:443
-            #   ];
-            # }];
+            x509_cert = [{
+              interval = "24h";
+              sources = [
+                tcp://torstencurdt.com:443
+              ];
+            }];
 
             docker = [{
               endpoint = "unix:///var/run/docker.sock";
