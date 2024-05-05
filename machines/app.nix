@@ -22,6 +22,7 @@ in nixpkgs.lib.nixosSystem {
 
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix
+
     # ../modules/db-postgres.nix
     # ../modules/redis.nix
 
@@ -116,13 +117,6 @@ in nixpkgs.lib.nixosSystem {
         #   '';
         # };
 
-
-        # virtualHosts."whoami.vafer.org" = {
-        #   extraConfig = ''
-        #     reverse_proxy echo1.default.svc.cluster.local:80
-        #   '';
-        # };
-
         # virtualHosts."foo.vafer.org" = {
         #   extraConfig = ''
         #     basicauth bcrypt Elasticsearch {
@@ -137,6 +131,7 @@ in nixpkgs.lib.nixosSystem {
         #       copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
         #     }
         #     reverse_proxy 127.0.0.1:2015
+        #     reverse_proxy echo1.default.svc.cluster.local:80
         #   '';
         # };
 
@@ -187,5 +182,100 @@ in nixpkgs.lib.nixosSystem {
     #   };
     # }
 
+    ../modules/db-influx.nix
+
+    {
+      services.telegraf = {
+        enable = true;
+        environmentFiles = [ "/secrets/telegraf.env" ];
+        extraConfig = {
+          global_tags = {
+            dc = "contabo";
+          };
+          agent = {
+            interval = "30s";
+            hostname = "app";
+          };
+          inputs = {
+            internal = {
+              namepass = [ "internal_agent" ];
+            };
+            mem = [{}];
+            cpu = [{
+              # taginclude = { cpu = [ "cpu-total" ]; };
+              # fieldpass = [ "cpu-total" ];
+            }];
+            disk = [{ mount_points = [ "/" ]; }];
+
+            # linux_cpu = {};
+            # swap = [{}]; # covered in mem
+            # kernel = [{}];
+            # system = [{}];
+            # sysstat = [{}];
+            # processes = [{}];
+            # procstat = [{}];
+            # interrupts = [{}];
+            # conntrack = [{}];
+            # net = [{}];
+            # netstat = [{}];
+            # diskio = [{}];
+
+            prometheus = [{
+              metric_version = 2;
+              urls = [
+                "http://127.0.0.1:2019/metrics" # caddy
+              ];
+              fieldpass = [ "caddy_*" "process_*" ];
+            }];
+
+            # postgresql = [{
+            #   interval =
+            #   address = "host=localhost user=postgres sslmode=disable";
+            #   ignored_databases = [
+            #     "postgres"
+            #     "template0"
+            #     "template1"
+            #   ];
+            # }];
+
+            redis = [{
+              servers = [ "tcp://127.0.0.1:6379" ];
+              # fieldinclude = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
+            }];
+
+            # x509_cert = [{
+            #   interval =
+            #   sources = [
+            #     tcp://api.vafer.org:443
+            #     tcp://ntfy.vafer.org:443
+            #   ];
+            # }];
+
+            docker = [{
+              endpoint = "unix:///var/run/docker.sock";
+              perdevice = false;
+              perdevice_include = ["cpu"];
+              docker_label_include = [];
+              docker_label_exclude = [];
+            }];
+          };
+
+          outputs = {
+
+            influxdb_v2 = [{
+              urls = [ "http://127.0.0.1:8086" ];
+              organization = "system";
+              bucket = "metrics";
+              token = "\${INFLUX_TELEGRAF_TOKEN}";
+              insecure_skip_verify = true;
+            }];
+
+            health = [{
+              service_address = "http://127.0.0.1:8888";
+            }];
+          };
+        };
+      };
+    }
   ];
 }
