@@ -78,7 +78,7 @@ in nixpkgs.lib.nixosSystem {
 
         virtualHosts."dev.vafer.org" = {
           extraConfig = ''
-            reverse_proxy http://127.0.0.1:8888
+            reverse_proxy http://127.0.0.1:8080
           '';
         };
 
