@@ -65,97 +65,78 @@ in nixpkgs.lib.nixosSystem {
       networking.firewall.allowedTCPPorts = [ 80 443 ];
     }
 
-    # {
-    #   services.caddy = {
-    #     enable = true;
-    #     email = "tcurdt@vafer.org";
-    #     globalConfig = ''
-    #       servers { metrics }
-    #     '';
+    {
+      services.caddy = {
+        enable = true;
+        email = "tcurdt@vafer.org";
+        globalConfig = ''
+          admin 127.0.0.1:2019
+          servers { metrics }
+          log { level error }
+          # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+        '';
 
-    #     virtualHosts."whoami.vafer.org" = {
-    #       extraConfig = ''
-    #         reverse_proxy echo1.default.svc.cluster.local:80
-    #       '';
-    #     };
+        virtualHosts."dev.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy http://127.0.0.1:8888
+          '';
+        };
 
-    #     virtualHosts."dev.vafer.org" = {
-    #       extraConfig = ''
-    #         reverse_proxy echo2.default.svc.cluster.local:80
-    #       '';
-    #     };
+        virtualHosts."mailings.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy http://127.0.0.1:4000
+          '';
+        };
 
-    #     # # public
+        virtualHosts."stats.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy http://127.0.0.1:3000
+          '';
+        };
 
-    #     # virtualHosts."dev.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:2015
-    #     #   '';
-    #     # };
+        virtualHosts."red.vafer.org" = {
+          extraConfig = ''
+            @auth not path /public/*
+            forward_auth @auth 127.0.0.1:9999 {
+              uri /
+            }
+            reverse_proxy http://127.0.0.1:1880
+          '';
+        };
 
-    #     # virtualHosts."list.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
+        # virtualHosts."metrics.vafer.org" = {
+        #   extraConfig = ''
+        #     import auth
+        #     reverse_proxy http://influxdb:8086
+        #   '';
+        # };
 
-    #     # virtualHosts."airtable.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
 
-    #     # virtualHosts."nodered.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
+        # virtualHosts."whoami.vafer.org" = {
+        #   extraConfig = ''
+        #     reverse_proxy echo1.default.svc.cluster.local:80
+        #   '';
+        # };
 
-    #     # # private
+        # virtualHosts."foo.vafer.org" = {
+        #   extraConfig = ''
+        #     basicauth bcrypt Elasticsearch {
+        #       import elasticsearch.auth
+        #     }
+        #     basicauth {
+        #       # Username "Bob", password "hiccup"
+        #       Bob $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx4IjWJPDhjvG
+        #     }
+        #     forward_auth 127.0.0.1:9091 {
+        #       uri /api/verify?rd=https://auth.vafer.org
+        #       copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+        #     }
+        #     reverse_proxy 127.0.0.1:2015
+        #   '';
+        # };
 
-    #     # virtualHosts."analytics.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
-
-    #     # virtualHosts."trello.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
-
-    #     # virtualHosts."serp.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
-
-    #     # virtualHosts."changes.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:8000
-    #     #   '';
-    #     # };
-
-    #     # virtualHosts."foo.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     basicauth bcrypt Elasticsearch {
-    #     #       import elasticsearch.auth
-    #     #     }
-    #     #     basicauth {
-    #     #       # Username "Bob", password "hiccup"
-    #     #       Bob $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx4IjWJPDhjvG
-    #     #     }
-    #     #     forward_auth 127.0.0.1:9091 {
-    #     #       uri /api/verify?rd=https://auth.vafer.org
-    #     #       copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-    #     #     }
-    #     #     reverse_proxy 127.0.0.1:2015
-    #     #   '';
-    #     # };
-
-    #   };
-    # }
+      };
+    }
 
     # {
     #   virtualisation.oci-containers.containers = {
