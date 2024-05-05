@@ -230,8 +230,8 @@ in nixpkgs.lib.nixosSystem {
             }];
 
             postgresql = [{
-              address = "host=127.0.0.1 user=postgres sslmode=disable";
-              # address = "postgres://telegraf:\${POSTGRES_TELEGRAF_PASSWORD}@127.0.0.1:5432[/dbname]?sslmode=disable";
+              # address = "host=127.0.0.1 user=postgres sslmode=disable";
+              address = "postgres://telegraf:\${TELEGRAF_DB_PASSWORD}@127.0.0.1:5432/postgres?sslmode=disable";
               ignored_databases = [
                 "postgres"
                 "template0"
