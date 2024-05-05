@@ -189,6 +189,7 @@
     ls = "eza";
     g = "git";
     lg = "lazygit";
+    dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
   };
 
   home.sessionVariables = {
