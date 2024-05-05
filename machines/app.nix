@@ -185,6 +185,7 @@ in nixpkgs.lib.nixosSystem {
     ../modules/db-influx.nix
 
     {
+      users.extraGroups.docker.members = [ "telegraf" ];
       services.telegraf = {
         enable = true;
         environmentFiles = [ "/secrets/telegraf.env" ];
