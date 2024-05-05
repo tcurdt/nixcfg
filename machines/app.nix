@@ -188,7 +188,7 @@ in nixpkgs.lib.nixosSystem {
       users.extraGroups.docker.members = [ "telegraf" ];
       services.telegraf = {
         enable = true;
-        environmentFiles = [ "/secrets/telegraf.env" ];
+        environmentFiles = [ "/secrets/compose.env" ];
         extraConfig = {
           global_tags = {
             dc = "contabo";
