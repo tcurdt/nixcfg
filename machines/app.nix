@@ -72,13 +72,18 @@ in nixpkgs.lib.nixosSystem {
         globalConfig = ''
           admin 127.0.0.1:2019
           servers { metrics }
-          log { level error }
           # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
         '';
 
         virtualHosts."dev.vafer.org" = {
           extraConfig = ''
             reverse_proxy http://127.0.0.1:8888
+          '';
+        };
+
+        virtualHosts."auth.vafer.org" = {
+          extraConfig = ''
+            reverse_proxy http://127.0.0.1:9999
           '';
         };
 
