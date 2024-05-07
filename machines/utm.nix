@@ -56,13 +56,6 @@ in nixpkgs.lib.nixosSystem {
     }
 
     # {
-    #   services = {
-    #     qemuGuest.enable = true;
-    #     openssh.settings.PermitRootLogin = lib.mkForce "yes";
-    #   };
-    # }
-
-    # {
     #   services.release-go = {
     #     enable = true;
     #     port = 2020;
@@ -71,24 +64,20 @@ in nixpkgs.lib.nixosSystem {
 
     {
       networking.firewall.allowedTCPPorts = [ 80 443 ];
+      services.caddy = {
+        enable = true;
+
+	# curl -k --resolve echo1.vafer.work:443:127.0.0.1 https://echo1.vafer.work
+
+        virtualHosts."echo1.vafer.work" = {
+          extraConfig = ''
+            reverse_proxy echo1.default.svc.cluster.local:80
+            tls internal
+         '';
+        };
+
+      };
     }
-
-    # {
-    #   networking.firewall.allowedTCPPorts = [ 80 443 ];
-    #   services.caddy = {
-    #     enable = true;
-
-    #     # curl -k --resolve ntfy.vafer.org:443:127.0.0.1 https://ntfy.vafer.org
-
-    #     # virtualHosts."dev.vafer.org" = {
-    #     #   extraConfig = ''
-    #     #     reverse_proxy 127.0.0.1:2015
-    #     #     tls internal
-    #     #   '';
-    #     # };
-
-    #   };
-    # }
 
   ];
 }
