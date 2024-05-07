@@ -62,12 +62,22 @@
         utm = import ./machines/utm.nix {
           hostName = "utm";
           hostPlatform = "aarch64-linux";
-          nixpkgs = nixpkgs-unstable;
-          home-manager = home-manager-unstable;
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
           inherit impermanence;
-          inherit nixos-generators;
-          inherit release-go;
+          # inherit nixos-generators;
+          # inherit release-go;
         };
+
+        # utm = import ./machines/utm.nix {
+        #   hostName = "utm";
+        #   hostPlatform = "aarch64-linux";
+        #   nixpkgs = nixpkgs-unstable;
+        #   home-manager = home-manager-unstable;
+        #   inherit impermanence;
+        #   inherit nixos-generators;
+        #   # inherit release-go;
+        # };
 
         app = import ./machines/app.nix {
           hostName = "app";
@@ -75,17 +85,25 @@
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
-          inherit release-go;
+          # inherit release-go;
         };
 
-        home-goe = import ./machines/home-goe.nix {
-          hostName = "home-goe";
+        edkimo = import ./machines/edkimo.nix {
+          hostName = "edkimo";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
-          inherit disko;
         };
+
+        # home-goe = import ./machines/home-goe.nix {
+        #   hostName = "home-goe";
+        #   hostPlatform = "x86_64-linux";
+        #   nixpkgs = nixpkgs-stable;
+        #   home-manager = home-manager-stable;
+        #   inherit impermanence;
+        #   inherit disko;
+        # };
 
         # home-ber
         # home-boat

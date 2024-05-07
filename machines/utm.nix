@@ -15,9 +15,9 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     ../modules/users.nix
 
-    ../modules/docker.nix
+    # ../modules/docker.nix
     # ../modules/podman.nix
-    # ../modules/k3s.nix
+    ../modules/k3s.nix
     # ../modules/rke2.nix
 
     # ../modules/telegraf.nix
@@ -40,11 +40,16 @@ in nixpkgs.lib.nixosSystem {
       networking.hostName = hostName;
       networking.domain = "utm";
       system.stateVersion = "23.11";
-      # system.stateVersion = "24.05";
     }
 
     ../users/root.nix
-    ../users/tcurdt.nix
+    # ../users/tcurdt.nix
+    ../users/ops.nix
+    {
+      ops.keyFiles = [
+        ../keys/tcurdt.pub
+      ];
+    }
 
     {
       users.users.root.password = "secret";
