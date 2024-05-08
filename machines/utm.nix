@@ -62,6 +62,13 @@ in nixpkgs.lib.nixosSystem {
     #   };
     # }
 
+    # {
+    #   networking.interfaces.cluster.ipv4.addresses = [ {
+    #     address = "172.16.1.1";
+    #     prefixLength = 12;
+    #   } ];
+    # }
+
     {
       networking.firewall.allowedTCPPorts = [ 80 443 ];
       services.caddy = {
