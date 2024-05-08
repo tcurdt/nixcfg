@@ -7,7 +7,8 @@
   services.k3s.role = "server";
   services.k3s.extraFlags = toString [
     "--disable=traefik"
-    # "--disable servicelb"
+    # "--disable=servicelb"
+    # "--disable=metrics-server"
   ];
 
   networking.nameservers = [ "10.43.0.10" ];
