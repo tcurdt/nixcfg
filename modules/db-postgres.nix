@@ -4,12 +4,14 @@
   # \l
   services.postgresql = {
     enable = true;
+    # settings = {
+    #   listen_addresses = "127.0.0.1";
+    # };
     identMap = ''
       superuser_map      root      postgres
       superuser_map      postgres  postgres
       superuser_map      /^(.*)$   \1
     '';
-
     # ensureDatabases = [
     #   "bluesky"
     # ];
