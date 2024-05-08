@@ -22,7 +22,7 @@ in nixpkgs.lib.nixosSystem {
 
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix
-    # ../modules/db-postgres.nix
+    ../modules/db-postgres.nix
     # ../modules/redis.nix
 
     # ../modules/homeassistant.nix
@@ -84,7 +84,7 @@ in nixpkgs.lib.nixosSystem {
             # root * /etc/caddy/message
 
             @exists {
-              file /etc/caddy/message.html
+              file /etc/caddy/wewillbeback
             }
 
             handle @exists {
