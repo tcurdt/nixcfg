@@ -19,11 +19,11 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: postgres
                   key: password
           # envFrom:
           #   - configMapRef:
-          #       name: postgres-secret
+          #       name: postgres
           ports:
             - name: postgres
               containerPort: 5432
