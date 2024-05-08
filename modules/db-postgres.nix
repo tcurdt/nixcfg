@@ -5,7 +5,7 @@
   services.postgresql = {
     enable = true;
     # settings = {
-    #   listen_addresses = "127.0.0.1";
+    #   listen_addresses = pkgs.lib.mkForce "0.0.0.0";
     # };
     identMap = ''
       superuser_map      root      postgres
