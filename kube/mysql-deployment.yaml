@@ -16,6 +16,8 @@ spec:
         - name: mysql
           image: mysql:8
           env:
+            # - name: MYSQL_ALLOW_EMPTY_PASSWORD
+            #   value: yes
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -29,6 +31,9 @@ spec:
           #     command:
           #     - mysqladmin
           #     - ping
+          #     - -h 127.0.0.1
+          #     - -u USER
+          #     - -p PASSWORD
           #   initialDelaySeconds: 30
           #   periodSeconds: 10
           #   timeoutSeconds: 5
@@ -37,6 +42,9 @@ spec:
           #     command:
           #     - mysqladmin
           #     - ping
+          #     - -h 127.0.0.1
+          #     - -u USER
+          #     - -p PASSWORD
           #   initialDelaySeconds: 5
           #   periodSeconds: 2
           #   timeoutSeconds: 1
