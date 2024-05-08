@@ -67,13 +67,33 @@ in nixpkgs.lib.nixosSystem {
       services.caddy = {
         enable = true;
 
-	# curl -k --resolve echo1.vafer.work:443:127.0.0.1 https://echo1.vafer.work
+        # curl -k --resolve echo1.vafer.work:443:127.0.0.1 https://echo1.vafer.work
 
         virtualHosts."echo1.vafer.work" = {
           extraConfig = ''
-            reverse_proxy echo1.default.svc.cluster.local:80
+
+            # if file "message.html" exist on disk show it
+
+            # root * /etc/caddy/message
+
+            @exists {
+              file /etc/caddy/message.html
+            }
+
+            handle @exists {
+              respond "We will be back shortly" 503 {
+                close
+              }
+            }
+
+            # otherwise pass on to proxy
+
+            handle {
+              reverse_proxy echo1.default.svc.cluster.local:80
+            }
+
             tls internal
-         '';
+          '';
         };
 
       };
