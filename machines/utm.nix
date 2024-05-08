@@ -22,7 +22,7 @@ in nixpkgs.lib.nixosSystem {
 
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix
-    ../modules/db-postgres.nix
+    # ../modules/db-postgres.nix
     # ../modules/redis.nix
 
     # ../modules/homeassistant.nix
