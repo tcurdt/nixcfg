@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+          # envFrom:
+          #   - configMapRef:
+          #       name: postgres-secret
+          ports:
+            - name: postgres
+              containerPort: 5432
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            failureThreshold: 6
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-persistent-storage
+          persistentVolumeClaim:
+            claimName: postgres-volume-claim
