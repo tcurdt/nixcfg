@@ -16,11 +16,6 @@ spec:
         - name: postgres
           image: postgres:16-alpine
           env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-superuser
-                  key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:

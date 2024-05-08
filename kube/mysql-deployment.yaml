@@ -19,23 +19,24 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-superuser
                   key: password
-          # envFrom:
-          #   - configMapRef:
-          #       name: postgres-secret
           ports:
             - name: mysql
               containerPort: 3306
           # livenessProbe:
           #   exec:
-          #     command: ["mysqladmin", "ping"]
+          #     command:
+          #     - mysqladmin
+          #     - ping
           #   initialDelaySeconds: 30
           #   periodSeconds: 10
           #   timeoutSeconds: 5
           # readinessProbe:
           #   exec:
-          #     command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
+          #     command:
+          #     - mysqladmin
+          #     - ping
           #   initialDelaySeconds: 5
           #   periodSeconds: 2
           #   timeoutSeconds: 1
@@ -45,4 +46,4 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
+            claimName: mysql-volume-claim
