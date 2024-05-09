@@ -39,7 +39,9 @@ spec:
         - name: grafana-persistent-storage
           persistentVolumeClaim:
             claimName: grafana-volume-claim
-      # securityContext:
-      #   runAsNonRoot: true
-      #   runAsUser: 65534
+      securityContext:
+        # runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
       # serviceAccountName: grafana
