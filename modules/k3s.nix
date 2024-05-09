@@ -19,6 +19,7 @@
 
   environment.shellAliases = {
     k = "kubectl";
+    ka = "kubectl get all -A";
   };
 
   environment.variables = {
