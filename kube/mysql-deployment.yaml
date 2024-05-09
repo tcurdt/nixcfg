@@ -17,7 +17,7 @@ spec:
           image: mysql:8
           env:
             - name: MYSQL_ALLOW_EMPTY_PASSWORD
-              value: yes
+              value: "yes"
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
