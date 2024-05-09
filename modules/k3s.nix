@@ -27,11 +27,12 @@
 
   environment.systemPackages = [
     pkgs.k3s
+    pkgs.kubernetes-helm
     pkgs.regclient
     pkgs.kustomize
     pkgs.envsubst
     pkgs.k9s
-    # pkgs.kubectx
+    pkgs.kubectx
     # pkgs.kor # unstable
   ];
 
