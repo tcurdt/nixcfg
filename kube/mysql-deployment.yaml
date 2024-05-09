@@ -16,8 +16,8 @@ spec:
         - name: mysql
           image: mysql:8
           env:
-            # - name: MYSQL_ALLOW_EMPTY_PASSWORD
-            #   value: yes
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: yes
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -26,28 +26,35 @@ spec:
           ports:
             - name: mysql
               containerPort: 3306
-          # livenessProbe:
-          #   exec:
-          #     command:
-          #     - mysqladmin
-          #     - ping
+          livenessProbe:
+            exec:
+              command:
+              - mysqladmin
+              - ping
           #     - -h 127.0.0.1
           #     - -u USER
           #     - -p PASSWORD
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   exec:
-          #     command:
-          #     - mysqladmin
-          #     - ping
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+              - mysqladmin
+              - ping
           #     - -h 127.0.0.1
           #     - -u USER
           #     - -p PASSWORD
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 2
-          #   timeoutSeconds: 1
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            timeoutSeconds: 1
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 100Mi
+            limits:
+              # cpu: 200m
+              memory: 200Mi
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
@@ -55,3 +62,7 @@ spec:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-volume-claim
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 65534
+      # serviceAccountName: mysql

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-volume
+  name: grafana-volume
   labels:
     type: local
 spec:
@@ -11,14 +11,14 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /srv/mysql
+    path: /srv/grafana
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-volume-claim
+  name: grafana-volume-claim
   labels:
-    app: mysql
+    app: grafana
 spec:
   storageClassName: manual
   accessModes:

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana-oss:10.4.2
+          env:
+            - name: GF_LOG_LEVEL
+              value: error
+          ports:
+            - name: grafana
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: grafana
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 100Mi
+            limits:
+              # cpu: 200m
+              memory: 200Mi
+          volumeMounts:
+            - name: grafana-persistent-storage
+              mountPath: /var/lib/grafana
+      volumes:
+        - name: grafana-persistent-storage
+          persistentVolumeClaim:
+            claimName: grafana-volume-claim
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 65534
+      # serviceAccountName: grafana

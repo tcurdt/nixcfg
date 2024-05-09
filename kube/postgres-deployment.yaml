@@ -37,6 +37,13 @@ spec:
             periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 5
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 100Mi
+            limits:
+              # cpu: 200m
+              memory: 200Mi
           volumeMounts:
             - name: postgres-persistent-storage
               mountPath: /var/lib/postgresql/data
@@ -44,3 +51,7 @@ spec:
         - name: postgres-persistent-storage
           persistentVolumeClaim:
             claimName: postgres-volume-claim
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 65534
+      # serviceAccountName: postgres

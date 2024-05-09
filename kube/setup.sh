@@ -27,6 +27,12 @@ kubectl apply \
  -f valkey-deployment.yaml \
  -f valkey-service.yaml
 
+kubectl apply \
+ -f grafana-volume.yaml \
+ -f grafana-deployment.yaml \
+ -f grafana-service.yaml
+
+
 # kubectl exec -it pod/postgres-5f8c6bcbc8-n7s9v -- psql -U postgres
 # kubectl exec -it pod/mysql-5f8c6bcbc8-n7s9v -- mysql -u root -p
 
