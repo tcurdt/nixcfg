@@ -12,15 +12,28 @@ spec:
       labels:
         app: grafana
     spec:
+      # initContainers:
+      #   - name: grafana-chown-data
+      #     image: busybox
+      #     imagePullPolicy: IfNotPresent
+      #     command: ["chown", "-R", "472:472", "/data"]
+      #     volumeMounts:
+      #     - mountPath: /data
+      #       name: grafana-persistent-storage
       containers:
         - name: grafana
           image: grafana/grafana-oss:10.4.2
+          # securityContext:
+          #   fsGroup: 472
           env:
             - name: GF_LOG_LEVEL
               value: error
           ports:
             - name: grafana
               containerPort: 3000
+          # fs:
+          #   securityContext:
+          #     fsGroup: 472
           readinessProbe:
             httpGet:
               path: /api/health
@@ -39,8 +52,8 @@ spec:
         - name: grafana-persistent-storage
           persistentVolumeClaim:
             claimName: grafana-volume-claim
-      # securityContext:
-      #   runAsUser: 65534
-      #   runAsGroup: 65534
-      #   fsGroup: 65534
+      securityContext:
+        # runAsUser: 472
+        # runAsGroup: 472
+        fsGroup: 472
       # serviceAccountName: grafana
