@@ -74,4 +74,4 @@ data:
     files = [ "/dev/null" ]
 
     [[outputs.health]]
-    service_address = ":8888"
+    service_address = "http://127.0.0.1:8888"
