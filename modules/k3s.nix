@@ -9,6 +9,10 @@
     "--disable=traefik"
     # "--disable=servicelb"
     # "--disable=metrics-server"
+    # "--disable-cloud-controller"
+    # "--disable-kube-proxy"
+    # "--disable-network-policy"
+    # "--disable-helm-controller"
   ];
 
   networking.nameservers = [ "10.43.0.10" ];
