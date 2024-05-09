@@ -12,6 +12,8 @@ spec:
       labels:
         app: postgres
     spec:
+      # securityContext:
+      #   runAsUser: 65534
       containers:
         - name: postgres
           image: postgres:16-alpine
@@ -51,7 +53,3 @@ spec:
         - name: postgres-persistent-storage
           persistentVolumeClaim:
             claimName: postgres-volume-claim
-      # securityContext:
-      #   runAsNonRoot: true
-      #   runAsUser: 65534
-      # serviceAccountName: postgres

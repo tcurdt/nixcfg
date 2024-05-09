@@ -12,6 +12,8 @@ spec:
       labels:
         app: mysql
     spec:
+      # securityContext:
+      #   runAsUser: 65534
       containers:
         - name: mysql
           image: mysql:8
@@ -62,7 +64,3 @@ spec:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-volume-claim
-      # securityContext:
-      #   runAsNonRoot: true
-      #   runAsUser: 65534
-      # serviceAccountName: mysql

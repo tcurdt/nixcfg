@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  # namespace: monitoring
+  name: telegraf
+  labels:
+    app: telegraf
+spec:
+  selector:
+    matchLabels:
+      name: telegraf
+  template:
+    metadata:
+      labels:
+        name: telegraf
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: telegraf
+          image: docker.io/telegraf:1.30.2-alpine
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: "HOST_PROC"
+              value: "/rootfs/proc"
+            - name: "HOST_SYS"
+              value: "/rootfs/sys"
+            # - name: INFLUXDB_DB
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: influxdb-creds
+            #       key: INFLUXDB_DB
+          volumeMounts:
+            - name: config
+              mountPath: /etc/telegraf
+            - name: sys
+              mountPath: /rootfs/sys
+              readOnly: true
+            - name: proc
+              mountPath: /rootfs/proc
+              readOnly: true
+            - name: utmp
+              mountPath: /var/run/utmp
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: telegraf
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: utmp
+          hostPath:
+            path: /var/run/utmp

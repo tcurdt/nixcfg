@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # namespace: monitoring
   name: grafana
 spec:
   replicas: 1
@@ -29,7 +30,6 @@ spec:
         # runAsGroup: 472
         # fsGroup: 472
         # fsGroupChangePolicy: "OnRootMismatch"
-      # serviceAccountName: grafana
       containers:
         - name: grafana
           image: grafana/grafana-oss:10.4.2

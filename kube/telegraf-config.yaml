@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # namespace: monitoring
+  name: telegraf
+  labels:
+    app: telegraf
+data:
+  telegraf.conf: |+
+    [global_tags]
+      env = "fsn1"
+    [agent]
+      interval = "30s"
+      hostname = "$HOSTNAME"
+    [[inputs.internal]]
+      namepass = [
+        "internal_agent"
+      ]
+    [[inputs.kernel]]
+    [[inputs.cpu]]
+      totalcpu = true
+    [[inputs.mem]]
+    [[inputs.swap]]
+    [[inputs.disk]]
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs"]
+    [[inputs.diskio]]
+    # [[inputs.processes]]
+    # [[inputs.system]]
+    # [[inputs.prometheus]]
+    #   urls = []
+    #   metric_version = 2
+    #   fieldpass = [
+    #     "caddy_*",
+    #     "process_*"
+    #   ]
+    # [[inpiuts.redis]]
+    #   servers = [ "tcp://127.0.0.1:6379" ];
+    #   # fieldpass = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
+    [[inputs.x509_cert]]
+      interval = "24h"
+      sources = [
+        "tcp://foo.com:443"
+      ]
+
+    [[outputs.file]]
+    files = [ "/dev/null" ]
+
+    [[outputs.health]]
+    service_address = ":8888"
