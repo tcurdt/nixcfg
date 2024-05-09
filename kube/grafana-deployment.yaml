@@ -13,17 +13,22 @@ spec:
         app: grafana
     spec:
       # initContainers:
-      #   - name: grafana-chown-data
-      #     image: busybox
-      #     imagePullPolicy: IfNotPresent
-      #     command: ["chown", "-R", "472:472", "/data"]
-      #     volumeMounts:
-      #      - name: grafana-persistent-storage
-      #        mountPath: /data
+      #  - name: grafana-chown-data
+      #    image: busybox
+      #    imagePullPolicy: IfNotPresent
+      #    command: ["chown", "-R", "472:472", "/data"]
+      #    volumeMounts:
+      #     - name: grafana-persistent-storage
+      #       mountPath: /data
       securityContext:
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        # runAsUser: 0
+        # runAsUser: 472
+        # runAsGroup: 472
+        # fsGroup: 472
+        # fsGroupChangePolicy: "OnRootMismatch"
       # serviceAccountName: grafana
       containers:
         - name: grafana
