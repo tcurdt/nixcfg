@@ -8,21 +8,35 @@ metadata:
 data:
   telegraf.conf: |+
     [global_tags]
-      env = "fsn1"
+      dc = "fsn1"
     [agent]
       interval = "30s"
-      hostname = "$HOSTNAME"
+      round_interval = true
+      metric_batch_size = 1000
+      metric_buffer_limit = 10000
+      collection_jitter = "0s"
+      flush_interval = "30s"
+      flush_jitter = "0s"
+      precision = ""
+      debug = true
+      quiet = true
+      logfile = ""
+      omit_hostname = false
+      hostname = "${HOSTNAME}"
     [[inputs.internal]]
       namepass = [
         "internal_agent"
       ]
     [[inputs.kernel]]
     [[inputs.cpu]]
+      percpu = true
       totalcpu = true
+      collect_cpu_time = false
+      report_active = false
     [[inputs.mem]]
     [[inputs.swap]]
     [[inputs.disk]]
-      ignore_fs = ["tmpfs", "devtmpfs", "devfs"]
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
     [[inputs.diskio]]
     # [[inputs.processes]]
     # [[inputs.system]]
@@ -33,14 +47,28 @@ data:
     #     "caddy_*",
     #     "process_*"
     #   ]
-    # [[inpiuts.redis]]
+    # [[inputs.redis]]
     #   servers = [ "tcp://127.0.0.1:6379" ];
     #   # fieldpass = [ "keyspace_*" "used_*" "tracking_*" "io_threaed_*" ];
+
     [[inputs.x509_cert]]
       interval = "24h"
       sources = [
-        "tcp://foo.com:443"
+        "tcp://google.com:443"
       ]
+
+    [[inputs.kubernetes]]
+    url = "https://$HOSTIP:10250"
+    bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    # insecure_skip_verify = true
+
+    # [[inputs.kube_inventory]]
+    # url = "https://${KUBERNETES_SERVICE_HOST}"
+    # bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
+    # tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    # insecure_skip_verify = true
+    # namespace = ""
 
     [[outputs.file]]
     files = [ "/dev/null" ]

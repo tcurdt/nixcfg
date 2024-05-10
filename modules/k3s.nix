@@ -32,6 +32,7 @@
     pkgs.envsubst
     pkgs.k9s
     # pkgs.kubectx
+    # pkgs.kor # unstable
   ];
 
 }

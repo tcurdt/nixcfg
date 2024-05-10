@@ -14,7 +14,7 @@ spec:
       labels:
         name: telegraf
     spec:
-      terminationGracePeriodSeconds: 30
+      # terminationGracePeriodSeconds: 30
       containers:
         - name: telegraf
           image: docker.io/telegraf:1.30.2-alpine
@@ -23,15 +23,32 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: HOSTIP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
             - name: "HOST_PROC"
               value: "/rootfs/proc"
             - name: "HOST_SYS"
               value: "/rootfs/sys"
+            # - name: "HOST_MOUNT_PREFIX"
+            #   value: "/hostfs"
             # - name: INFLUXDB_DB
             #   valueFrom:
             #     secretKeyRef:
             #       name: influxdb-creds
             #       key: INFLUXDB_DB
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8888
+          # resources:
+          #   requests:
+          #     # cpu: 100m
+          #     memory: 300Mi
+          #   limits:
+          #     # cpu: 200m
+          #     memory: 600Mi
           volumeMounts:
             - name: config
               mountPath: /etc/telegraf
