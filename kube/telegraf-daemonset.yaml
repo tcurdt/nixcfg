@@ -27,11 +27,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: KUBERNETES_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: default-token
-                  key: token
             - name: "HOST_PROC"
               value: "/rootfs/proc"
             - name: "HOST_SYS"
