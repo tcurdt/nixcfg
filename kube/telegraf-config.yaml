@@ -58,20 +58,20 @@ data:
       ]
 
     [[inputs.kubernetes]]
-    url = "https://$HOSTIP:10250"
-    bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-    tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-    # insecure_skip_verify = true
+      url = "https://$HOSTIP:10250"
+      bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+      # insecure_skip_verify = true
 
     # [[inputs.kube_inventory]]
-    # url = "https://${KUBERNETES_SERVICE_HOST}"
-    # bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
-    # tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-    # insecure_skip_verify = true
-    # namespace = ""
+      # url = "https://${KUBERNETES_SERVICE_HOST}"
+      # bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
+      # tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+      # insecure_skip_verify = true
+      # namespace = ""
 
     [[outputs.file]]
-    files = [ "/dev/null" ]
+      files = [ "/dev/null" ]
 
     [[outputs.health]]
-    service_address = "http://127.0.0.1:8888"
+      service_address = "http://127.0.0.1:8888"

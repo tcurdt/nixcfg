@@ -32,27 +32,62 @@ mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
 
 kubectl apply \
  -f postgres-volume.yaml \
- -f postgres-deployment.yaml \
- -f postgres-service.yaml
+ -f postgres-deployment.yaml
 
 kubectl apply \
  -f mysql-volume.yaml \
- -f mysql-deployment.yaml \
- -f mysql-service.yaml
+ -f mysql-deployment.yaml
 
 kubectl apply \
- -f valkey-deployment.yaml \
- -f valkey-service.yaml
+ -f valkey-deployment.yaml
 
 kubectl apply \
  -f grafana-volume.yaml \
- -f grafana-deployment.yaml \
- -f grafana-service.yaml
+ -f grafana-deployment.yaml
 
 kubectl apply \
  -f telegraf-config.yaml \
  -f telegraf-daemonset.yaml
 
+kubectl create namespace monitoring
+
+helm repo add influxdata https://helm.influxdata.com/
+helm install influxdata/influxdb2 --generate-name
+helm install influxdata/telegraf --generate-name
+
+helm repo add grafana https://grafana.github.io/helm-charts
+helm install grafana/grafana --generate-name
+
+kubectl create secret generic influxdb-auth \
+  --from-literal=admin-password=foo \
+  --from-literal=admin-token=token
+
+
+deploymentMode: SingleBinary
+loki:
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: 'filesystem'
+  schemaConfig:
+    configs:
+    - from: 2024-01-01
+      store: tsdb
+      index:
+        prefix: loki_index_
+        period: 24h
+      object_store: filesystem # we're storing on filesystem so there's no real persistence here.
+      schema: v13
+singleBinary:
+  replicas: 1
+read:
+  replicas: 0
+backend:
+  replicas: 0
+write:
+  replicas: 0
+
+helm install --values values.yaml loki --namespace=loki grafana/loki
 
 # kubectl exec -it pod/postgres-5f8c6bcbc8-n7s9v -- psql -U postgres
 # kubectl exec -it pod/mysql-5f8c6bcbc8-n7s9v -- mysql -u root -p

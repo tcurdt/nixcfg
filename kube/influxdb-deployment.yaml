@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # namespace: monitoring
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  ports:
+    - port: 8086
+  selector:
+    app: influxdb
 ---
 apiVersion: apps/v1
 kind: Deployment
