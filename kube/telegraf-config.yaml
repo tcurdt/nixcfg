@@ -59,8 +59,9 @@ data:
 
     [[inputs.kubernetes]]
     url = "https://$HOSTIP:10250"
-    bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-    tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    bearer_token = "${KUBERNETES_API_TOKEN}"
+    # bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    # tls_ca = "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
     # insecure_skip_verify = true
 
     # [[inputs.kube_inventory]]
