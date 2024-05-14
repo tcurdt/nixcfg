@@ -7,8 +7,8 @@
   services.k3s.role = "server";
   services.k3s.extraFlags = toString [
     "--disable=traefik"
+    "--disable=metrics-server"
     # "--disable=servicelb"
-    # "--disable=metrics-server"
     # "--disable-cloud-controller"
     # "--disable-kube-proxy"
     # "--disable-network-policy"

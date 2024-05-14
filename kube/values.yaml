@@ -1,0 +1,25 @@
+grafana:
+  adminPassword: secret
+  persistence:
+    enabled: true
+
+prometheus:
+  persistence:
+    enabled: true
+
+alertmanager:
+  enabled: true
+
+kubeEtcd:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+thanosService:
+  enabled: true
+  persistence:
+    enabled: true
