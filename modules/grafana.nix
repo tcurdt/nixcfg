@@ -14,12 +14,19 @@
     # declarativePlugins = [
     #   pkgs.grafanaPlugins.grafana-piechart-panel
     # ];
-    # provision = {
-    #   notifiers = {};
-    #   dashboards = {
-    #     path = "";
-    #   };
-    # };
+    provision = {
+      # datasources = [
+      #   {
+      #     name = "loki";
+      #     type = "loki";
+      #     url = "127.0.0.1:3100";
+      #   }
+      # ];
+      # notifiers = {};
+      # dashboards = {
+      #   path = "";
+      # };
+    };
   };
 
   environment.systemPackages = [
