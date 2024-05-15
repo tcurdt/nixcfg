@@ -1,14 +1,19 @@
 { config, pkgs, ... }:
 {
   services.thanos = {
-    # compact = {};
-    # downsample = {};
-    # query = {};
-    # query-frontend = {};
-    # receive = {};
-    # rule = {};
-    # sidecar = {};
-    # store = {};
+    sidecar = {};
+    store = {};
+    query = {};
+    query-frontend = {};
+    rule = {};
+    compact = {};
+    downsample = {};
+    receive = {};
+
+    # log = "error";
+    # tracing = {};
+    # common = {};
+    # objstore = {};
   };
 
   environment.systemPackages = [
