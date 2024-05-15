@@ -4,16 +4,20 @@
     enable = true;
 
     configuration = {
-      server.http_listen_port = 9080;
-      server.grpc_listen_port = 0;
+      server = {
+        http_listen_address = "127.0.0.1"; # 0.0.0.0
+        http_listen_port = 9080;
+        grpc_listen_address = "127.0.0.1"; # 0.0.0.0
+        grpc_listen_port = 9096;
+      };
 
-      # clients = [
-      #   {
+      clients = [
+        {
       #     basic_auth.username = "promtail@thalheim.io";
       #     basic_auth.password_file = config.sops.secrets.promtail-password.path;
-      #     url = "http://loki.r/loki/api/v1/push";
-      #   }
-      # ];
+          url = "http://127.0.0.1:3100/loki/api/v1/push";
+        }
+      ];
 
       scrape_configs = [
         {

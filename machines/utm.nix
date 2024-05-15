@@ -20,9 +20,12 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/podman.nix
     # ../modules/docker.nix
 
-    ../modules/loki.nix
     ../modules/prometheus.nix
     ../modules/thanos.nix
+
+    ../modules/loki.nix
+    ../modules/promtail.nix
+
     ../modules/grafana.nix
 
     # ../modules/telegraf.nix

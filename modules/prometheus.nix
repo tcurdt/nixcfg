@@ -2,7 +2,7 @@
 {
   services.prometheus = {
     enable = true;
-    listenAddress = "127.0.0.1";
+    listenAddress = "127.0.0.1"; # "0.0.0.0"
     # globalConfig = {
     #   scrape_interval = "10s";
     # };
