@@ -62,6 +62,13 @@ kubectl create secret generic influxdb-auth \
   --from-literal=admin-password=foo \
   --from-literal=admin-token=token
 
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install bitnami/postgresql --generate-name \
+  --set primary.persistence.existingClaim=pg-pvc \
+  --set auth.postgresPassword=pgpass \
+  --set volumePermissions.enabled=true
+helm install my-release oci://registry-1.docker.io/bitnamicharts/postgresql
+
 
 deploymentMode: SingleBinary
 loki:
