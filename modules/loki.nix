@@ -7,14 +7,16 @@
       auth_enabled = false;
 
       server = {
-        http_listen_address = "127.0.0.1"; # "0.0.0.0"
+        http_listen_address = "127.0.0.1"; # "0.0.0.0";
         http_listen_port = 3100;
-        grpc_listen_address = "127.0.0.1"; # "0.0.0.0"
+        grpc_listen_address = "127.0.0.1"; # "0.0.0.0";
         grpc_listen_port = 9095;
+        log_level = "error";
+        # log_format = "json";
       };
 
       common = {
-        instance_addr = "127.0.0.1";
+        instance_addr = "127.0.0.1"; # "0.0.0.0";
         replication_factor = 1;
         ring = {
           kvstore = {

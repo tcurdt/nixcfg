@@ -2,20 +2,26 @@
 {
   services.prometheus = {
     enable = true;
-    listenAddress = "127.0.0.1"; # "0.0.0.0"
-    # globalConfig = {
-    #   scrape_interval = "10s";
-    # };
-    # scrapeConfigs = [
-    #   {
-    #     job_name = "";
-    #     static_configs = [
-    #       {
-    #         targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
-    #       }
-    #     ];
-    #   }
-    # ];
+    listenAddress = "127.0.0.1"; # "0.0.0.0";
+    globalConfig = {
+      scrape_interval = "10s";
+    };
+    scrapeConfigs = [
+      {
+        job_name = "node";
+        static_configs = [
+          { targets = [ "127.0.0.1:9100" ]; }
+        ];
+	metric_relabel_configs = [
+	  {
+            source_labels = [ "__name__" ];
+            regex = "^(node_|process_|up).*";
+            action = "keep";
+          }
+        ];
+      }
+    ];
+
     exporters = {
       node = {
         enable = true;
