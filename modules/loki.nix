@@ -33,14 +33,14 @@
       };
 
       query_range = {
-        # results_cache = {
-        #   cache = {
-        #     embedded_cache = {
-        #       enabled = true;
-        #       max_size_mb = 100;
-        #     };
-        #   };
-        # };
+        results_cache = {
+          cache = {
+            embedded_cache = {
+              enabled = true;
+              max_size_mb = 100;
+            };
+          };
+        };
       };
 
       schema_config = {
@@ -62,9 +62,9 @@
         # alertmanager_url = "http://localhost:9093";
       };
 
-      # frontend = {
-      #   encoding = "protobuf";
-      # };
+      frontend = {
+        # encoding = "protobuf";
+      };
 
     };
   };
