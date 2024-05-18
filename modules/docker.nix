@@ -14,6 +14,11 @@
     };
   };
 
+  # systemd.services.docker.serviceConfig.LogLevelMax = 0;
+  # systemd.services.docker.serviceConfig.LogFilterPatterns = [
+  #   "run-docker-runtime"
+  # ];
+
   environment.systemPackages = [
     pkgs.docker-compose
     pkgs.regclient
