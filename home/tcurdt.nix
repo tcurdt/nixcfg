@@ -183,13 +183,14 @@
   };
 
   home.shellAliases = {
-    ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
     cat = "bat --style plain --paging=never";
     bat = "bat --style numbers --paging=never";
+    ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
     ls = "eza";
     g = "git";
     lg = "lazygit";
     dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
+    systemtime = "chronyc makestep && chronyc tracking";
   };
 
   home.sessionVariables = {
