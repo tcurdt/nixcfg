@@ -14,6 +14,11 @@
     };
   };
 
+  services.journald.extraConfig = ''
+    MaxLevelStore=notice
+    MaxLevelSyslog=notice
+  '';
+
   # systemd.services.docker.serviceConfig.LogLevelMax = 0;
   # systemd.services.docker.serviceConfig.LogFilterPatterns = [
   #   "run-docker-runtime"
