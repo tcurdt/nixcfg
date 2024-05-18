@@ -13,13 +13,13 @@
         static_configs = [
           { targets = [ "127.0.0.1:9090" ]; }
         ];
-	#metric_relabel_configs = [
-	#  {
-        #    source_labels = [ "__name__" ];
-        #    regex = "^(node_|process_|up).*";
-        #    action = "keep";
-        #  }
-        #];
+	metric_relabel_configs = [
+	  {
+            source_labels = [ "__name__" ];
+            regex = "^(prometheus_.*|up)";
+            action = "keep";
+          }
+        ];
       }
 
       {
@@ -27,13 +27,13 @@
         static_configs = [
           { targets = [ "127.0.0.1:9091" ]; }
         ];
-	#metric_relabel_configs = [
-	#  {
-        #    source_labels = [ "__name__" ];
-        #    regex = "^(node_|process_|up).*";
-        #    action = "keep";
-        #  }
-        #];
+	metric_relabel_configs = [
+	  {
+            source_labels = [ "__name__" ];
+            regex = "up";
+            action = "keep";
+          }
+        ];
       }
 
       {
@@ -41,13 +41,13 @@
         static_configs = [
           { targets = [ "127.0.0.1:2019" ]; }
         ];
-	#metric_relabel_configs = [
-	#  {
-        #    source_labels = [ "__name__" ];
-        #    regex = "^(node_|process_|up).*";
-        #    action = "keep";
-        #  }
-        #];
+	metric_relabel_configs = [
+	  {
+            source_labels = [ "__name__" ];
+            regex = "^(caddy_.*|up)";
+            action = "keep";
+          }
+        ];
       }
 
       {
@@ -58,7 +58,7 @@
 	metric_relabel_configs = [
 	  {
             source_labels = [ "__name__" ];
-            regex = "^(node_|process_|up).*";
+            regex = "^(node_.*|process_.*|up)";
             action = "keep";
           }
         ];
