@@ -19,6 +19,14 @@
     MaxLevelSyslog=notice
   '';
 
+  # systemd.units."run-docker-.mount" = {
+  #   overrideStrategy = "asDropin";
+  #   text = ''
+  #     [Mount]
+  #     LogLevelMax=0
+  #   '';
+  # };
+
   # systemd.services.docker.serviceConfig.LogLevelMax = 0;
   # systemd.services.docker.serviceConfig.LogFilterPatterns = [
   #   "run-docker-runtime"
