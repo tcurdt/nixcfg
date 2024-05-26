@@ -1,3 +1,7 @@
+mkdir -p /srv/volumes/cdn && chown 65534:65534 /srv/volumes/cdn
+mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
+mkdir -p /srv/volumes/postgres && chown 65534:65534 /srv/volumes/postgres
+
 kubectl create secret generic postgres-superuser \
 --from-literal=username=postgres \
 --from-literal=password=secret
@@ -5,6 +9,7 @@ kubectl create secret generic postgres-superuser \
 # kubectl create secret generic postgres-superuser \
 # --from-file=username=./username.txt \
 # --from-file=password=./password.txt
+
 
 kubectl apply \
  -f namespaces.yaml
@@ -25,8 +30,14 @@ kubectl apply \
 kubectl apply \
  -f backend-live.yaml
 
+kubectl apply \
+ -f grafana.yaml
+
 curl -k --resolve live.vafer.org:443:127.0.0.1 https://live.vafer.org
 curl -k --resolve test.vafer.org:443:127.0.0.1 https://test.vafer.org
+
+kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/master/deployments/kubernetes/reloader.yaml
+kubectl rollout restart deployment/caddy
 
 # -----------
 
