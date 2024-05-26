@@ -17,6 +17,17 @@ kubectl apply \
  -f echo.yaml
 
 
+# curl -k --resolve dev.vafer.org:443:10.43.199.140 https://dev.vafer.org
+
+# iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port <nodePort>
+# iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port <nodePort>
+
+# net.ipv4.ip_forward=1
+# /etc/sysctl.conf
+# sudo sysctl -p
+
+# ufw route allow proto tcp from any to any port 80 redirect to <nodePort>
+# ufw route allow proto tcp from any to any port 443 redirect to <nodePort>
 
 # -----------
 
