@@ -24,11 +24,14 @@ data:
     {
       email "tcurdt@vafer.org"
       admin :2019
-      servers { metrics }
+      servers {
+        metrics
+      }
       acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
     }
 
     dev.vafer.org {
+      tls internal
       header -server
       respond "We will be back shortly" 503 {
         close
