@@ -38,19 +38,19 @@ data:
     live.vafer.org {
       tls internal
       header -server
-      respond "We will be back shortly" 503 {
-        close
-      }
-      # reverse_proxy http://echo.live.svc.cluster.local:80
+      # respond "We will be back shortly" 503 {
+      #   close
+      # }
+      reverse_proxy http://backend.live.svc.cluster.local:80
     }
 
     test.vafer.org {
       tls internal
       header -server
-      respond "We will be back shortly" 503 {
-        close
-      }
-      # reverse_proxy http://echo.test.svc.cluster.local:80
+      # respond "We will be back shortly" 503 {
+      #   close
+      # }
+      reverse_proxy http://backend.test.svc.cluster.local:80
     }
 ---
 apiVersion: apps/v1

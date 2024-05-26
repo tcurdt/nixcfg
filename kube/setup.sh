@@ -20,15 +20,23 @@ kubectl apply \
  -f valkey.yaml
 
 kubectl apply \
- -f echo.yaml \
- --namespace live
+ -f backend-test.yaml
 
 kubectl apply \
- -f echo.yaml \
- --namespace test
+ -f backend-live.yaml
 
+curl -k --resolve live.vafer.org:443:127.0.0.1 https://live.vafer.org
+curl -k --resolve test.vafer.org:443:127.0.0.1 https://test.vafer.org
 
 # -----------
+
+# kubectl apply \
+#  -f echo.yaml \
+#  --namespace live
+
+# kubectl apply \
+#  -f echo.yaml \
+#  --namespace test
 
 # curl -k --resolve dev.vafer.org:443:10.43.29.39 https://dev.vafer.org
 # curl -k --resolve dev.vafer.org:443:192.168.75.3 https://dev.vafer.org
