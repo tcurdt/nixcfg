@@ -23,8 +23,8 @@ create_hosts_file() {
     caddy=$(lookup "caddy.default.svc.cluster.local" $coredns_ip)
     postgres=$(lookup "postgres.default.svc.cluster.local" $coredns_ip)
     valkey=$(lookup "valkey.default.svc.cluster.local" $coredns_ip)
-    backend_live=$(lookup "echo.live.svc.cluster.local" $coredns_ip)
-    backend_test=$(lookup "echo.test.svc.cluster.local" $coredns_ip)
+    backend_live=$(lookup "backend.live.svc.cluster.local" $coredns_ip)
+    backend_test=$(lookup "backend.test.svc.cluster.local" $coredns_ip)
 
     echo "" | tee $hosts_new
 
