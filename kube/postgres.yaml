@@ -10,8 +10,39 @@ spec:
   selector:
     app: postgres
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  # persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    # mkdir -p /srv/volumes/postgres
+    path: /srv/volumes/postgres
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-volume-claim
+  labels:
+    app: postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: postgres
 spec:
@@ -30,6 +61,7 @@ spec:
         - name: postgres
           image: postgres:16-alpine
           env:
+            # kubectl create secret generic postgres-superuser --from-literal=password=secret
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -59,9 +91,9 @@ spec:
               # cpu: 200m
               memory: 200Mi
           volumeMounts:
-            - name: postgres-persistent-storage
+            - name: postgres-storage
               mountPath: /var/lib/postgresql/data
       volumes:
-        - name: postgres-persistent-storage
+        - name: postgres-storage
           persistentVolumeClaim:
             claimName: postgres-volume-claim

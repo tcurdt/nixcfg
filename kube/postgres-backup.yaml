@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: database-backup
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: database-backup
+            image: your-docker-image:tag
+            env:
+              - name: DB_HOST
+                value: postgresql
+              - name: DB_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: username
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-superuser
+                    key: password

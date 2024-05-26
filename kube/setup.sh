@@ -1,3 +1,26 @@
+kubectl create secret generic postgres-superuser \
+--from-literal=username=postgres \
+--from-literal=password=secret
+
+# kubectl create secret generic postgres-superuser \
+# --from-file=username=./username.txt \
+# --from-file=password=./password.txt
+
+kubectl apply \
+ -f postgres.yaml \
+ -f postgres-backup.yaml
+
+kubectl apply \
+ -f valkey.yaml
+
+kubectl apply \
+ -f echo.yaml
+
+
+
+# -----------
+
+
 export GITHUB_USER=tcurdt
 export GITHUB_TOKEN=...
 
@@ -25,21 +48,14 @@ kubectl create secret generic grafana-creds \
 kubectl create secret generic mysql-superuser \
 --from-literal=password=secret
 
-kubectl create secret generic postgres-superuser \
---from-literal=password=secret
 
 mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
 
-kubectl apply \
- -f postgres-volume.yaml \
- -f postgres-deployment.yaml
 
 kubectl apply \
  -f mysql-volume.yaml \
  -f mysql-deployment.yaml
 
-kubectl apply \
- -f valkey-deployment.yaml
 
 kubectl apply \
  -f grafana-volume.yaml \
@@ -105,6 +121,3 @@ helm install --values values.yaml loki --namespace=loki grafana/loki
 # kubectl exec -it postgres-665b7554dc-cddgq -- /bin/bash
 # psql -U ps_user -d ps_db -f /tmp/db_backup.sql
 
-# kubectl create secret generic postgres-superuser \
-# --from-file=username=./username.txt \
-# --from-file=password=./password.txt
