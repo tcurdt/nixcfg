@@ -1,32 +1,38 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: echo
+  name: backend
+  namespace: live
+  labels:
+    app: backend
 spec:
   ports:
   - port: 80
     targetPort: 5678
   selector:
-    app: echo
+    app: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echo
+  name: backend
+  namespace: live
+  labels:
+    app: backend
 spec:
   selector:
     matchLabels:
-      app: echo
-  replicas: 1
+      app: backend
+  replicas: 2
   template:
     metadata:
       labels:
-        app: echo
+        app: backend
     spec:
       containers:
-      - name: echo
+      - name: backend
         image: hashicorp/http-echo
         args:
-        - "-text=echo"
+        - "-text=backend-live"
         ports:
         - containerPort: 5678

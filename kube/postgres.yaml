@@ -15,6 +15,7 @@ kind: PersistentVolume
 metadata:
   name: postgres-volume
   labels:
+    app: postgres
     type: local
 spec:
   capacity:
@@ -45,6 +46,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
+  labels:
+    app: postgres
 spec:
   replicas: 1
   selector:

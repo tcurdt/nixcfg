@@ -14,6 +14,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: valkey
+  labels:
+    app: valkey
 spec:
   replicas: 1
   selector:

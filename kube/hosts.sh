@@ -20,12 +20,19 @@ create_hosts_file() {
     coredns_ip="10.43.0.10"
     hosts_new="/etc/hosts.new"
 
-    echo=$(lookup "echo.default.svc.cluster.local" $coredns_ip)
+    caddy=$(lookup "caddy.default.svc.cluster.local" $coredns_ip)
+    postgres=$(lookup "postgres.default.svc.cluster.local" $coredns_ip)
+    valkey=$(lookup "valkey.default.svc.cluster.local" $coredns_ip)
+    backend_live=$(lookup "echo.live.svc.cluster.local" $coredns_ip)
+    backend_test=$(lookup "echo.test.svc.cluster.local" $coredns_ip)
 
     echo "" | tee $hosts_new
 
-    echo "$echo echo.service" | tee -a $hosts_new
-
+    echo "$caddy caddy.default.svc.cluster.local"       | tee -a $hosts_new
+    echo "$postgres postgres.default.svc.cluster.local" | tee -a $hosts_new
+    echo "$valkey valkey.default.svc.cluster.local"     | tee -a $hosts_new
+    echo "$backend_live backend.live.svc.cluster.local" | tee -a $hosts_new
+    echo "$backend_test backend.test.svc.cluster.local" | tee -a $hosts_new
 }
 
 create_hosts_file

@@ -7,6 +7,12 @@ kubectl create secret generic postgres-superuser \
 # --from-file=password=./password.txt
 
 kubectl apply \
+ -f namespaces.yaml
+
+kubectl apply \
+ -f caddy.yaml
+
+kubectl apply \
  -f postgres.yaml \
  -f postgres-backup.yaml
 
@@ -14,15 +20,20 @@ kubectl apply \
  -f valkey.yaml
 
 kubectl apply \
- -f echo.yaml
+ -f echo.yaml \
+ --namespace live
+
+kubectl apply \
+ -f echo.yaml \
+ --namespace test
 
 
 # -----------
 
-# curl -k --resolve dev.vafer.org:443:10.43.199.140 https://dev.vafer.org
+# curl -k --resolve dev.vafer.org:443:10.43.29.39 https://dev.vafer.org
 # curl -k --resolve dev.vafer.org:443:192.168.75.3 https://dev.vafer.org
 # curl -k --resolve dev.vafer.org:443:127.0.0.1 https://dev.vafer.org
-# iptables -t nat -L
+# iptables -t nat -nL --line-numbers
 
 # iptables -t nat -I PREROUTING 1 -p tcp --dport 80  -j REDIRECT --to-port 30080
 # iptables -t nat -I PREROUTING 1 -p tcp --dport 443 -j REDIRECT --to-port 30443
