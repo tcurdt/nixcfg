@@ -6,10 +6,12 @@ spec:
   selector:
     app: caddy
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     port: 80
     targetPort: 80
-  - protocol: TCP
+  - name: https
+    protocol: TCP
     port: 443
     targetPort: 443
 ---
