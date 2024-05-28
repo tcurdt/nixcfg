@@ -46,6 +46,8 @@
     pkgs.envsubst
     pkgs.k9s
     pkgs.kubectx
+    pkgs.kubetail
+    pkgs.stern
     # pkgs.kor # unstable
   ];
 

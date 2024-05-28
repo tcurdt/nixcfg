@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: cdn-volume
+  namespace: infra
   labels:
     app: cdn
     type: local
@@ -20,6 +21,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: cdn-volume-claim
+  namespace: infra
   labels:
     app: cdn
 spec:
@@ -34,6 +36,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: caddy
+  namespace: infra
   labels:
     app: caddy
 spec:
@@ -54,6 +57,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: caddy
+  namespace: infra
   labels:
     app: caddy
   # annotations:
@@ -109,6 +113,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: caddy
+  namespace: infra
   labels:
     app: caddy
   annotations:

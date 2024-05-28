@@ -2,6 +2,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: database-backup
+  namespace: infra
   labels:
     app: postgres
 spec:

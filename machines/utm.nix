@@ -15,18 +15,18 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     ../modules/users.nix
 
-    # ../modules/rke2.nix
     ../modules/k3s.nix
+    # ../modules/rke2.nix
     # ../modules/podman.nix
     # ../modules/docker.nix
 
-    ../modules/prometheus.nix
-    ../modules/thanos.nix
+    # ../modules/prometheus.nix
+    # ../modules/thanos.nix
 
-    ../modules/loki.nix
-    ../modules/promtail.nix
+    # ../modules/loki.nix
+    # ../modules/promtail.nix
 
-    ../modules/grafana.nix
+    # ../modules/grafana.nix
 
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix

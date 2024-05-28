@@ -10,7 +10,6 @@ kubectl create secret generic postgres-superuser \
 # --from-file=username=./username.txt \
 # --from-file=password=./password.txt
 
-
 kubectl apply \
  -f namespaces.yaml
 
@@ -18,8 +17,7 @@ kubectl apply \
  -f caddy.yaml
 
 kubectl apply \
- -f postgres.yaml \
- -f postgres-backup.yaml
+ -f postgres.yaml
 
 kubectl apply \
  -f valkey.yaml
@@ -30,14 +28,34 @@ kubectl apply \
 kubectl apply \
  -f backend-live.yaml
 
-kubectl apply \
- -f grafana.yaml
+# kubectl apply \
+#  -f grafana.yaml
 
+echo "foo" > /srv/volumes/cdn/foo
+curl -k --resolve cdn.vafer.org:443:127.0.0.1  https://cdn.vafer.org/foo
 curl -k --resolve live.vafer.org:443:127.0.0.1 https://live.vafer.org
 curl -k --resolve test.vafer.org:443:127.0.0.1 https://test.vafer.org
 
-kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/master/deployments/kubernetes/reloader.yaml
+
+# helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+# helm repo update
+# helm upgrade -i prometheus prometheus-community/prometheus
+
+# kubectl apply \
+#  -f postgres-backup.yaml
+
+
+
+# kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/master/deployments/kubernetes/reloader.yaml
 kubectl rollout restart deployment/caddy
+
+
+# kubectl get pods --all-namespaces -o wide | grep Evicted | awk '{print $1,$2}' | xargs -L1 kubectl delete pod -n
+# kubectl get pods --all-namespaces -o wide | grep Error | awk '{print $1,$2}' | xargs -L1 kubectl delete pod -n
+# kubectl get pods --all-namespaces -o wide | grep Completed | awk '{print $1,$2}' | xargs -L1 kubectl delete pod -n
+# kubectl describe -A pvc | grep -E "^Name:.*$|^Namespace:.*$|^Used By:.*$" | grep -B 2 "<none>" | grep -E "^Name:.*$|^Namespace:.*$" | cut -f2 -d: | paste -d " " - - | xargs -n2 bash -c 'kubectl -n ${1} delete pvc ${0}'
+# kubectl get pvc --all-namespaces | tail -n +2 | grep -v Bound | awk '{print $1,$2}' | xargs -L1 kubectl delete pvc -n
+# kubectl get pv | tail -n +2 | grep -v Bound | awk '{print $1}' | xargs -L1 kubectl delete pv
 
 # -----------
 
