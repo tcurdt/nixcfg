@@ -15,6 +15,7 @@ lookup() {
   fi
 }
 
+
 filename="/etc/hosts"
 filename_tmp="/etc/hosts.tmp"
 
@@ -27,7 +28,7 @@ backend_live=$(lookup "backend.live.svc.cluster.local" $coredns_ip)
 backend_test=$(lookup "backend.test.svc.cluster.local" $coredns_ip)
 
 content=$(cat <<EOF
-# generate below
+# marker
 
 $caddy caddy.default.svc.cluster.local
 $postgres postgres.default.svc.cluster.local
@@ -40,7 +41,7 @@ EOF
 
 marker_found=false
 while IFS= read -r line; do
-  if [[ $line == "# generate below" ]]; then
+  if [[ $line == "# marker" ]]; then
     marker_found=true
     echo "$content"
   else
@@ -53,4 +54,4 @@ if ! $marker_found; then
   echo "$content" >> "$filename_tmp"
 fi
 
-mv "$filename_tmp" "$filename"
+# mv "$filename_tmp" "$filename"
