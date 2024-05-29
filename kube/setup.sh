@@ -3,6 +3,7 @@ mkdir -p /srv/volumes/loki && chown 65534:65534 /srv/volumes/loki
 mkdir -p /srv/volumes/thanos && chown 65534:65534 /srv/volumes/thanos
 mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
 mkdir -p /srv/volumes/postgres && chown 65534:65534 /srv/volumes/postgres
+mkdir -p /srv/volumes/prometheus && chown 65534:65534 /srv/volumes/prometheus
 
 kubectl create secret generic postgres-superuser \
 --from-literal=username=postgres \
