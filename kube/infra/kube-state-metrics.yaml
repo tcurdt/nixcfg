@@ -110,8 +110,8 @@ metadata:
   name: kube-state-metrics-binding
 subjects:
 - kind: ServiceAccount
-  name: kube-state-metrics
   namespace: kube-system
+  name: kube-state-metrics
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

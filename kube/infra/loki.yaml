@@ -60,9 +60,9 @@ data:
   loki.yml: |
     auth_enabled: false
     reporting_enabled: false
+    log_level: "error"
     # local_storage_config:
     #   directory: ""
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -84,9 +84,6 @@ spec:
       containers:
       - name: loki
         image: grafana/loki:latest
-        env:
-          - name: LOKI_LOG_LEVEL
-            value: "error"
         ports:
           - name: loki
             containerPort: 3100
