@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: infra
+  name: pushgateway
+  labels:
+    app: pushgateway
+spec:
+  containers:
+  - name: pushgateway
+    image: prom/pushgateway:latest
+    ports:
+    - containerPort: 9091
+      name: http
+  resources:
+    requests:
+      # cpu: 50m
+      memory: 100Mi
+    limits:
+      # cpu: 100m
+      memory: 200Mi

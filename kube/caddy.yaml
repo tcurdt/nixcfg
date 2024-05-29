@@ -76,18 +76,34 @@ data:
     live.vafer.org {
       tls internal
       header -server
-      # respond "We will be back shortly" 503 {
-      #   close
-      # }
-      reverse_proxy http://backend.live.svc.cluster.local:80
+
+      # if file "maintenance" exists on disk show maintenance
+
+      @exists {
+        file /srv/volumes/cdn/maintenance
+      }
+
+      handle @exists {
+        respond "We will be back shortly" 503 {
+          close
+        }
+      }
+
+      # otherwise pass on to proxy
+
+      handle {
+        reverse_proxy http://backend.live.svc.cluster.local:80
+      }
     }
 
     test.vafer.org {
       tls internal
       header -server
+
       # respond "We will be back shortly" 503 {
       #   close
       # }
+
       reverse_proxy http://backend.test.svc.cluster.local:80
     }
 
@@ -116,8 +132,8 @@ metadata:
   namespace: infra
   labels:
     app: caddy
-  annotations:
-    reloader.stakater.com/search: "true"
+  # annotations:
+  #   reloader.stakater.com/search: "true"
 spec:
   replicas: 1
   selector:

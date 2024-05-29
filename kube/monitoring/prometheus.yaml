@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: infra
+  name: prometheus-volume
+  labels:
+    app: prometheus
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  hostPath:
+    path: /srv/volumes/prometheus
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: infra
+  name: prometheus-volume-claim
+  labels:
+    app: prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  # persistentVolumeReclaimPolicy: Retain
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus
+  namespace: infra
+  labels:
+    app: prometheus
+  # annotations:
+  #   reloader.stakater.com/match: "true"
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 30s
+    # scrape_configs:
+    #   - job_name: 'replaceme'
+    # scrape_configs:
+    #   - job_name: 'node'
+    #     scheme: http
+    #     static_configs:
+    #     - targets: ['<node_ip>:9100']
+  datasource.yml: |-
+     apiVersion: 1
+     datasources:
+     - name: Prometheus
+       type: prometheus
+       url: https://127.0.0.1:9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: infra
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  # clusterIP: None
+  selector:
+    app: prometheus
+  ports:
+  - protocol: TCP
+    port: 9090
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: infra
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: prometheus
+        image: prometheus/prometheus:latest
+        args: ["--config.file=/etc/prometheus/prometheus.yml"]
+        ports:
+          - name: prometheus
+            containerPort: 9090
+        resources:
+          requests:
+            # cpu: 100m
+            memory: 100Mi
+          limits:
+            # cpu: 200m
+            memory: 200Mi
+        volumeMounts:
+          - name: prometheus-config
+            mountPath: /etc/prometheus/prometheus.yml
+            subPath: prometheus.yml
+          - name: prometheus-storage
+            mountPath: /prometheus
+    volumes:
+      - name: prometheus-config
+        configMap:
+          name: prometheus
+      - name: prometheus-storage
+        persistentVolumeClaim:
+          claimName: prometheus-volume-claim
+

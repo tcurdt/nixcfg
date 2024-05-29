@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: infra
+  name: loki-volume
+  labels:
+    app: loki
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  hostPath:
+    path: /srv/volumes/loki
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: infra
+  name: loki-volume-claim
+  labels:
+    app: loki
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  # persistentVolumeReclaimPolicy: Retain
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: infra
+  name: loki
+  labels:
+    app: loki
+spec:
+  selector:
+    app: loki
+  ports:
+  - protocol: TCP
+    port: 3100
+    targetPort: 3100
+  type: NodePort
+  nodePort: 30001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: infra
+  name: loki
+  labels:
+    app: loki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loki
+  template:
+    metadata:
+      labels:
+        app: loki
+    spec:
+      containers:
+      - name: loki
+        image: loki/loki:latest
+        ports:
+          - name: loki
+            containerPort: 3100
+        resources:
+          requests:
+            # cpu: 100m
+            memory: 100Mi
+          limits:
+            # cpu: 200m
+            memory: 200Mi
+        volumeMounts:
+          - name: loki-storage
+            mountPath: /storage
+    volumes:
+      - name: loki-storage
+        persistentVolumeClaim:
+          claimName: loki-volume-claim
+

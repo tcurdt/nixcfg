@@ -1,14 +1,35 @@
 mkdir -p /srv/volumes/cdn && chown 65534:65534 /srv/volumes/cdn
+mkdir -p /srv/volumes/loki && chown 65534:65534 /srv/volumes/loki
+mkdir -p /srv/volumes/thanos && chown 65534:65534 /srv/volumes/thanos
 mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
 mkdir -p /srv/volumes/postgres && chown 65534:65534 /srv/volumes/postgres
 
 kubectl create secret generic postgres-superuser \
 --from-literal=username=postgres \
---from-literal=password=secret
+--from-literal=password=secret \
+-n infra
 
 # kubectl create secret generic postgres-superuser \
 # --from-file=username=./username.txt \
 # --from-file=password=./password.txt
+# -n infra
+
+# export GITHUB_USER=tcurdt
+# export GITHUB_TOKEN=...
+
+# kubectl create secret docker-registry github \
+# --docker-server=https://ghcr.io \
+# --docker-username=$GITHUB_USER \
+# --docker-password=$GITHUB_TOKEN \
+# --docker-email=tcurdt@vafer.org
+# -n live
+
+# kubectl create secret docker-registry github \
+# --docker-server=https://ghcr.io \
+# --docker-username=$GITHUB_USER \
+# --docker-password=$GITHUB_TOKEN \
+# --docker-email=tcurdt@vafer.org
+# -n test
 
 kubectl apply \
  -f namespaces.yaml
@@ -20,21 +41,24 @@ kubectl apply \
  -f postgres.yaml
 
 kubectl apply \
- -f valkey.yaml
-
-kubectl apply \
  -f backend-test.yaml
 
 kubectl apply \
  -f backend-live.yaml
 
 # kubectl apply \
-#  -f grafana.yaml
+#  -f valkey.yaml
+
+# kubectl apply \
+#  -f monitoring
 
 echo "foo" > /srv/volumes/cdn/foo
 curl -k --resolve cdn.vafer.org:443:127.0.0.1  https://cdn.vafer.org/foo
 curl -k --resolve live.vafer.org:443:127.0.0.1 https://live.vafer.org
 curl -k --resolve test.vafer.org:443:127.0.0.1 https://test.vafer.org
+
+
+# -----------
 
 
 # helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -45,9 +69,8 @@ curl -k --resolve test.vafer.org:443:127.0.0.1 https://test.vafer.org
 #  -f postgres-backup.yaml
 
 
-
 # kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/master/deployments/kubernetes/reloader.yaml
-kubectl rollout restart deployment/caddy
+# kubectl rollout restart deployment/caddy
 
 
 # kubectl get pods --all-namespaces -o wide | grep Evicted | awk '{print $1,$2}' | xargs -L1 kubectl delete pod -n
@@ -57,7 +80,6 @@ kubectl rollout restart deployment/caddy
 # kubectl get pvc --all-namespaces | tail -n +2 | grep -v Bound | awk '{print $1,$2}' | xargs -L1 kubectl delete pvc -n
 # kubectl get pv | tail -n +2 | grep -v Bound | awk '{print $1}' | xargs -L1 kubectl delete pv
 
-# -----------
 
 # kubectl apply \
 #  -f echo.yaml \
@@ -66,37 +88,6 @@ kubectl rollout restart deployment/caddy
 # kubectl apply \
 #  -f echo.yaml \
 #  --namespace test
-
-# curl -k --resolve dev.vafer.org:443:10.43.29.39 https://dev.vafer.org
-# curl -k --resolve dev.vafer.org:443:192.168.75.3 https://dev.vafer.org
-# curl -k --resolve dev.vafer.org:443:127.0.0.1 https://dev.vafer.org
-# iptables -t nat -nL --line-numbers
-
-# iptables -t nat -I PREROUTING 1 -p tcp --dport 80  -j REDIRECT --to-port 30080
-# iptables -t nat -I PREROUTING 1 -p tcp --dport 443 -j REDIRECT --to-port 30443
-
-# net.ipv4.ip_forward=1
-# /etc/sysctl.conf
-# sudo sysctl -p
-
-# ufw allow 22
-# ufw enable
-
-# /etc/ufw/before.rules
-
-# *nat
-# :PREROUTING ACCEPT [0:0]
-# -A PREROUTING -p tcp --dport 80  -j REDIRECT --to-port 30080
-# -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 30443
-
-export GITHUB_USER=tcurdt
-export GITHUB_TOKEN=...
-
-kubectl create secret docker-registry github \
---docker-server=https://ghcr.io \
---docker-username=$GITHUB_USER \
---docker-password=$GITHUB_TOKEN \
---docker-email=tcurdt@vafer.org
 
 kubectl create secret generic influxdb-creds \
   --from-literal=INFLUXDB_DB=monitoring \
@@ -115,10 +106,6 @@ kubectl create secret generic grafana-creds \
 
 kubectl create secret generic mysql-superuser \
 --from-literal=password=secret
-
-
-mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
-
 
 kubectl apply \
  -f mysql-volume.yaml \
@@ -184,8 +171,6 @@ helm install --values values.yaml loki --namespace=loki grafana/loki
 # kubectl exec -it pod/mysql-5f8c6bcbc8-n7s9v -- mysql -u root -p
 
 # kubectl exec -it postgres-665b7554dc-cddgq -- pg_dump -U postgres -d database > db_backup.sql
-
 # kubectl cp db_backup.sql postgres-665b7554dc-cddgq:/tmp/db_backup.sql
 # kubectl exec -it postgres-665b7554dc-cddgq -- /bin/bash
 # psql -U ps_user -d ps_db -f /tmp/db_backup.sql
-

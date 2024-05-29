@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: infra
+  name: kube-state-metrics
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: infra
+  name: kube-state-metrics-reader
+  labels:
+    app: kube-state-metrics
+rules:
+- apiGroups: [""]
+  resources:
+  - pods
+  - resourcequotas
+  - secrets
+  - configmaps
+  - serviceaccounts
+  - persistentvolumeclaims
+  - namespaces
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions", "apps"]
+  resources:
+  - deployments
+  - replicasets
+  - daemonsets
+  - statefulsets
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["metrics.k8s.io"]
+  resources:
+  - pods
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  namespace: infra
+  name: kube-state-metrics-reader-binding
+  labels:
+    app: kube-state-metrics
+subjects:
+- kind: ServiceAccount
+  name: kube-state-metrics
+  namespace: ""
+roleRef:
+  apiGroup: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  name: kube-state-metrics-reader
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: infra
+  name: kube-state-metrics
+  labels:
+    app: kube-state-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        app: kube-state-metrics
+    spec:
+      containers:
+      - name: kube-state-metrics
+        image: kubernetes/kube-state-metrics:latest
+        ports:
+        - containerPort: 8080
+          name: metrics
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        emptyDir: {}  # ptional config map
