@@ -45,8 +45,8 @@ data:
             message: '{message}'
             timestamp: '{time}' # adjust for log format
         relabel_configs:
-        - source_labels: ['__meta_kubernetes_pod_label_<name>'] # Replace <name> with actual pod label names
-          target_label: '{{__meta_kubernetes_pod_label_<name>}}'  # Replace <name> with actual pod label names
+        - source_labels: ['__meta_kubernetes_pod_label_<name>']
+          target_label: '{{__meta_kubernetes_pod_label_<name>}}'
         kubernetes_sd_configs:
         - role: pod
           # namespace filter for pods

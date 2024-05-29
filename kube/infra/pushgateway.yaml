@@ -10,8 +10,8 @@ spec:
   - name: pushgateway
     image: prom/pushgateway:latest
     ports:
-    - containerPort: 9091
-      name: http
+    - name: http
+      containerPort: 9091
   resources:
     requests:
       # cpu: 50m

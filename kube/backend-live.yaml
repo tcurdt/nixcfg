@@ -15,8 +15,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
   namespace: live
+  name: backend
   labels:
     app: backend
 spec:

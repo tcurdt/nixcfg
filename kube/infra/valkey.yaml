@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: valkey
   namespace: infra
+  name: valkey
   labels:
     app: valkey
 spec:
@@ -14,8 +14,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: valkey
   namespace: infra
+  name: valkey
   labels:
     app: valkey
 spec:
@@ -58,4 +58,3 @@ spec:
       # securityContext:
       #   runAsNonRoot: true
       #   runAsUser: 65534
-      # serviceAccountName: valkey
