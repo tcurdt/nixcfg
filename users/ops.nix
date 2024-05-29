@@ -36,6 +36,10 @@ in {
     };
 
     home-manager.users.ops = (import cfg.home-manager pkgs) // {
+      # home.shellAliases = {
+      #   foo = "eza";
+      # };
+      # home.stateVersion = "23.11";
     };
   };
 }
