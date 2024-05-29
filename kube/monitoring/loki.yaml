@@ -46,6 +46,24 @@ spec:
     targetPort: 3100
   type: NodePort
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loki
+  namespace: infra
+  labels:
+    app: loki
+  # annotations:
+  #   reloader.stakater.com/match: "true"
+data:
+  # https://grafana.com/docs/loki/latest/configure/
+  loki.yml: |
+    auth_enabled: false
+    reporting_enabled: false
+    # local_storage_config:
+    #   directory: ""
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,7 +83,10 @@ spec:
     spec:
       containers:
       - name: loki
-        image: loki/loki:latest
+        image: grafana/loki:latest
+        env:
+          - name: LOKI_LOG_LEVEL
+            value: "error"
         ports:
           - name: loki
             containerPort: 3100
@@ -80,7 +101,9 @@ spec:
           - name: loki-storage
             mountPath: /storage
       volumes:
+        - name: loki-config
+          configMap:
+            name: loki
         - name: loki-storage
           persistentVolumeClaim:
             claimName: loki-volume-claim
-
