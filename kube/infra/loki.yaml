@@ -98,6 +98,8 @@ spec:
       containers:
       - name: loki
         image: grafana/loki:latest
+        args:
+          - -config.file=/config/loki.yaml
         ports:
           - name: loki
             containerPort: 3100
@@ -109,6 +111,8 @@ spec:
             # cpu: 200m
             memory: 200Mi
         volumeMounts:
+          - name: loki-config
+            mountPath: /config
           - name: loki-storage
             mountPath: /storage
       volumes:
