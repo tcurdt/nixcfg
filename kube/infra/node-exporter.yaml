@@ -60,11 +60,11 @@ spec:
         - --collector.time
         - --collector.udp_queues
         - --collector.uname
-        - --collector.vmstat
         - --collector.watchdog
         - --path.sysfs=/host/sys
         - --path.rootfs=/host/root
-        - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)
+        - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)
+        - --collector.filesystem.fs-types-exclude=^(ramfs|tmpfs|autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
         - --collector.netclass.ignored-devices=^(veth.*|cni.*|docker.*|flannel.*)$
         ports:
           - name: metrics

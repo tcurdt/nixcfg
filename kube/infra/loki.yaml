@@ -61,8 +61,10 @@ data:
     auth_enabled: false
     reporting_enabled: false
     log_level: "error"
-    # local_storage_config:
-    #   directory: ""
+    local_storage_config:
+      directory: /storage
+      max_disk_space: 10GB
+      retention_period: 14 days
 ---
 apiVersion: apps/v1
 kind: Deployment
