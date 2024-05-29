@@ -117,11 +117,12 @@ spec:
             subPath: prometheus.yml
           - name: prometheus-storage
             mountPath: /prometheus
-    volumes:
+      volumes:
       - name: prometheus-config
         configMap:
           name: prometheus
       - name: prometheus-storage
         persistentVolumeClaim:
           claimName: prometheus-volume-claim
+
 
