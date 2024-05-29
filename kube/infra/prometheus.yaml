@@ -132,7 +132,9 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:latest
-        args: ["--config.file=/etc/prometheus/prometheus.yml", "--log.level=error"]
+        args:
+          - --config.file=/etc/prometheus/prometheus.yml
+          - --log.level=error
         ports:
           - name: prometheus
             containerPort: 9090

@@ -49,8 +49,8 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: loki
   namespace: infra
+  name: loki
   labels:
     app: loki
   # annotations:
@@ -60,7 +60,7 @@ data:
   loki.yml: |
     auth_enabled: false
     reporting_enabled: false
-    log_level: "error"
+    # log_level: "error"
     common:
       replication_factor: 1
       path_prefix: /storage
@@ -99,7 +99,8 @@ spec:
       - name: loki
         image: grafana/loki:latest
         args:
-          - -config.file=/config/loki.yaml
+          - --config.file=/etc/loki/loki.yml
+          - --log.level=error
         ports:
           - name: loki
             containerPort: 3100
@@ -112,7 +113,7 @@ spec:
             memory: 200Mi
         volumeMounts:
           - name: loki-config
-            mountPath: /config
+            mountPath: /etc/loki
           - name: loki-storage
             mountPath: /storage
       volumes:
