@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   namespace: infra
-  name: prometheus-list-pods
+  name: prometheus
 rules:
 - apiGroups: [""]
   resources: ["pods", "endpoints", "services"]
@@ -11,8 +11,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  # namespace: infra
-  name: prometheus-list-pods-binding
+  name: prometheus-binding
 subjects:
 - kind: ServiceAccount
   name: default
@@ -20,7 +19,7 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: prometheus-list-pods
+  name: prometheus
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -124,7 +123,7 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:latest
-        args: ["--config.file=/etc/prometheus/prometheus.yml"]
+        args: ["--config.file=/etc/prometheus/prometheus.yml", "--log.level=error"]
         ports:
           - name: prometheus
             containerPort: 9090
