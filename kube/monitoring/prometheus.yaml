@@ -16,16 +16,14 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: infra:default
-  namespace: infra
 roleRef:
-  apiGroup: rbac.authorization.k8s.io/v1
+  apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: prometheus-list-pods
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  namespace: infra
   name: prometheus-volume
   labels:
     app: prometheus
@@ -121,6 +119,7 @@ spec:
       labels:
         app: prometheus
     spec:
+      serviceAccountName: prometheus-list-pods
       containers:
       - name: prometheus
         image: prom/prometheus:latest
@@ -135,12 +134,9 @@ spec:
           limits:
             # cpu: 200m
             memory: 200Mi
-        securityContext:
-          serviceAccountName: prometheus-list-pods
         volumeMounts:
           - name: prometheus-config
-            mountPath: /etc/prometheus/prometheus.yml
-            subPath: prometheus.yml
+            mountPath: /etc/prometheus
           - name: prometheus-storage
             mountPath: /prometheus
       volumes:
