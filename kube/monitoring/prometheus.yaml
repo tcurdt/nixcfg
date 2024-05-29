@@ -99,7 +99,7 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: prometheus/prometheus:latest
+        image: prom/prometheus:latest
         args: ["--config.file=/etc/prometheus/prometheus.yml"]
         ports:
           - name: prometheus
