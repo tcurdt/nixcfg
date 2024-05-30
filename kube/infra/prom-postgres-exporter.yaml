@@ -15,7 +15,7 @@ spec:
     targetPort: 9187
   selector:
     app: prom-postgres-exporter
---
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
