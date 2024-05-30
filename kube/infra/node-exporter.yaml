@@ -2,17 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: infra
-  name: node-exporter
+  name: prom-node-exporter
   labels:
-    app: node-exporter
+    app: prom-node-exporter
   # annotations:
   #   prometheus.io/scrape: 'true'
   #   prometheus.io/port: '9100'
 spec:
   selector:
-    app: node-exporter
+    app: prom-node-exporter
   ports:
-  - name: node-exporter
+  - name: prom-node-exporter
     protocol: TCP
     port: 9100
     targetPort: 9100
@@ -21,21 +21,21 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   namespace: infra
-  name: node-exporter
+  name: prom-node-exporter
   labels:
-    app: node-exporter
+    app: prom-node-exporter
 spec:
   selector:
     matchLabels:
-      app: node-exporter
+      app: prom-node-exporter
   template:
     metadata:
       labels:
-        app: node-exporter
+        app: prom-node-exporter
     spec:
       hostNetwork: true  # allows access to host network
       containers:
-      - name: node-exporter
+      - name: prom-node-exporter
         image: prom/node-exporter:latest
         args:
         - --collector.disable-defaults

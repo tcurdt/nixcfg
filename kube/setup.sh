@@ -58,6 +58,7 @@ curl -k --resolve cdn.vafer.org:443:127.0.0.1  https://cdn.vafer.org/foo
 curl -k --resolve live.vafer.org:443:127.0.0.1 https://live.vafer.org
 curl -k --resolve test.vafer.org:443:127.0.0.1 https://test.vafer.org
 
+kubectl delete -f .
 
 # -----------
 

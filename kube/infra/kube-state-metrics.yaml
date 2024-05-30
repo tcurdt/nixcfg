@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   namespace: infra
-  name: kube-state-metrics
+  name: prom-kube-exporter
 rules:
 - apiGroups: [""]
   resources:
@@ -107,30 +107,30 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: kube-state-metrics-binding
+  name: prom-kube-exporter-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kube-state-metrics
+  name: prom-kube-exporter
 subjects:
 - kind: ServiceAccount
   namespace: kube-system
-  name: kube-state-metrics
+  name: prom-kube-exporter
 ---
 apiVersion: v1
 kind: ServiceAccount
-automountServiceAccountToken: false
+# automountServiceAccountToken: false
 metadata:
   namespace: infra
-  name: kube-state-metrics
+  name: prom-kube-exporter
 ---
 apiVersion: v1
 kind: Service
 metadata:
   namespace: infra
-  name: kube-state-metrics
+  name: prom-kube-exporter
 spec:
-  clusterIP: None
+  # clusterIP: None
   ports:
   - name: metrics
     port: 8080
@@ -139,29 +139,29 @@ spec:
     port: 8081
     targetPort: telemetry
   selector:
-    app: kube-state-metrics
+    app: prom-kube-exporter
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: infra
-  name: kube-state-metrics
+  name: prom-kube-exporter
   labels:
-    app: kube-state-metrics
+    app: prom-kube-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kube-state-metrics
+      app: prom-kube-exporter
   template:
     metadata:
       labels:
-        app: kube-state-metrics
+        app: prom-kube-exporter
     spec:
-      automountServiceAccountToken: true
-      serviceAccountName: kube-state-metrics
+      # automountServiceAccountToken: true
+      serviceAccountName: prom-kube-exporter
       containers:
-      - name: kube-state-metrics
+      - name: prom-kube-exporter
         image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0
         ports:
         - name: metrics

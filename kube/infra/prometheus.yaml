@@ -79,22 +79,22 @@ data:
   prometheus.yml: |
     global:
       scrape_interval: 30s
-
     scrape_configs:
-      - job_name: 'node-exporter'
+      - job_name: node
         kubernetes_sd_configs:
           - role: endpoints
         relabel_configs:
         - source_labels: [__meta_kubernetes_endpoints_name]
-          regex: 'node-exporter'
+          regex: 'prom-node-exporter'
           action: keep
-      - job_name: 'kube-state-metrics'
+      - job_name: kube
         static_configs:
-          - targets: ['kube-state-metrics:8080']
-      # - job_name: 'foo'
-      #   scheme: http
-      #   static_configs:
-      #   - targets: ['<ip>:9100']
+          - targets:
+            - prom-kube-exporter:8080
+      - job_name: postgres
+        static_configs:
+          - targets:
+            - prom-postgres-exporter:9187
   datasource.yml: |-
      apiVersion: 1
      datasources:
