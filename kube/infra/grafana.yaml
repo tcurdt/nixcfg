@@ -43,6 +43,23 @@ spec:
   selector:
     app: grafana
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: infra
+  name: grafana-datasources
+data:
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus:9090
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://loki:3100
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -98,9 +115,19 @@ spec:
               # cpu: 200m
               memory: 200Mi
           volumeMounts:
+            - name: grafana-datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            # - name: grafana-dashboards
+            #   mountPath: /etc/grafana/provisioning/dashboards
             - name: grafana-storage
               mountPath: /var/lib/grafana
       volumes:
+        - name: grafana-datasources
+          configMap:
+            name: grafana-datasources
+        # - name: grafana-dashboards
+        #   configMap:
+        #     name: grafana-dashboards
         - name: grafana-storage
           persistentVolumeClaim:
             claimName: grafana-volume-claim

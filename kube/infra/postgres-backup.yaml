@@ -11,6 +11,7 @@ spec:
     spec:
       template:
         spec:
+          restartPolicy: OnFailure
           containers:
           - name: postgres-backup
             image: your-docker-image:tag
