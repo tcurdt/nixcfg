@@ -117,18 +117,18 @@ subjects:
   - kind: ServiceAccount
     namespace: kube-system
     name: prom-kube-exporter
-  # - kind: ServiceAccount
-  #   namespace: default
-  #   name: prom-kube-exporter
-  # - kind: ServiceAccount
-  #   namespace: infra
-  #   name: prom-kube-exporter
-  # - kind: ServiceAccount
-  #   namespace: live
-  #   name: prom-kube-exporter
-  # - kind: ServiceAccount
-  #   namespace: test
-  #   name: prom-kube-exporter
+  - kind: ServiceAccount
+    namespace: default
+    name: prom-kube-exporter
+  - kind: ServiceAccount
+    namespace: infra
+    name: prom-kube-exporter
+  - kind: ServiceAccount
+    namespace: live
+    name: prom-kube-exporter
+  - kind: ServiceAccount
+    namespace: test
+    name: prom-kube-exporter
 ---
 apiVersion: v1
 kind: ServiceAccount
