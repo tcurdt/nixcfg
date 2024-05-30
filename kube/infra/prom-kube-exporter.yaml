@@ -180,8 +180,8 @@ spec:
       - name: prom-kube-exporter
         image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0
         args:
-          - --v 0
-          - --resources=pods,statefulsets,daemonsets,deployments,cronjobs
+          - --v=0
+          - --resources=pods,statefulsets,daemonsets,deployments # ,cronjobs
           # - --resources=pods,nodes,services,endpoints,statefulsets,daemonsets,deployments,replicasets,cronjobs,jobs
         ports:
           - name: metrics
