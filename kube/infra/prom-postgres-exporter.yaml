@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: prom-postgres-exporter
-          image: prometheuscommunity/postgres-exporter:v0.10.1
+          image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
           args:
             - --log.level=error
             - --collector.long_running_transaction
