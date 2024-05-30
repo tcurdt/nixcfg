@@ -1,5 +1,5 @@
 mkdir -p /srv/volumes/cdn && chown 65534:65534 /srv/volumes/cdn
-mkdir -p /srv/volumes/loki && chown 65534:65534 /srv/volumes/loki
+mkdir -p /srv/volumes/loki && chown 10001:10001 /srv/volumes/loki
 mkdir -p /srv/volumes/thanos && chown 65534:65534 /srv/volumes/thanos
 mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
 mkdir -p /srv/volumes/postgres && chown 65534:65534 /srv/volumes/postgres

@@ -66,6 +66,9 @@ data:
     common:
       replication_factor: 1
       path_prefix: /storage
+      ring:
+        kvstore:
+          store: "inmemory"
       # storage:
       #   filesystem:
       #     chunks_directory: /storage/chunks
