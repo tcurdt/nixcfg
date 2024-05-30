@@ -5,6 +5,9 @@ mkdir -p /srv/volumes/grafana && chown 65534:65534 /srv/volumes/grafana
 mkdir -p /srv/volumes/postgres && chown 65534:65534 /srv/volumes/postgres
 mkdir -p /srv/volumes/prometheus && chown 65534:65534 /srv/volumes/prometheus
 
+kubectl apply \
+ -f namespaces.yaml
+
 kubectl delete secret postgres-superuser -n infra
 kubectl create secret generic postgres-superuser \
 --from-literal=username=postgres \
@@ -28,9 +31,6 @@ kubectl create secret generic postgres-superuser \
 # --docker-password=$GITHUB_TOKEN \
 # --docker-email=tcurdt@vafer.org
 # -n test
-
-kubectl apply \
- -f namespaces.yaml
 
 kubectl apply \
  -f infra
