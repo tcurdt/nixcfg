@@ -184,11 +184,11 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 5
         resources:
-          limits:
-            # cpu: 250m
-            memory: 100Mi
           requests:
             # cpu: 100m
+            memory: 100Mi
+          limits:
+            # cpu: 250m
             memory: 200Mi
         securityContext:
           allowPrivilegeEscalation: false
