@@ -29,6 +29,12 @@ roleRef:
   name: prometheus
 ---
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: infra
+  name: prometheus
+---
+apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: prometheus-volume
