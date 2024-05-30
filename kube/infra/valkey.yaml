@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -31,7 +32,6 @@ spec:
       containers:
         - name: valkey
           image: valkey/valkey:7.2-alpine
-          env:
           ports:
             - name: valkey
               containerPort: 6379
@@ -50,11 +50,6 @@ spec:
             timeoutSeconds: 5
           resources:
             requests:
-              # cpu: 100m
               memory: 100Mi
             limits:
-              # cpu: 200m
               memory: 200Mi
-      # securityContext:
-      #   runAsNonRoot: true
-      #   runAsUser: 65534
