@@ -65,7 +65,7 @@ data:
     #   log_level: "error"
     common:
       replication_factor: 1
-      # path_prefix: /storage
+      path_prefix: /storage
       # storage:
       #   filesystem:
       #     chunks_directory: /storage/chunks
@@ -79,9 +79,9 @@ data:
           index:
             prefix: index_
             period: 24h
-    storage_config:
-      local:
-        directory: /storage
+    # storage_config:
+    #   local:
+    #     directory: /storage
     # local_storage_config:
     #   # directory: /storage/chunks
     #   max_disk_space: 10GB
