@@ -36,7 +36,7 @@ spec:
           image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
           args:
             - --log.level=error
-            - --collector.long_running_transaction
+            - --collector.long_running_transactions
           env:
             - name: DATA_SOURCE_NAME
               valueFrom:
