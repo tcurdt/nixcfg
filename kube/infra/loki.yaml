@@ -61,18 +61,12 @@ data:
     auth_enabled: false
     analytics:
       reporting_enabled: false
-    # server:
-    #   log_level: "error"
     common:
       replication_factor: 1
       path_prefix: /storage
       ring:
         kvstore:
           store: "inmemory"
-      # storage:
-      #   filesystem:
-      #     chunks_directory: /storage/chunks
-      #     rules_directory: /storage/rules
     schema_config:
       configs:
         - from: 2023-07-01
@@ -82,13 +76,10 @@ data:
           index:
             prefix: index_
             period: 24h
-    # storage_config:
-    #   local:
-    #     directory: /storage
-    # local_storage_config:
-    #   # directory: /storage/chunks
-    #   max_disk_space: 10GB
-    #   retention_period: 14 days
+    storage_config:
+      filesystem:
+        max_disk_space: 10GB
+        retention_period: 14 days
 ---
 apiVersion: apps/v1
 kind: Deployment

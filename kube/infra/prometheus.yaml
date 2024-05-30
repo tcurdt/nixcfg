@@ -82,9 +82,9 @@ data:
         - source_labels: [__meta_kubernetes_endpoints_name]
           regex: 'node-exporter'
           action: keep
-      # - job_name: 'kube-state-metrics'
-      #   static_configs:
-      #     - targets: ['kube-state-metrics.kube-system.svc.cluster.local:8080']
+      - job_name: 'kube-state-metrics'
+        static_configs:
+          - targets: ['kube-state-metrics:8080']
       # - job_name: 'foo'
       #   scheme: http
       #   static_configs:
@@ -131,7 +131,7 @@ spec:
       serviceAccountName: prometheus
       containers:
       - name: prometheus
-        image: prom/prometheus:latest
+        image: prom/prometheus:v2.52.0
         args:
           - --config.file=/etc/prometheus/prometheus.yml
           - --log.level=error

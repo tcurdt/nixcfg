@@ -1,3 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: infra
+  name: promtail
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - nodes
+    - services
+    - pods
+    verbs:
+    - get
+    - watch
+    - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: promtail-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: promtail
+subjects:
+  - kind: ServiceAccount
+    namespace: default
+    name: promtail
+  - kind: ServiceAccount
+    namespace: infra
+    name: promtail
+  - kind: ServiceAccount
+    namespace: live
+    name: promtail
+  - kind: ServiceAccount
+    namespace: test
+    name: promtail
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: infra
+  name: promtail
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -23,45 +68,75 @@ metadata:
   labels:
     app: promtail
 data:
-  positions.yaml: |
-    # gets updated by promtail
   promtail.yaml: |
-    # scrape configurations
     server:
       http_listen_port: 9080
+      grpc_listen_port: 0
+
+    clients:
+    - url: https://loki:3100/loki/api/v1/push
+
+    positions:
+      filename: /tmp/positions.yaml
     target_config:
       sync_period: 10s
-      scrape_configs:
-      - job_name: kubernetes-pods
-        pipeline_stages:
-        - docker: {}  # optional
-        - match:
-            # filter by app label
-            selector:
-              app: "backend"
-        stages:
-        - parser: json
-          expressions:
-            message: '{message}'
-            timestamp: '{time}' # adjust for log format
-        relabel_configs:
-        - source_labels: ['__meta_kubernetes_pod_label_<name>']
-          target_label: '{{__meta_kubernetes_pod_label_<name>}}'
-        kubernetes_sd_configs:
+    scrape_configs:
+    - job_name: pod-logs
+      kubernetes_sd_configs:
         - role: pod
-          # namespace filter for pods
           namespaces:
             names:
             - "live"
             - "test"
+      # pipeline_stages:
+      #   - docker: {}
+      #   - match:
+      #       # filter by app label
+      #       selector:
+      #         app: "backend"
+      # stages:
+      #   - parser: json
+      #     expressions:
+      #       message: '{message}'
+      #       timestamp: '{time}' # adjust for log format
+      relabel_configs:
+        - source_labels:
+            - __meta_kubernetes_pod_node_name
+          target_label: __host__
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(.+)
+        - action: replace
+          replacement: $1
+          separator: /
+          source_labels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_name
+          target_label: job
+        - action: replace
+          source_labels:
+            - __meta_kubernetes_namespace
+          target_label: namespace
+        - action: replace
+          source_labels:
+            - __meta_kubernetes_pod_name
+          target_label: pod
+        - action: replace
+          source_labels:
+            - __meta_kubernetes_pod_container_name
+          target_label: container
+        - replacement: /var/log/pods/*$1/*.log
+          separator: /
+          source_labels:
+            - __meta_kubernetes_pod_uid
+            - __meta_kubernetes_pod_container_name
+          target_label: __path__
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   namespace: infra
   name: promtail
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: promtail
@@ -70,20 +145,33 @@ spec:
       labels:
         app: promtail
     spec:
+      serviceAccount: promtail
       containers:
       - name: promtail
         image: grafana/promtail:3.0.0
-        resources:
-          requests:
-            memory: "100Mi"
-            # cpu: "100m"
-          limits:
-            memory: "200Mi"
-            # cpu: "200m"
-        command:
-        - "-write"
-        - "loki:3100"
+        args:
+        - --config.file=/etc/promtail/promtail.yaml
+        - --log.level=error
+        env:
+        - name: 'HOSTNAME'
+          valueFrom:
+            fieldRef:
+              fieldPath: 'spec.nodeName'
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+        - name: promtail-config
+          mountPath: /etc/promtail
+        # - mountPath: /var/lib/docker/containers
+        #   name: varlibdockercontainers
+        #   readOnly: true
       volumes:
+      - name: logs
+        hostPath:
+          path: /var/log
+      # - name: varlibdockercontainers
+      #   hostPath:
+      #     path: /var/lib/docker/containers
       - name: promtail-config
         configMap:
           name: promtail
