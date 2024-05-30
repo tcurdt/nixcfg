@@ -59,22 +59,28 @@ data:
   # https://grafana.com/docs/loki/latest/configure/
   loki.yml: |
     auth_enabled: false
-    reporting_enabled: false
-    # log_level: "error"
+    analytics:
+      reporting_enabled: false
+    # server:
+    #   log_level: "error"
     common:
       replication_factor: 1
       path_prefix: /storage
     schema_config:
       configs:
-      - from: 2020-05-15
-        store: tsdb
-        object_store: filesystem
-        schema: v13
-        index:
-          prefix: index_
-          period: 24h
+        - from: 2020-05-15
+          store: tsdb
+          object_store: filesystem
+          schema: v13
+          index:
+            prefix: index_
+            period: 24h
+    # storage:
+    #   filesystem:
+    #     chunks_directory: /storage/chunks
+    #     rules_directory: /storage/rules
     local_storage_config:
-      directory: /storage/chunks
+      # directory: /storage/chunks
       max_disk_space: 10GB
       retention_period: 14 days
 ---
