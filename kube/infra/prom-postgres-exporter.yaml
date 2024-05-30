@@ -5,6 +5,9 @@ metadata:
   name: prom-postgres-exporter
   labels:
     app: prom-postgres-exporter
+  # annotations:
+  #   prometheus.io/scrape: 'true'
+  #   prometheus.io/port: '9187'
 spec:
   ports:
   - name: metrics

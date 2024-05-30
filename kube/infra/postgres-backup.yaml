@@ -2,9 +2,9 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   namespace: infra
-  name: database-backup
+  name: postgres-backup
   labels:
-    app: postgres
+    app: postgres-backup
 spec:
   schedule: "*/10 * * * *"
   jobTemplate:
@@ -12,7 +12,7 @@ spec:
       template:
         spec:
           containers:
-          - name: database-backup
+          - name: postgres-backup
             image: your-docker-image:tag
             env:
               - name: DB_HOST

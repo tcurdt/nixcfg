@@ -163,6 +163,13 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: 'spec.nodeName'
+        resources:
+          limits:
+            # cpu: 250m
+            memory: 100Mi
+          requests:
+            # cpu: 100m
+            memory: 200Mi
         volumeMounts:
         - name: logs
           mountPath: /var/log

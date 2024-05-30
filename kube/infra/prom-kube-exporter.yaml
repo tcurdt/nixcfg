@@ -129,6 +129,9 @@ kind: Service
 metadata:
   namespace: infra
   name: prom-kube-exporter
+  # annotations:
+  #   prometheus.io/scrape: 'true'
+  #   prometheus.io/port: '8080'
 spec:
   # clusterIP: None
   ports:
@@ -180,6 +183,13 @@ spec:
             port: 8081
           initialDelaySeconds: 5
           timeoutSeconds: 5
+        resources:
+          limits:
+            # cpu: 250m
+            memory: 100Mi
+          requests:
+            # cpu: 100m
+            memory: 200Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true

@@ -156,6 +156,13 @@ spec:
           subPath: Caddyfile
         - name: cdn-storage
           mountPath: /srv/volumes/cdn
+        resources:
+          limits:
+            # cpu: 250m
+            memory: 100Mi
+          requests:
+            # cpu: 100m
+            memory: 200Mi
       volumes:
       - name: caddy-config
         configMap:

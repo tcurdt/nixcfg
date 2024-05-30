@@ -2,12 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: infra
-  name: pushgateway
+  name: prom-push-exporter
   labels:
-    app: pushgateway
+    app: prom-push-exporter
+  # annotations:
+  #   prometheus.io/scrape: 'true'
+  #   prometheus.io/port: '9091'
 spec:
   selector:
-    app: pushgateway
+    app: prom-push-exporter
   ports:
   - protocol: TCP
     port: 9091
@@ -18,21 +21,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: infra
-  name: pushgateway
+  name: prom-push-exporter
   labels:
-    app: pushgateway
+    app: prom-push-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pushgateway
+      app: prom-push-exporter
   template:
     metadata:
       labels:
-        app: pushgateway
+        app: prom-push-exporter
     spec:
       containers:
-      - name: pushgateway
+      - name: prom-push-exporter
         image: prom/pushgateway:v1.8.0
         ports:
         - name: http

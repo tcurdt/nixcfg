@@ -87,6 +87,13 @@ data:
         - source_labels: [__meta_kubernetes_endpoints_name]
           regex: 'prom-node-exporter'
           action: keep
+      - job_name: push
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_endpoints_name]
+          regex: 'prom-push-exporter'
+          action: keep
       - job_name: kube
         static_configs:
           - targets:
