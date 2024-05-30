@@ -156,6 +156,47 @@ spec:
     targetPort: telemetry
   selector:
     app: prom-kube-exporter
+# ---
+# apiVersion: apps/v1
+# kind: DaemonSet
+# spec:
+#   template:
+#     spec:
+#       containers:
+#       - name: prom-kube-exporter
+#         image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0
+#         args:
+#           - --resources=pods,cronjobs
+#           # - --resources=pods,nodes,services,endpoints,statefulsets,daemonsets,deployments,replicasets,cronjobs,jobs
+#           - --node=$(NODE_NAME)
+#         ports:
+#           - name: metrics
+#             containerPort: 8080
+#           - name: telemetry
+#             containerPort: 8081
+#         livenessProbe:
+#           httpGet:
+#             path: /healthz
+#             port: 8080
+#           initialDelaySeconds: 5
+#           timeoutSeconds: 5
+#         readinessProbe:
+#           httpGet:
+#             path: /
+#             port: 8081
+#           initialDelaySeconds: 5
+#           timeoutSeconds: 5
+#         resources:
+#           requests:
+#             # cpu: 100m
+#             memory: 100Mi
+#           limits:
+#             # cpu: 250m
+#             memory: 200Mi
+#         securityContext:
+#           allowPrivilegeEscalation: false
+#           readOnlyRootFilesystem: true
+#           runAsUser: 65534
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -179,11 +220,20 @@ spec:
       containers:
       - name: prom-kube-exporter
         image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0
+        args:
+          - --resources=pods,cronjobs
+          # - --resources=pods,nodes,services,endpoints,statefulsets,daemonsets,deployments,replicasets,cronjobs,jobs
+          - --node=$(NODE_NAME)
+        env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
         ports:
-        - name: metrics
-          containerPort: 8080
-        - name: telemetry
-          containerPort: 8081
+          - name: metrics
+            containerPort: 8080
+          - name: telemetry
+            containerPort: 8081
         livenessProbe:
           httpGet:
             path: /healthz
