@@ -36,6 +36,7 @@ spec:
           image: prometheuscommunity/postgres-exporter:v0.10.1
           args:
             - --log.level=error
+            - --collector.long_running_transaction
           env:
             - name: DATA_SOURCE_NAME
               valueFrom:
