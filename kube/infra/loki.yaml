@@ -106,7 +106,7 @@ spec:
     spec:
       containers:
       - name: loki
-        image: grafana/loki:latest
+        image: grafana/loki:3.0.0
         args:
           - --config.file=/etc/loki/loki.yml
           - --log.level=error

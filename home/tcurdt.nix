@@ -193,6 +193,7 @@
     dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
     k  = "kubectl";
     kall = "kubectl get all -A";
+    # kdebug = "kubectl debug -it <pod-name> --image=busybox --target=<container-name> --namespace=<namespace>";
   };
 
   home.sessionVariables = {
