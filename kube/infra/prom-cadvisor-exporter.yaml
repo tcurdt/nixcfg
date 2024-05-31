@@ -39,8 +39,8 @@ spec:
       labels:
         app: prom-cadvisor-exporter
     spec:
+      automountServiceAccountToken: false
       # serviceAccountName: cadvisor
-      # automountServiceAccountToken: false
       # terminationGracePeriodSeconds: 30
       containers:
         - name: prom-cadvisor-exporter
