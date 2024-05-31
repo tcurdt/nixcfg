@@ -1,3 +1,4 @@
+# unfinished
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,24 +14,24 @@ spec:
         app: prometheus-sidecar
     spec:
       containers:
-      - name: prometheus-sidecar
-        image: prom/prometheus:latest  # Same image as Prometheus
-        args:
-        - "--storage.tsdb.retention=168h"  # Keep raw data for 7 days (adjust if needed)
-        - "--storage.remote.enable"
-        - "--storage.remote.url=http://thanos-queryserver:9094"  # Replace with queryserver URL
-        resources:
-          requests:
-            memory: 50Mi
-          limits:
-            memory: 100Mi
+        - name: prometheus-sidecar
+          image: prom/prometheus:latest # Same image as Prometheus
+          args:
+            - "--storage.tsdb.retention=168h" # Keep raw data for 7 days (adjust if needed)
+            - "--storage.remote.enable"
+            - "--storage.remote.url=http://thanos-queryserver:9094" # Replace with queryserver URL
+          resources:
+            requests:
+              memory: 50Mi
+            limits:
+              memory: 100Mi
       volumes:
-      - name: prometheus-config
-        configMap:
-          name: prometheus  # Reference existing Prometheus config map
+        - name: prometheus-config
+          configMap:
+            name: prometheus # Reference existing Prometheus config map
       volumeMounts:
-      - name: prometheus-config
-        mountPath: /etc/prometheus
+        - name: prometheus-config
+          mountPath: /etc/prometheus
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -47,17 +48,17 @@ spec:
         app: thanos-queryserver
     spec:
       containers:
-      - name: thanos-queryserver
-        image: prom/thanos:latest
-        args:
-        - "--queryserver.http-address=0.0.0.0:9094"
-        - "--query.store=remote"
-        - "--query.remote.url=http://thanos-store:8080"  # Replace with store URL
-        resources:
-          requests:
-            memory: 100Mi
-          limits:
-            memory: 200Mi
+        - name: thanos-queryserver
+          image: prom/thanos:latest
+          args:
+            - "--queryserver.http-address=0.0.0.0:9094"
+            - "--query.store=remote"
+            - "--query.remote.url=http://thanos-store:8080" # Replace with store URL
+          resources:
+            requests:
+              memory: 100Mi
+            limits:
+              memory: 200Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -67,4 +68,3 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-

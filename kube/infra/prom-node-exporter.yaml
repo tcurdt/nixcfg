@@ -12,10 +12,10 @@ spec:
   selector:
     app: prom-node-exporter
   ports:
-  - name: prom-node-exporter
-    protocol: TCP
-    port: 9100
-    targetPort: 9100
+    - name: prom-node-exporter
+      protocol: TCP
+      port: 9100
+      targetPort: 9100
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -35,61 +35,61 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - name: prom-node-exporter
-        image: prom/node-exporter:v1.8.1
-        args:
-        - --collector.disable-defaults
-        - --collector.conntrack
-        - --collector.cpu
-        - --collector.cpufreq
-        - --collector.diskstats
-        - --collector.edac
-        - --collector.entropy
-        - --collector.filefd
-        - --collector.filesystem
-        - --collector.loadavg
-        - --collector.meminfo
-        - --collector.netclass
-        - --collector.netdev
-        - --collector.netstat
-        - --collector.pressure
-        - --collector.schedstat
-        - --collector.selinux
-        - --collector.sockstat
-        - --collector.stat
-        - --collector.time
-        - --collector.udp_queues
-        - --collector.uname
-        - --collector.watchdog
-        - --path.sysfs=/host/sys
-        - --path.rootfs=/host/root
-        - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)
-        - --collector.filesystem.fs-types-exclude=^(ramfs|tmpfs|autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
-        - --collector.netclass.ignored-devices=^(veth.*|cni.*|docker.*|flannel.*)$
-        ports:
-          - name: metrics
-            containerPort: 9100
-            protocol: TCP
-        resources:
-          requests:
-            # cpu: 100m
-            memory: 100Mi
-          limits:
-            # cpu: 250m
-            memory: 200Mi
-        volumeMounts:
-        - mountPath: /host/sys
-          mountPropagation: HostToContainer
-          name: sys
-          readOnly: true
-        - mountPath: /host/root
-          mountPropagation: HostToContainer
-          name: root
-          readOnly: true
+        - name: prom-node-exporter
+          image: prom/node-exporter:v1.8.1
+          args:
+            - --collector.disable-defaults
+            - --collector.conntrack
+            - --collector.cpu
+            - --collector.cpufreq
+            - --collector.diskstats
+            - --collector.edac
+            - --collector.entropy
+            - --collector.filefd
+            - --collector.filesystem
+            - --collector.loadavg
+            - --collector.meminfo
+            - --collector.netclass
+            - --collector.netdev
+            - --collector.netstat
+            - --collector.pressure
+            - --collector.schedstat
+            - --collector.selinux
+            - --collector.sockstat
+            - --collector.stat
+            - --collector.time
+            - --collector.udp_queues
+            - --collector.uname
+            - --collector.watchdog
+            - --path.sysfs=/host/sys
+            - --path.rootfs=/host/root
+            - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)
+            - --collector.filesystem.fs-types-exclude=^(ramfs|tmpfs|autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+            - --collector.netclass.ignored-devices=^(veth.*|cni.*|docker.*|flannel.*)$
+          ports:
+            - name: metrics
+              containerPort: 9100
+              protocol: TCP
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 100Mi
+            limits:
+              # cpu: 250m
+              memory: 200Mi
+          volumeMounts:
+            - mountPath: /host/sys
+              mountPropagation: HostToContainer
+              name: sys
+              readOnly: true
+            - mountPath: /host/root
+              mountPropagation: HostToContainer
+              name: root
+              readOnly: true
       volumes:
-      - hostPath:
-          path: /sys
-        name: sys
-      - hostPath:
-          path: /
-        name: root
+        - hostPath:
+            path: /sys
+          name: sys
+        - hostPath:
+            path: /
+          name: root

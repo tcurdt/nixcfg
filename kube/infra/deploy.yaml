@@ -5,19 +5,19 @@ metadata:
   name: promtail
 rules:
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - nodes
-    - services
-    - pods
+      - nodes
+      - services
+      - pods
     verbs:
-    - create
-    - update
-    - patch
-    - delete
-    - get
-    - watch
-    - list
+      - create
+      - update
+      - patch
+      - delete
+      - get
+      - watch
+      - list
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -54,5 +54,5 @@ spec:
           serviceAccountName: deploy
           restartPolicy: OnFailure
           containers:
-          - name: deploy
-            image: your-docker-image:tag
+            - name: deploy
+              image: your-docker-image:tag

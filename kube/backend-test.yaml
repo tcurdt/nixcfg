@@ -7,8 +7,8 @@ metadata:
     app: backend
 spec:
   ports:
-  - port: 80
-    targetPort: 5678
+    - port: 80
+      targetPort: 5678
   selector:
     app: backend
 ---
@@ -30,9 +30,9 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: hashicorp/http-echo
-        args:
-        - "-text=backend-test"
-        ports:
-        - containerPort: 5678
+        - name: backend
+          image: hashicorp/http-echo
+          args:
+            - "-text=backend-test"
+          ports:
+            - containerPort: 5678

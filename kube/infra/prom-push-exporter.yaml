@@ -12,9 +12,9 @@ spec:
   selector:
     app: prom-push-exporter
   ports:
-  - protocol: TCP
-    port: 9091
-    targetPort: 9091
+    - protocol: TCP
+      port: 9091
+      targetPort: 9091
   type: ClusterIP
 ---
 apiVersion: apps/v1
@@ -35,15 +35,15 @@ spec:
         app: prom-push-exporter
     spec:
       containers:
-      - name: prom-push-exporter
-        image: prom/pushgateway:v1.8.0
-        ports:
-        - name: http
-          containerPort: 9091
-        resources:
-          requests:
-            # cpu: 50m
-            memory: 100Mi
-          limits:
-            # cpu: 100m
-            memory: 200Mi
+        - name: prom-push-exporter
+          image: prom/pushgateway:v1.8.0
+          ports:
+            - name: http
+              containerPort: 9091
+          resources:
+            requests:
+              # cpu: 50m
+              memory: 100Mi
+            limits:
+              # cpu: 100m
+              memory: 200Mi

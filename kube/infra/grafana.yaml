@@ -131,4 +131,3 @@ spec:
         - name: grafana-storage
           persistentVolumeClaim:
             claimName: grafana-volume-claim
-

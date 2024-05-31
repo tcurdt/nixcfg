@@ -4,25 +4,25 @@ metadata:
   namespace: infra
   name: prometheus
 rules:
-- apiGroups:
-    - ""
-  resources:
-    - pods
-    - endpoints
-    - services
-  verbs:
-    - get
-    - list
-    - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - endpoints
+      - services
+    verbs:
+      - get
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: prometheus-binding
 subjects:
-- kind: ServiceAccount
-  name: prometheus
-  namespace: infra
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: infra
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -114,11 +114,11 @@ data:
         # - target_label: __address__
         #   replacement: 127.0.0.1:9187
   datasource.yml: |-
-     apiVersion: 1
-     datasources:
-     - name: Prometheus
-       type: prometheus
-       url: https://127.0.0.1:9090
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: https://127.0.0.1:9090
 ---
 apiVersion: v1
 kind: Service
@@ -132,8 +132,8 @@ spec:
   selector:
     app: prometheus
   ports:
-  - protocol: TCP
-    port: 9090
+    - protocol: TCP
+      port: 9090
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -154,32 +154,30 @@ spec:
     spec:
       serviceAccountName: prometheus
       containers:
-      - name: prometheus
-        image: prom/prometheus:v2.52.0
-        args:
-          - --config.file=/etc/prometheus/prometheus.yml
-          - --log.level=error
-        ports:
-          - name: prometheus
-            containerPort: 9090
-        resources:
-          requests:
-            # cpu: 100m
-            memory: 100Mi
-          limits:
-            # cpu: 200m
-            memory: 200Mi
-        volumeMounts:
-          - name: prometheus-config
-            mountPath: /etc/prometheus
-          - name: prometheus-storage
-            mountPath: /prometheus
+        - name: prometheus
+          image: prom/prometheus:v2.52.0
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --log.level=error
+          ports:
+            - name: prometheus
+              containerPort: 9090
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 100Mi
+            limits:
+              # cpu: 200m
+              memory: 200Mi
+          volumeMounts:
+            - name: prometheus-config
+              mountPath: /etc/prometheus
+            - name: prometheus-storage
+              mountPath: /prometheus
       volumes:
-      - name: prometheus-config
-        configMap:
-          name: prometheus
-      - name: prometheus-storage
-        persistentVolumeClaim:
-          claimName: prometheus-volume-claim
-
-
+        - name: prometheus-config
+          configMap:
+            name: prometheus
+        - name: prometheus-storage
+          persistentVolumeClaim:
+            claimName: prometheus-volume-claim

@@ -41,9 +41,9 @@ spec:
   selector:
     app: loki
   ports:
-  - protocol: TCP
-    port: 3100
-    targetPort: 3100
+    - protocol: TCP
+      port: 3100
+      targetPort: 3100
   type: NodePort
 ---
 apiVersion: v1
@@ -99,26 +99,26 @@ spec:
         app: loki
     spec:
       containers:
-      - name: loki
-        image: grafana/loki:3.0.0
-        args:
-          - --config.file=/etc/loki/loki.yml
-          - --log.level=error
-        ports:
-          - name: loki
-            containerPort: 3100
-        resources:
-          requests:
-            # cpu: 100m
-            memory: 100Mi
-          limits:
-            # cpu: 200m
-            memory: 200Mi
-        volumeMounts:
-          - name: loki-config
-            mountPath: /etc/loki
-          - name: loki-storage
-            mountPath: /storage
+        - name: loki
+          image: grafana/loki:3.0.0
+          args:
+            - --config.file=/etc/loki/loki.yml
+            - --log.level=error
+          ports:
+            - name: loki
+              containerPort: 3100
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 100Mi
+            limits:
+              # cpu: 200m
+              memory: 200Mi
+          volumeMounts:
+            - name: loki-config
+              mountPath: /etc/loki
+            - name: loki-storage
+              mountPath: /storage
       volumes:
         - name: loki-config
           configMap:
