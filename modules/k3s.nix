@@ -40,16 +40,16 @@
 
   environment.systemPackages = [
     pkgs.k3s
-    pkgs.kubernetes-helm
-    pkgs.envsubst
     pkgs.k9s
     pkgs.kubetail
+    pkgs.kubernetes-helm
+    pkgs.envsubst
+    pkgs.kustomize
+    pkgs.kubectx
     # pkgs.regclient
-    # pkgs.kustomize
-    # pkgs.kubectx
+    # pkgs.kor # unstable
     # pkgs.stern
     # pkgs.velero
-    # pkgs.kor # unstable
   ];
 
 }
