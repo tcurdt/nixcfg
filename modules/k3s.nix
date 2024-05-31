@@ -27,7 +27,7 @@
     ];
   };
 
-  networking.nameservers = [ "10.43.0.10" ];
+  # networking.nameservers = [ "10.43.0.10" ];
 
   # environment.shellAliases = {
   #   k  = "kubectl";
