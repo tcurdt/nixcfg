@@ -85,6 +85,6 @@ spec:
         - name: docker
           hostPath:
             path: /var/lib/docker
-       - name: disk
+        - name: disk
           hostPath:
             path: /dev/disk
