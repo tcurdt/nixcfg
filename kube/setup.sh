@@ -41,6 +41,20 @@ kubectl apply \
 kubectl apply \
  -f backend-live.yaml
 
+
+cat <<EOF > kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- backend-live.yaml
+- backend-test.yaml
+EOF
+
+kustomize edit set image hashicorp/http-echo:live=hashicorp/http-echo:sha-live
+kustomize edit set image hashicorp/http-echo:test=hashicorp/http-echo:sha-test
+
+
 echo "foo" > /srv/volumes/cdn/foo
 curl -k --resolve cdn.vafer.org:443:127.0.0.1  https://cdn.vafer.org/foo
 curl -k --resolve live.vafer.org:443:127.0.0.1 https://live.vafer.org

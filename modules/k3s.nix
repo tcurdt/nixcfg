@@ -46,7 +46,7 @@
     pkgs.envsubst
     pkgs.kustomize
     pkgs.kubectx
-    # pkgs.regclient
+    pkgs.regclient
     # pkgs.kor # unstable
     # pkgs.stern
     # pkgs.velero
