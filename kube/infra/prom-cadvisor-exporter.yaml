@@ -1,0 +1,90 @@
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   namespace: infra
+#   name: cadvisor
+# ---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: infra
+  name: prom-cadvisor-exporter
+  labels:
+    app: prom-cadvisor-exporter
+  # annotations:
+  #   prometheus.io/scrape: 'true'
+  #   prometheus.io/port: '8080'
+spec:
+  selector:
+    app: prom-cadvisor-exporter
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: infra
+  name: prom-cadvisor-exporter
+  labels:
+    app: prom-cadvisor-exporter
+spec:
+  selector:
+    matchLabels:
+      app: prom-cadvisor-exporter
+  template:
+    metadata:
+      labels:
+        app: prom-cadvisor-exporter
+    spec:
+      # serviceAccountName: cadvisor
+      # automountServiceAccountToken: false
+      # terminationGracePeriodSeconds: 30
+      containers:
+        - name: prom-cadvisor-exporter
+          image: gcr.io/cadvisor/cadvisor:v0.47.0
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          volumeMounts:
+            - name: rootfs
+              mountPath: /rootfs
+              readOnly: true
+            - name: var-run
+              mountPath: /var/run
+              readOnly: true
+            - name: sys
+              mountPath: /sys
+              readOnly: true
+            - name: docker
+              mountPath: /var/lib/docker
+              readOnly: true
+            - name: disk
+              mountPath: /dev/disk
+              readOnly: true
+      volumes:
+        - name: rootfs
+          hostPath:
+            path: /
+        - name: var-run
+          hostPath:
+            path: /var/run
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: docker
+          hostPath:
+            path: /var/lib/docker
+       - name: disk
+          hostPath:
+            path: /dev/disk
