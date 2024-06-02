@@ -52,6 +52,7 @@ metadata:
   labels:
     app: mysql
 spec:
+  serviceName: mysql
   replicas: 1
   selector:
     matchLabels:
@@ -76,13 +77,29 @@ spec:
           ports:
             - name: mysql
               containerPort: 3306
-          # resources:
-          #   requests:
-          #     # cpu: 100m
-          #     memory: 200Mi
-          #   limits:
-          #     # cpu: 200m
-          #     memory: 400Mi
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+            failureThreshold: 6
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              # cpu: 100m
+              memory: 1Gi
+            limits:
+              # cpu: 200m
+              memory: 2Gi
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: mysql-storage
               mountPath: /var/lib/mysql

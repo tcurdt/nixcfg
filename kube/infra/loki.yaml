@@ -41,9 +41,8 @@ spec:
   selector:
     app: loki
   ports:
-    - protocol: TCP
-      port: 3100
-      targetPort: 3100
+    - port: 3100
+      # targetPort: 3100
   type: NodePort
 ---
 apiVersion: v1
@@ -114,6 +113,9 @@ spec:
             limits:
               # cpu: 200m
               memory: 200Mi
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: loki-config
               mountPath: /etc/loki

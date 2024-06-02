@@ -138,11 +138,10 @@ metadata:
   labels:
     app: prometheus
 spec:
+  ports:
+    - port: 9090
   selector:
     app: prometheus
-  ports:
-    - protocol: TCP
-      port: 9090
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -176,6 +175,17 @@ spec:
               memory: 100Mi
             limits:
               memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: prometheus
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: prometheus
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: prometheus-config
               mountPath: /etc/prometheus

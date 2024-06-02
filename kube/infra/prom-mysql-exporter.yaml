@@ -5,11 +5,13 @@ metadata:
   name: prom-mysql-exporter
   labels:
     app: prom-mysql-exporter
+  # annotations:
+  #   prometheus.io/scrape: 'true'
+  #   prometheus.io/port: '9187'
 spec:
   ports:
-    - name: metrics
-      port: 9187
-      targetPort: 9187
+    - port: 9187
+      # targetPort: 9187
   selector:
     app: prom-mysql-exporter
 ---
@@ -50,3 +52,14 @@ spec:
               memory: 100Mi
             limits:
               memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false

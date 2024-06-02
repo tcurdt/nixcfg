@@ -148,12 +148,10 @@ metadata:
 spec:
   # clusterIP: None
   ports:
-    - name: metrics
-      port: 8080
-      targetPort: metrics
-    - name: telemetry
-      port: 8081
-      targetPort: telemetry
+    - port: 8080
+      # targetPort: 8080
+    - port: 8081
+      # targetPort: 8081
   selector:
     app: prom-kube-exporter
 ---
@@ -191,15 +189,15 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 8080
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
+              port: metrics
+            # initialDelaySeconds: 5
+            # timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: 8081
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
+              port: telemetry
+            # initialDelaySeconds: 5
+            # timeoutSeconds: 5
           resources:
             requests:
               # cpu: 100m
@@ -208,6 +206,6 @@ spec:
               # cpu: 250m
               memory: 200Mi
           securityContext:
+            # readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
             runAsUser: 65534

@@ -54,9 +54,8 @@ spec:
   selector:
     app: promtail
   ports:
-    - protocol: TCP
-      port: 9080
-      targetPort: 9080
+    - port: 9080
+      # targetPort: 9080
   type: NodePort
   # nodePort: 30002
 ---
@@ -170,6 +169,17 @@ spec:
             limits:
               # cpu: 250m
               memory: 200Mi
+          # readinessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: http
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: logs
               mountPath: /var/log

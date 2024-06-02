@@ -52,6 +52,7 @@ metadata:
   labels:
     app: postgres
 spec:
+  serviceName: postgres
   replicas: 1
   selector:
     matchLabels:
@@ -95,6 +96,9 @@ spec:
             limits:
               # cpu: 200m
               memory: 200Mi
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data

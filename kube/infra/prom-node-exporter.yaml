@@ -9,13 +9,11 @@ metadata:
   #   prometheus.io/scrape: 'true'
   #   prometheus.io/port: '9100'
 spec:
+  ports:
+    - port: 9100
+      # targetPort: 9100
   selector:
     app: prom-node-exporter
-  ports:
-    - name: prom-node-exporter
-      protocol: TCP
-      port: 9100
-      targetPort: 9100
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -69,7 +67,6 @@ spec:
           ports:
             - name: metrics
               containerPort: 9100
-              protocol: TCP
           resources:
             requests:
               # cpu: 100m
@@ -77,6 +74,17 @@ spec:
             limits:
               # cpu: 250m
               memory: 200Mi
+          # readinessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: metrics
+          # livenessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: metrics
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - mountPath: /host/sys
               mountPropagation: HostToContainer

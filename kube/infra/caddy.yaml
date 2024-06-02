@@ -43,13 +43,9 @@ spec:
   selector:
     app: caddy
   ports:
-    - name: http
-      protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 80
-    - name: https
-      protocol: TCP
-      port: 443
+    - port: 443
       targetPort: 443
   type: LoadBalancer
 ---
@@ -148,8 +144,12 @@ spec:
         - name: caddy
           image: caddy:2.7.6-alpine
           ports:
-            - containerPort: 80
-            - containerPort: 443
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+            - name: admin
+              containerPort: 2019
           volumeMounts:
             - name: caddy-config
               mountPath: /etc/caddy/Caddyfile
@@ -163,6 +163,17 @@ spec:
             requests:
               # cpu: 100m
               memory: 200Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: admin
+          readinessProbe:
+            httpGet:
+              path: /
+              port: admin
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
       volumes:
         - name: caddy-config
           configMap:

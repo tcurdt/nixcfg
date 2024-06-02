@@ -9,13 +9,12 @@ metadata:
   #   prometheus.io/scrape: 'true'
   #   prometheus.io/port: '9091'
 spec:
+  ports:
+    - port: 9091
+      # targetPort: 9091
   selector:
     app: prom-push-exporter
-  ports:
-    - protocol: TCP
-      port: 9091
-      targetPort: 9091
-  type: ClusterIP
+  # type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,7 +37,7 @@ spec:
         - name: prom-push-exporter
           image: prom/pushgateway:v1.8.0
           ports:
-            - name: http
+            - name: metrics
               containerPort: 9091
           resources:
             requests:
@@ -47,3 +46,14 @@ spec:
             limits:
               # cpu: 100m
               memory: 200Mi
+          # readinessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: metrics
+          # livenessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: metrics
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false

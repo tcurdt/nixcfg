@@ -107,6 +107,10 @@ spec:
             httpGet:
               path: /api/health
               port: grafana
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: grafana
           resources:
             requests:
               # cpu: 100m
@@ -114,6 +118,9 @@ spec:
             limits:
               # cpu: 200m
               memory: 200Mi
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: grafana-datasources
               mountPath: /etc/grafana/provisioning/datasources

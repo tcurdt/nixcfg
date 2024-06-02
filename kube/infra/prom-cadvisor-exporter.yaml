@@ -15,13 +15,12 @@ metadata:
   #   prometheus.io/scrape: 'true'
   #   prometheus.io/port: '8080'
 spec:
+  # type: ClusterIP
+  ports:
+    - port: 8080
+      # targetPort: 8080
   selector:
     app: prom-cadvisor-exporter
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -46,16 +45,26 @@ spec:
         - name: prom-cadvisor-exporter
           image: gcr.io/cadvisor/cadvisor:v0.47.0
           ports:
-            - name: http
+            - name: metrics
               containerPort: 8080
-              protocol: TCP
           resources:
             requests:
-              cpu: 100m
+              # cpu: 100m
               memory: 100Mi
             limits:
-              cpu: 200m
+              # cpu: 200m
               memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
           volumeMounts:
             - name: rootfs
               mountPath: /rootfs
