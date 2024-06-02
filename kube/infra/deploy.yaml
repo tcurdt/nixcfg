@@ -1,24 +1,24 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  namespace: infra
-  name: promtail
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - nodes
-      - services
-      - pods
-    verbs:
-      - create
-      - update
-      - patch
-      - delete
-      - get
-      - watch
-      - list
----
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRole
+# metadata:
+#   namespace: infra
+#   name: promtail
+# rules:
+#   - apiGroups:
+#       - ""
+#     resources:
+#       - nodes
+#       - services
+#       - pods
+#     verbs:
+#       - create
+#       - update
+#       - patch
+#       - delete
+#       - get
+#       - watch
+#       - list
+# ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -26,7 +26,8 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: deploy
+  # name: deploy
+  name: cluster-admin
 subjects:
   - kind: ServiceAccount
     namespace: infra
@@ -46,7 +47,7 @@ metadata:
   labels:
     app: deploy
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
@@ -55,4 +56,10 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: deploy
-              image: your-docker-image:tag
+              image: bitnami/kubectl:1.27.14
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "deployment start"
+                  kubectl get all -A
+                  echo "deployment stop"
