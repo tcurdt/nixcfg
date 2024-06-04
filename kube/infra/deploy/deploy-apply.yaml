@@ -6,6 +6,7 @@ metadata:
   labels:
     app: deploy-apply
 spec:
+  volumeName: infra-volume
   accessModes:
     - ReadOnlyMany
   storageClassName: local-path
