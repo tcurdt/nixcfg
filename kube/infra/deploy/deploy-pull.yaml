@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: infra-volume
+  namespace: infra
+  labels:
+    app: deploy-pull
+    type: local
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  # persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    # mkdir -p /srv/volumes/infra
+    path: /srv/volumes/infra
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: infra-volume-claim
+  namespace: infra
+  labels:
+    app: deploy-pull
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: infra
+  name: deploy-pull
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploy-pull
+  template:
+    metadata:
+      labels:
+        app: deploy-pull
+    spec:
+      securityContext:
+        fsGroup: 101
+      containers:
+        - name: git-sync
+          image: registry.k8s.io/git-sync/git-sync:v4.0.0
+          args:
+            - --depth=1
+            - --period=60s
+            - --link=current
+            - --root=/git
+            - --http-metrics
+            - --http-bind=:4444
+            - --verbose=0
+          env:
+            - name: GITSYNC_REPO
+              valueFrom:
+                secretKeyRef:
+                  name: git-repo-infra
+                  key: url
+            - name: GITSYNC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: git-repo-infra
+                  key: username
+            - name: GITSYNC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: git-repo-infra
+                  key: password
+          ports:
+            - name: metrics
+              containerPort: 4444
+          volumeMounts:
+            - name: infra-volume
+              mountPath: /git
+      volumes:
+        - name: infra-volume
+          persistentVolumeClaim:
+            claimName: infra-volume-claim

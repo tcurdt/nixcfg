@@ -73,6 +73,8 @@ metadata:
   namespace: infra
   labels:
     app: prometheus
+  annotations:
+    internal.config.kubernetes.io/needsHashSuffix: enabled
 data:
   prometheus.yml: |
     global:

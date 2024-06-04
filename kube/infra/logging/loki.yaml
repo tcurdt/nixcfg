@@ -42,7 +42,6 @@ spec:
     app: loki
   ports:
     - port: 3100
-      # targetPort: 3100
   type: NodePort
 ---
 apiVersion: v1
@@ -52,7 +51,8 @@ metadata:
   name: loki
   labels:
     app: loki
-  # annotations:
+  annotations:
+    internal.config.kubernetes.io/needsHashSuffix: enabled
   #   reloader.stakater.com/match: "true"
 data:
   # https://grafana.com/docs/loki/latest/configure/

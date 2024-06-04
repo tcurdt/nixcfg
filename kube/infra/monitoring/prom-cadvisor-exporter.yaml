@@ -15,10 +15,8 @@ metadata:
   #   prometheus.io/scrape: 'true'
   #   prometheus.io/port: '8080'
 spec:
-  # type: ClusterIP
   ports:
     - port: 8080
-      # targetPort: 8080
   selector:
     app: prom-cadvisor-exporter
 ---

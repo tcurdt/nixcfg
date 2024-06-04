@@ -48,6 +48,8 @@ kind: ConfigMap
 metadata:
   namespace: infra
   name: grafana-datasources
+  annotations:
+    internal.config.kubernetes.io/needsHashSuffix: enabled
 data:
   datasources.yaml: |
     apiVersion: 1

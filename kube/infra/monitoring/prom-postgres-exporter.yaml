@@ -2,58 +2,63 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: infra
-  name: prom-push-exporter
+  name: prom-postgres-exporter
   labels:
-    app: prom-push-exporter
+    app: prom-postgres-exporter
   # annotations:
   #   prometheus.io/scrape: 'true'
-  #   prometheus.io/port: '9091'
+  #   prometheus.io/port: '9187'
 spec:
   ports:
-    - port: 9091
-      # targetPort: 9091
+    - port: 9187
   selector:
-    app: prom-push-exporter
-  # type: ClusterIP
+    app: prom-postgres-exporter
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: infra
-  name: prom-push-exporter
+  name: prom-postgres-exporter
   labels:
-    app: prom-push-exporter
+    app: prom-postgres-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prom-push-exporter
+      app: prom-postgres-exporter
   template:
     metadata:
       labels:
-        app: prom-push-exporter
+        app: prom-postgres-exporter
     spec:
       containers:
-        - name: prom-push-exporter
-          image: prom/pushgateway:v1.8.0
+        - name: prom-postgres-exporter
+          image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
+          args:
+            - --log.level=error
+            - --collector.long_running_transactions
+          env:
+            - name: DATA_SOURCE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-superuser
+                  key: url
           ports:
             - name: metrics
-              containerPort: 9091
+              containerPort: 9187
           resources:
             requests:
-              # cpu: 50m
               memory: 100Mi
             limits:
-              # cpu: 100m
               memory: 200Mi
           # readinessProbe:
           #   httpGet:
           #     path: /metrics
-          #     port: metrics
+          #     port: http
           # livenessProbe:
           #   httpGet:
           #     path: /metrics
-          #     port: metrics
+          #     port: http
           securityContext:
             # readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
