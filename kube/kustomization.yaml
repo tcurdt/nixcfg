@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- infra/caddy.yaml
+- backend-live.yaml
+- backend-test.yaml
+
+generatorOptions:
+  disableNameSuffixHash: false

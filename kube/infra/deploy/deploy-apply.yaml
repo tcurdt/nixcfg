@@ -38,7 +38,7 @@ spec:
                 echo "resolving oci images"
                 echo "kubectl apply"
                 echo "notify"
-                ls -la /git
+                ls -la /git/current
                 sleep 30
               done
           volumeMounts:

@@ -47,8 +47,6 @@ spec:
       labels:
         app: deploy-pull
     spec:
-      securityContext:
-        fsGroup: 101
       containers:
         - name: git-sync
           image: registry.k8s.io/git-sync/git-sync:v4.0.0
@@ -82,6 +80,9 @@ spec:
           volumeMounts:
             - name: infra-volume
               mountPath: /git
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
       volumes:
         - name: infra-volume
           persistentVolumeClaim:

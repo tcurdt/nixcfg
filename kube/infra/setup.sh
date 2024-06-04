@@ -1,4 +1,4 @@
-mkdir -p /srv/volumes/infra && chown 65534:101 /srv/volumes/infra
+mkdir -p /srv/volumes/infra && chown 65533:65533 /srv/volumes/infra
 mkdir -p /srv/volumes/cdn && chown 65534:65534 /srv/volumes/cdn
 mkdir -p /srv/volumes/loki && chown 10001:10001 /srv/volumes/loki
 mkdir -p /srv/volumes/mysql && chown 65534:65534 /srv/volumes/mysql
