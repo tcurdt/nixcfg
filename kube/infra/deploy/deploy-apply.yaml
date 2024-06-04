@@ -9,9 +9,9 @@ spec:
   accessModes:
     - ReadOnlyMany
   storageClassName: local-path
-  # resources:
-  #   requests:
-  #     storage: 50Mi
+  resources:
+    requests:
+      storage: 50Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
