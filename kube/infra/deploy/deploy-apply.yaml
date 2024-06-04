@@ -1,19 +1,3 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: infra-volume-claim-read
-  namespace: infra
-  labels:
-    app: deploy-apply
-spec:
-  volumeName: infra-volume
-  accessModes:
-    - ReadOnlyMany
-  storageClassName: local-path
-  resources:
-    requests:
-      storage: 50Mi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,4 +32,4 @@ spec:
       volumes:
         - name: infra-volume
           persistentVolumeClaim:
-            claimName: infra-volume-claim-read
+            claimName: infra-volume-claim-ro

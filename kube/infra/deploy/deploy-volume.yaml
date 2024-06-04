@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: infra-volume
+  namespace: infra
+  labels:
+    app: deploy
+    type: local
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  storageClassName: local-path
+  # persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    # mkdir -p /srv/volumes/infra
+    path: /srv/volumes/infra
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: infra-volume-claim-rw
+  namespace: infra
+  labels:
+    app: deploy-pull
+spec:
+  # volumeName: infra-volume
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: infra-volume-claim-ro
+  namespace: infra
+  labels:
+    app: deploy-apply
+spec:
+  # volumeName: infra-volume
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+
