@@ -29,7 +29,11 @@ spec:
           volumeMounts:
             - name: infra-volume
               mountPath: /git
+              readOnly: true
+          securityContext:
+            # readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
       volumes:
         - name: infra-volume
           persistentVolumeClaim:
-            claimName: infra-volume-claim-ro
+            claimName: infra-volume-claim
