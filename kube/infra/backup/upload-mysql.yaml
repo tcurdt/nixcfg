@@ -28,3 +28,9 @@ spec:
                     secretKeyRef:
                       name: postgres-superuser
                       key: password
+
+# mysql
+# curl
+# age
+# rclone
+# aws cli
