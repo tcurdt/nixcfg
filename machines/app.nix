@@ -39,7 +39,6 @@ in nixpkgs.lib.nixosSystem {
       networking.hostName = hostName;
       networking.domain = "nixos";
       system.stateVersion = "23.11";
-      # system.stateVersion = "24.05";
     }
 
     ../users/root.nix
