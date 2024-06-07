@@ -41,17 +41,17 @@ spec:
             - name: GITSYNC_REPO
               valueFrom:
                 secretKeyRef:
-                  name: git-repo-infra
+                  name: git-repo-infrastructure
                   key: url
             - name: GITSYNC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: git-repo-infra
+                  name: git-repo-infrastructure
                   key: username
             - name: GITSYNC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: git-repo-infra
+                  name: git-repo-infrastructure
                   key: password
           ports:
             - name: metrics

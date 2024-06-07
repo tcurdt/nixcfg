@@ -31,6 +31,8 @@ spec:
     spec:
       containers:
         - name: backend
+          # imagePullSecrets:
+          #   - name: docker-registry-github
           image: hashicorp/http-echo
           args:
             - "-text=backend-test"

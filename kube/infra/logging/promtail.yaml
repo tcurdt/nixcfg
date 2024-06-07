@@ -91,7 +91,7 @@ data:
           path: /var/log/journal
           labels:
             job: systemd-journal
-            hostname: k3s-01 # FIXME
+            hostname: node01 # FIXME
         relabel_configs:
           - source_labels:
               - __journal__systemd_unit

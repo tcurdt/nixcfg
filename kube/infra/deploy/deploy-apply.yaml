@@ -15,17 +15,25 @@ spec:
     spec:
       containers:
         - name: deploy-apply
-          image: alpine:latest
+          image: ghcr.io/tcurdt/kubeops:latest
           command: ["/bin/sh", "-c"]
           args:
             - |
+              REPO=/tmp/repo
               while true; do
-                whoami
-                echo "resolving oci images"
-                echo "kubectl apply"
-                echo "notify"
-                ls -la /git/current
-                sleep 60
+
+                rm -rf $REPO
+                cp -r /git/current/kubernetes $REPO
+                cd $REPO
+
+                RESOLVED=$(oci-resolve)
+                echo $RESOLVED
+                sh <(echo $RESOLVED)
+
+                # kubectl kustomize . | kubectl apply -f -
+                # kustomize build /git/current | kubectl apply -f -
+
+                sleep 60 # wait or webhook
               done
           volumeMounts:
             - name: infra-volume

@@ -88,8 +88,16 @@
           # inherit release-go;
         };
 
-        edkimo = import ./machines/edkimo.nix {
-          hostName = "edkimo";
+        kube-edkimo = import ./machines/kube-edkimo.nix {
+          hostName = "node01";
+          hostPlatform = "x86_64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+        };
+
+        kube-michael = import ./machines/kube-michael.nix {
+          hostName = "node01";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;

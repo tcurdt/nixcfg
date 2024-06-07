@@ -30,7 +30,7 @@ spec:
     requests:
       storage: 50Mi
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   namespace: infra
@@ -38,7 +38,7 @@ metadata:
   labels:
     app: backup-volumes
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "*/ * * * *"
   jobTemplate:
     spec:
       template:

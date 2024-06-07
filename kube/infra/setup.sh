@@ -9,8 +9,14 @@ mkdir -p /srv/volumes/prometheus && chown 65534:65534 /srv/volumes/prometheus
 
 kubectl apply -f namespaces.yaml
 
-kubectl delete secret git-repo-infra -n infra
-kubectl create secret generic git-repo-infra \
+kubectl create secret docker-registry docker-registry-github \
+--docker-server=https://ghcr.io \
+--docker-username=$GITHUB_USER \
+--docker-password=$GITHUB_TOKEN \
+--docker-email=tcurdt@vafer.org
+
+kubectl delete secret git-repo-infrastructure -n infra
+kubectl create secret generic git-repo-infrastructure \
 --from-literal=username= \
 --from-literal=password= \
 --from-literal=url=https://github.com/tcurdt/nixcfg.git \
@@ -23,11 +29,11 @@ kubectl create secret generic postgres-superuser \
 --from-literal=url=postgres://postgres:secret@postgres:5432/postgres \
 -n infra
 
-kubectl delete secret mysql-superuser -n infra
-kubectl create secret generic mysql-superuser \
---from-literal=username=root \
---from-literal=password=secret \
---from-literal=url=mysql://root:secret@mysql:3306/mysql \
--n infra
+# kubectl delete secret mysql-superuser -n infra
+# kubectl create secret generic mysql-superuser \
+# --from-literal=username=root \
+# --from-literal=password=secret \
+# --from-literal=url=mysql://root:secret@mysql:3306/mysql \
+# -n infra
 
 kubectl apply -f infra
