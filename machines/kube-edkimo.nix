@@ -44,6 +44,8 @@ in nixpkgs.lib.nixosSystem {
     {
       ops.keyFiles = [
         ../keys/tcurdt.pub
+        ../keys/kai.pub
+        ../keys/swaack.pub
       ];
       users.users.ops = {
         packages = [ maintenanceScript ];
