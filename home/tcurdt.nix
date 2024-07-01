@@ -180,6 +180,11 @@
       ];
     };
 
+    tmux = {
+      enable = true;
+      clock24 = true;
+      # mouse = true;
+    };
   };
 
   home.shellAliases = {
@@ -188,9 +193,9 @@
     ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
     ls = "eza";
     g = "git";
-    lg = "lazygit";
+    # lg = "lazygit";
     systemtime = "chronyc makestep && chronyc tracking";
-    dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
+    # dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
     k  = "kubectl";
     kall = "kubectl get all -A";
     # kdebug = "kubectl debug -it <pod-name> --image=busybox --target=<container-name> --namespace=<namespace>";
@@ -205,7 +210,7 @@
   home.packages = [
     pkgs.nano
     # pkgs.neovim
-    pkgs.tmux
+    # pkgs.tmux
     pkgs.curl
     pkgs.jq
     pkgs.openssl
@@ -234,13 +239,13 @@
     # pkgs.jp # json plot
   ];
 
-  home.file = {
-    ".foo" = {
-      text = ''
-        bar
-      '';
-    };
-  };
+  # home.file = {
+  #   ".foo" = {
+  #     text = ''
+  #       bar
+  #     '';
+  #   };
+  # };
 
   home.stateVersion = "23.11";
 }
