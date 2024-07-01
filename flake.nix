@@ -89,7 +89,7 @@
         };
 
         kube-edkimo = import ./machines/kube-edkimo.nix {
-          hostName = "node01";
+          hostName = "kube-edkimo";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
@@ -97,7 +97,7 @@
         };
 
         kube-michael = import ./machines/kube-michael.nix {
-          hostName = "node01";
+          hostName = "kube-michael";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
