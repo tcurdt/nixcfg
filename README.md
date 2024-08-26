@@ -1,10 +1,14 @@
 # utm
 
+```
 curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIX_CHANNEL=nixos-22.11 bash -x
+```
 
+```
 nix-shell -p gitMinimal
 cd && git clone git@github.com:tcurdt/nixcfg.git && cd nixcfg
-nixos-rebuild switch --flake .#utm
+nixos-rebuild switch --flake .#utm-arm
+```
 
 # hetzner
 

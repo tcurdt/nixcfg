@@ -59,9 +59,19 @@
 
       nixosConfigurations = {
 
-        utm = import ./machines/utm.nix {
-          hostName = "utm";
+        utm-arm = import ./machines/utm-arm.nix {
+          hostName = "utm-arm";
           hostPlatform = "aarch64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+          # inherit nixos-generators;
+          # inherit release-go;
+        };
+
+        utm-intel = import ./machines/utm-intel.nix {
+          hostName = "utm-intel";
+          hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
