@@ -275,11 +275,11 @@
 
   environment.persistence."/nix/persist" = {
     directories = [
-      { directory = "/secrets";   mode="0755"; } # secrets
-      # { directory = "/etc/nixos"; mode="0755"; } # nixos system config files, can be considered optional
-      # { directory = "/srv";       mode="0755"; } # service data
-      # { directory = "/var/log";   mode="0755"; } # the place that journald dumps it logs to
-      # { directory = "/var/lib";   mode="0755"; } # system service persistent data
+      { directory = "/secrets";         mode="0755"; } # secrets
+      { directory = "/var/lib/nixos";   mode="0755"; } # system service persistent data
+      # { directory = "/etc/nixos";       mode="0755"; } # nixos system config files, can be considered optional
+      # { directory = "/srv";             mode="0755"; } # service data
+      # { directory = "/var/log";         mode="0755"; } # the place that journald dumps it logs to
 
       # { directory = "/var/lib/influxdb2";  mode="0755"; }
       # { directory = "/var/lib/postgresql"; mode="0755"; }
