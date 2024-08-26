@@ -15,7 +15,7 @@ in nixpkgs.lib.nixosSystem {
     ../modules/server.nix
     ../modules/users.nix
 
-    ../modules/k3s.nix
+    # ../modules/k3s.nix
     # ../modules/rke2.nix
     # ../modules/podman.nix
     # ../modules/docker.nix
