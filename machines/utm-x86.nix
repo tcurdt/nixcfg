@@ -11,7 +11,7 @@ in nixpkgs.lib.nixosSystem {
     # inputs.nixos-generators.nixosModules.all-formats
     # inputs.release-go.nixosModules.default
 
-    ../hardware/utm-intel.nix
+    ../hardware/utm-x86.nix
     ../modules/server.nix
     ../modules/users.nix
 

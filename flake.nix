@@ -34,8 +34,8 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # disko.url = "github:nix-community/disko";
+    # disko.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
   };
 
@@ -49,7 +49,7 @@
     , impermanence
     , release-go
     , deploy-rs
-    , disko
+    # , disko
     # , agenix
     # , darwin
     , ...
@@ -69,8 +69,8 @@
           # inherit release-go;
         };
 
-        utm-intel = import ./machines/utm-intel.nix {
-          hostName = "utm-intel";
+        utm-x86 = import ./machines/utm-x86.nix {
+          hostName = "utm-x86";
           hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
