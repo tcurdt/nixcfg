@@ -52,7 +52,6 @@ in nixpkgs.lib.nixosSystem {
     }
 
     ../users/root.nix
-    # ../users/tcurdt.nix
     ../users/ops.nix
     {
       ops.keyFiles = [
