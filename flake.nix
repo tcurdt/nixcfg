@@ -12,17 +12,17 @@
     home-manager-stable.url = "github:nix-community/home-manager/release-24.05";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
+    impermanence.url = "github:nix-community/impermanence";
+
     # agenix.url = "github:ryantm/agenix";
     # agenix.inputs.nixpkgs.follows = "nixpkgs";
     # agenix.inputs.darwin.follows = "";
 
-    impermanence.url = "github:nix-community/impermanence";
+    # release-go.url = "github:tcurdt/release-go";
+    # release-go.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    release-go.url = "github:tcurdt/release-go";
-    release-go.inputs.nixpkgs.follows = "nixpkgs-stable";
-
-    deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # deploy-rs.url = "github:serokell/deploy-rs";
+    # deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
     # darwin.url = "github:LnL7/nix-darwin";
@@ -31,11 +31,8 @@
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
     # flake-utils.url = "github:numtide/flake-utils";
 
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
-
-    # disko.url = "github:nix-community/disko";
-    # disko.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # nixos-generators.url = "github:nix-community/nixos-generators";
+    # nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
 
   };
 
@@ -45,10 +42,10 @@
     , nixpkgs-stable
     , home-manager-unstable
     , home-manager-stable
-    , nixos-generators
     , impermanence
-    , release-go
-    , deploy-rs
+    # , nixos-generators
+    # , release-go
+    # , deploy-rs
     # , disko
     # , agenix
     # , darwin
@@ -61,46 +58,34 @@
 
         utm-arm = import ./machines/utm-arm.nix {
           hostName = "utm-arm";
-          hostPlatform = "aarch64-linux";
+          # hostPlatform = "aarch64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
-          # inherit nixos-generators;
-          # inherit release-go;
         };
 
         utm-x86 = import ./machines/utm-x86.nix {
           hostName = "utm-x86";
-          hostPlatform = "x86_64-linux";
+          # hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
-          # inherit nixos-generators;
-          # inherit release-go;
         };
 
-        # utm = import ./machines/utm.nix {
-        #   hostName = "utm";
-        #   hostPlatform = "aarch64-linux";
-        #   nixpkgs = nixpkgs-unstable;
-        #   home-manager = home-manager-unstable;
-        #   inherit impermanence;
-        #   inherit nixos-generators;
-        #   # inherit release-go;
-        # };
 
         app = import ./machines/app.nix {
           hostName = "app";
-          hostPlatform = "x86_64-linux";
+          # hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
           # inherit release-go;
         };
 
+
         kube-edkimo = import ./machines/kube-edkimo.nix {
           hostName = "kube-edkimo";
-          hostPlatform = "x86_64-linux";
+          # hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
@@ -108,23 +93,28 @@
 
         kube-michael = import ./machines/kube-michael.nix {
           hostName = "kube-michael";
-          hostPlatform = "x86_64-linux";
+          # hostPlatform = "x86_64-linux";
           nixpkgs = nixpkgs-stable;
           home-manager = home-manager-stable;
           inherit impermanence;
         };
 
-        # home-goe = import ./machines/home-goe.nix {
-        #   hostName = "home-goe";
-        #   hostPlatform = "x86_64-linux";
-        #   nixpkgs = nixpkgs-stable;
-        #   home-manager = home-manager-stable;
-        #   inherit impermanence;
-        #   inherit disko;
-        # };
 
-        # home-ber
-        # home-boat
+        home-goe = import ./machines/home-goe.nix {
+          hostName = "home-goe";
+          # hostPlatform = "x86_64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+        };
+
+        home-ber = import ./machines/home-ber.nix {
+          hostName = "home-goe";
+          # hostPlatform = "x86_64-linux";
+          nixpkgs = nixpkgs-stable;
+          home-manager = home-manager-stable;
+          inherit impermanence;
+        };
 
         # cnc
         # laptop

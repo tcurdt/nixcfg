@@ -1,5 +1,6 @@
-{ nixpkgs, hostName, hostPlatform, impermanence, ... } @ inputs: let
+{ nixpkgs, hostName, impermanence, ... } @ inputs: let
 
+  hostPlatform = "x86_64-linux";
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
   maintenanceScript = pkgs.writeScriptBin "maintenance" ''
@@ -33,7 +34,6 @@ in nixpkgs.lib.nixosSystem {
     ../modules/k3s.nix
 
     {
-      nixpkgs.hostPlatform = hostPlatform;
       networking.hostName = hostName;
       networking.domain = "nixos";
       system.stateVersion = "24.05";

@@ -1,5 +1,6 @@
-{ nixpkgs, hostName, hostPlatform, impermanence, ... } @ inputs: let
+{ nixpkgs, hostName, impermanence, ... } @ inputs: let
 
+  hostPlatform = "x86_64-linux";
   pkgs = nixpkgs.legacyPackages.${hostPlatform};
 
 in nixpkgs.lib.nixosSystem {
@@ -8,12 +9,29 @@ in nixpkgs.lib.nixosSystem {
 
   modules = [
 
-    # inputs.nixos-generators.nixosModules.all-formats
-    # inputs.release-go.nixosModules.default
+    {
+      networking.hostName = hostName;
+      networking.domain = "nixos";
+      system.stateVersion = "23.11";
+    }
 
     ../hardware/contabo.nix
+
     ../modules/server.nix
     ../modules/users.nix
+
+    ../users/root.nix
+    ../users/tcurdt.nix
+    ../users/ops.nix
+    {
+      ops.keyFiles = [
+        ../keys/tcurdt.pub
+      ];
+    }
+
+    # {
+    #   users.users.root.password = "secret";
+    # }
 
     ../modules/docker.nix
     # ../modules/podman.nix
@@ -33,26 +51,6 @@ in nixpkgs.lib.nixosSystem {
     # ../modules/hook-web.nix
 
     # ../modules/backup.nix
-
-    {
-      nixpkgs.hostPlatform = hostPlatform;
-      networking.hostName = hostName;
-      networking.domain = "nixos";
-      system.stateVersion = "23.11";
-    }
-
-    ../users/root.nix
-    ../users/tcurdt.nix
-    # ../users/ops.nix
-    # {
-    #   ops.keyFiles = [
-    #     ../keys/tcurdt.pub
-    #   ];
-    # }
-
-    # {
-    #   users.users.root.password = "secret";
-    # }
 
     # {
     #   services.release-go = {
