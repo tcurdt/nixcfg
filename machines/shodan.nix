@@ -1,20 +1,12 @@
-{ nixpkgs, darwin, home-manager, ... }: let
+{ inputs, ... }: {
 
-  hostPlatform = "aarch64-darwin";
-  hostName = "shodan";
+  networking.hostName = "shodan";
+  networking.domain = "home";
+  system.stateVersion = "23.11";
 
-  pkgs = nixpkgs.legacyPackages.${hostPlatform};
-
-in darwin.lib.darwinSystem {
-
-  modules = [
+  imports = [
 
     {
-      nixpkgs.hostPlatform = hostPlatform;
-      # networking.hostName = hostName;
-      # networking.domain = "local";
-      # system.stateVersion = "23.11";
-      # system.stateVersion = "4";
       nix.extraOptions = ''
         experimental-features = nix-command flakes
       '';

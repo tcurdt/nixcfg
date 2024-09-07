@@ -1,19 +1,10 @@
-{ nixpkgs, hostName, impermanence, ... } @ inputs: let
+{ inputs, ... }: {
 
-  hostPlatform = "x86_64-linux";
-  pkgs = nixpkgs.legacyPackages.${hostPlatform};
+  networking.hostName = "utm-x86";
+  networking.domain = "utm";
+  system.stateVersion = "23.11";
 
-in nixpkgs.lib.nixosSystem {
-
-  specialArgs = { inherit inputs; };
-
-  modules = [
-
-    {
-      networking.hostName = hostName;
-      networking.domain = "utm";
-      system.stateVersion = "23.11";
-    }
+  imports = [
 
     ../hardware/utm-x86.nix
 

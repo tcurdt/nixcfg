@@ -1,7 +1,4 @@
-{ nixpkgs, hostName, impermanence, ... } @ inputs: let
-
-  hostPlatform = "x86_64-linux";
-  pkgs = nixpkgs.legacyPackages.${hostPlatform};
+{ pkgs, inputs, ... }: let
 
   maintenanceScript = pkgs.writeScriptBin "maintenance" ''
     #!${pkgs.bash}/bin/bash
@@ -20,24 +17,19 @@
     exit 1
   '';
 
+in {
 
-in nixpkgs.lib.nixosSystem {
+  networking.hostName = "kube-edkimo";
+  networking.domain = "nixos";
+  system.stateVersion = "24.05";
 
-  specialArgs = { inherit inputs; };
-
-  modules = [
+  imports = [
 
     ../hardware/hetzner.nix
     ../modules/server.nix
     ../modules/users.nix
 
     ../modules/k3s.nix
-
-    {
-      networking.hostName = hostName;
-      networking.domain = "nixos";
-      system.stateVersion = "24.05";
-    }
 
     ../users/root.nix
     ../users/ops.nix

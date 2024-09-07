@@ -24,12 +24,12 @@
     # deploy-rs.url = "github:serokell/deploy-rs";
     # deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    # cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
     # darwin.url = "github:LnL7/nix-darwin";
     # darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     # nixos-hardware.url = "github:nixos/nixos-hardware";
+
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
-    # flake-utils.url = "github:numtide/flake-utils";
 
     # nixos-generators.url = "github:nix-community/nixos-generators";
     # nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -46,7 +46,6 @@
     # , nixos-generators
     # , release-go
     # , deploy-rs
-    # , disko
     # , agenix
     # , darwin
     , ...
@@ -56,65 +55,73 @@
 
       nixosConfigurations = {
 
-        utm-arm = import ./machines/utm-arm.nix {
-          hostName = "utm-arm";
-          # hostPlatform = "aarch64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
+        utm-arm = nixpkgs-stable.lib.nixosSystem {
+          # system = "x86_64-linux";
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/utm-arm.nix ];
         };
 
-        utm-x86 = import ./machines/utm-x86.nix {
-          hostName = "utm-x86";
-          # hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
-        };
-
-
-        app = import ./machines/app.nix {
-          hostName = "app";
-          # hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
-          # inherit release-go;
+        utm-x86 = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/utm-x86.nix ];
         };
 
 
-        kube-edkimo = import ./machines/kube-edkimo.nix {
-          hostName = "kube-edkimo";
-          # hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
-        };
-
-        kube-michael = import ./machines/kube-michael.nix {
-          hostName = "kube-michael";
-          # hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
+        app = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/app.nix ];
         };
 
 
-        home-goe = import ./machines/home-goe.nix {
-          hostName = "home-goe";
-          # hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
+        kube-edkimo = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/kube-edkimo.nix ];
         };
 
-        home-ber = import ./machines/home-ber.nix {
-          hostName = "home-goe";
-          # hostPlatform = "x86_64-linux";
-          nixpkgs = nixpkgs-stable;
-          home-manager = home-manager-stable;
-          inherit impermanence;
+        kube-michael = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/kube-michael.nix ];
         };
+
+
+        home-goe = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/home-goe.nix ];
+        };
+
+        home-ber = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inputs = inputs // {
+              home-manager = home-manager-stable;
+            };
+          };
+          modules = [ ./machines/home-ber.nix ];
+        };
+
 
         # cnc
         # laptop
