@@ -49,7 +49,7 @@
       virtualisation.oci-containers.containers = {
 
         test = {
-          image = "ghcr.io/tcurdt/test-project";
+          image = "ghcr.io/tcurdt/test-project:test";
           ports = [ "127.0.0.1:2015:2015" ];
 
           #environment = {
