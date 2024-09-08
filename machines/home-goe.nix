@@ -46,30 +46,33 @@
     }
 
     {
-      virtualisation.oci-containers.containers = {
+      virtualisation.oci-containers = {
+        backend = "docker";
+        containers = {
 
-        test = {
-          image = "ghcr.io/tcurdt/test-project:test";
-          ports = [ "127.0.0.1:2015:2015" ];
+          test = {
+            image = "ghcr.io/tcurdt/test-project:test";
+            ports = [ "127.0.0.1:2015:2015" ];
 
-          #environment = {
-          #  PASSWORD = "foo";
-          #};
-          environmentFiles = [
-            /run/credentials/live.password
-          ];
+            #environment = {
+            #  PASSWORD = "foo";
+            #};
+            environmentFiles = [
+              /run/credentials/live.password
+            ];
 
-          # extraOptions = [
-          #   "--network=testing"
-          # ];
+            # extraOptions = [
+            #   "--network=testing"
+            # ];
 
-          # login = {
-          #   registry = "ghcr.io";
-          #   username = "tcurdt";
-          #   passwordFile = "/run/credentials/registry.github";
-          # };
+            login = {
+              registry = "ghcr.io";
+              username = "tcurdt";
+              passwordFile = "/run/credentials/registry.github";
+            };
+          };
+
         };
-
       };
     }
 
