@@ -1,23 +1,4 @@
-{ pkgs, inputs, ... }: let
-
-  maintenanceScript = pkgs.writeScriptBin "maintenance" ''
-    #!${pkgs.bash}/bin/bash
-
-    if [ "$1" == "on" ]; then
-      touch /srv/volumes/cdn/maintenance
-      exit 0
-    fi
-
-    if [ "$1" == "off" ]; then
-      rm -f /srv/volumes/cdn/maintenance
-      exit 0
-    fi
-
-    echo "usage: maintenance [on|off]"
-    exit 1
-  '';
-
-in {
+{ pkgs, ... }: {
 
   networking.hostName = "kube-michael";
   networking.domain = "nixos";
@@ -30,6 +11,7 @@ in {
     ../modules/users.nix
 
     ../modules/k3s.nix
+    ../modules/maintenance.nix
 
     ../users/root.nix
     ../users/ops.nix
@@ -37,9 +19,6 @@ in {
       ops.keyFiles = [
         ../keys/tcurdt.pub
       ];
-      users.users.ops = {
-        packages = [ maintenanceScript ];
-      };
     }
 
     {

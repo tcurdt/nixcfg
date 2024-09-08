@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   # https://docs.influxdata.com/influxdb/v2/reference/config-options/
   services.influxdb2 = {

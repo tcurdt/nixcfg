@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ pkgs, ... }: {
 
   networking.hostName = "utm-arm";
   networking.domain = "utm";

@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ pkgs, ... }: {
 
   networking.hostName = "home-ber";
   networking.domain = "home";

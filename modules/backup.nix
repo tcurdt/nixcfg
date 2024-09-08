@@ -1,5 +1,5 @@
 
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 let
 
   # backup read PRIVATE

@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ pkgs, ... }: {
 
   networking.hostName = "home-goe";
   networking.domain = "home";
@@ -23,7 +23,6 @@
       users.users.root.password = "secret";
     }
 
-
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix
     # ../modules/homeassistant.nix
@@ -42,6 +41,34 @@
         #     tls internal
         #   '';
         # };
+
+      };
+    }
+
+    {
+      virtualisation.oci-containers.containers = {
+
+        test = {
+          image = "ghcr.io/tcurdt/test-project";
+          ports = [ "127.0.0.1:2015:2015" ];
+
+          #environment = {
+          #  PASSWORD = "foo";
+          #};
+          environmentFiles = [
+            /run/credentials/live.password
+          ];
+
+          # extraOptions = [
+          #   "--network=testing"
+          # ];
+
+          # login = {
+          #   registry = "ghcr.io";
+          #   username = "tcurdt";
+          #   passwordFile = "/run/credentials/registry.github";
+          # };
+        };
 
       };
     }
