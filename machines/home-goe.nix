@@ -76,14 +76,9 @@
               "--rolling-restart=true"
             ];
             volumes = [
+              "/run/credentials/docker.registries:/config.json"
               "/var/run/docker.sock:/var/run/docker.sock"
             ];
-
-            login = {
-              registry = "ghcr.io";
-              username = "tcurdt";
-              passwordFile = "/run/credentials/password.registry.github";
-            };
           };
 
           test = {
