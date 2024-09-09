@@ -65,7 +65,7 @@
             environmentFiles = [
               "/run/credentials/env.watchtower"
               # https://containrrr.dev/shoutrrr/v0.8/getting-started/
-              # WATCHTOWER_NOTIFICATION_URL=""
+              # WATCHTOWER_NOTIFICATION_URL=pushover://shoutrrr:<api>@<user>/?devices=iphone
               # WATCHTOWER_NOTIFICATION_TITLE_TAG="[home-goe]"
               # WATCHTOWER_NOTIFICATIONS_LEVEL="info"
             ];
@@ -76,6 +76,7 @@
               "--rolling-restart=true"
             ];
             volumes = [
+              # https://containrrr.dev/watchtower/private-registries/
               "/run/credentials/docker.registries:/config.json"
               "/var/run/docker.sock:/var/run/docker.sock"
             ];
