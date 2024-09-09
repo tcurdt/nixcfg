@@ -64,11 +64,13 @@
             image = "containrrr/watchtower";
             environmentFiles = [
               "/run/credentials/env.watchtower"
+              # https://containrrr.dev/shoutrrr/v0.8/getting-started/
               # WATCHTOWER_NOTIFICATION_URL=""
               # WATCHTOWER_NOTIFICATION_TITLE_TAG="[home-goe]"
               # WATCHTOWER_NOTIFICATIONS_LEVEL="info"
             ];
-            extraOptions = [
+            command = [
+              # https://containrrr.dev/watchtower/arguments/
               "--interval 60"
               "--label-enable true"
               "--rolling-restart true"
@@ -80,18 +82,14 @@
 
           test = {
             image = "ghcr.io/tcurdt/test-project:test";
-            ports = [ "127.0.0.1:2015:2015" ];
-
-            environmentFiles = [
-              "/run/credentials/env.test"
-            ];
-
             labels = {
               "com.centurylinklabs.watchtower.enable" = "true";
             };
 
-            extraOptions = [
-              # "--network=testing"
+            ports = [ "127.0.0.1:2015:2015" ];
+
+            environmentFiles = [
+              "/run/credentials/env.test"
             ];
 
             login = {
