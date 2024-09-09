@@ -78,6 +78,12 @@
             volumes = [
               "/var/run/docker.sock:/var/run/docker.sock"
             ];
+
+            login = {
+              registry = "ghcr.io";
+              username = "tcurdt";
+              passwordFile = "/run/credentials/password.registry.github";
+            };
           };
 
           test = {
