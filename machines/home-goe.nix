@@ -46,7 +46,16 @@
     }
 
     {
-      virtualisation.oci-containers = {
+        virtualisation.docker.daemon.settings = {
+            userland-proxy = false;
+            experimental = true;
+            metrics-addr = "0.0.0.0:9323";
+            ipv6 = false;
+            log-driver = "journald";
+            log-level = "info";
+        };
+
+        virtualisation.oci-containers = {
         backend = "docker";
         containers = {
 
@@ -54,9 +63,6 @@
             image = "ghcr.io/tcurdt/test-project:test";
             ports = [ "127.0.0.1:2015:2015" ];
 
-            #environment = {
-            #  PASSWORD = "foo";
-            #};
             environmentFiles = [
               /run/credentials/live.password
             ];
