@@ -69,11 +69,11 @@
               # WATCHTOWER_NOTIFICATION_TITLE_TAG="[home-goe]"
               # WATCHTOWER_NOTIFICATIONS_LEVEL="info"
             ];
-            command = [
+            cmd = [
               # https://containrrr.dev/watchtower/arguments/
-              "--interval 60"
-              "--label-enable true"
-              "--rolling-restart true"
+              "--interval=60"
+              "--label-enable=true"
+              "--rolling-restart=true"
             ];
             volumes = [
               "/var/run/docker.sock:/var/run/docker.sock"
