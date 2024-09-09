@@ -1,5 +1,4 @@
-# { pkgs, file ? "/srv/volumes/cdn/maintenance",... }: let
-{ pkgs, file,... }: let
+{ pkgs, ... }: let
 
   maintenanceScript = pkgs.writeScriptBin "maintenance" ''
     #!${pkgs.bash}/bin/bash
@@ -25,3 +24,10 @@ in {
   };
 
 }
+
+# { pkgs, config, ... }: {
+#   options.tcurdt.myModule.file = lib.mkOption { type = lib.types.str; default = "/some/path"; };
+#   config = {
+#     # …rest of module goes here and references config.tcurdt.myModule.file…
+#   };
+# }

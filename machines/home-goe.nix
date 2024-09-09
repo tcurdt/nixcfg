@@ -46,35 +46,56 @@
     }
 
     {
-        virtualisation.docker.daemon.settings = {
-            userland-proxy = false;
-            experimental = true;
-            metrics-addr = "0.0.0.0:9323";
-            ipv6 = false;
-            log-driver = "journald";
-            log-level = "info";
-        };
+      virtualisation.docker.daemon.settings = {
+        userland-proxy = false;
+        experimental = true;
+        metrics-addr = "0.0.0.0:9323";
+        ipv6 = false;
+        log-driver = "journald";
+        log-level = "info";
+      };
 
-        virtualisation.oci-containers = {
+      virtualisation.oci-containers = {
         backend = "docker";
         containers = {
+
+          watchtower = {
+            autoStart = true;
+            image = "containrrr/watchtower";
+            environmentFiles = [
+              "/run/credentials/env.watchtower"
+              # WATCHTOWER_NOTIFICATION_URL=""
+              # WATCHTOWER_NOTIFICATION_TITLE_TAG="[home-goe]"
+              # WATCHTOWER_NOTIFICATIONS_LEVEL="info"
+            ];
+            volumes = [
+              "/var/run/docker.sock:/var/run/docker.sock"
+            ];
+          };
 
           test = {
             image = "ghcr.io/tcurdt/test-project:test";
             ports = [ "127.0.0.1:2015:2015" ];
 
             environmentFiles = [
-              /run/credentials/live.password
+              "/run/credentials/env.test"
             ];
 
-            # extraOptions = [
-            #   "--network=testing"
-            # ];
+            labels = {
+              "com.centurylinklabs.watchtower.enable" = "true";
+            };
+
+            extraOptions = [
+              "--interval 60"
+              "--label-enable true"
+              "--rolling-restart true"
+              # "--network=testing"
+            ];
 
             login = {
               registry = "ghcr.io";
               username = "tcurdt";
-              passwordFile = "/run/credentials/registry.github";
+              passwordFile = "/run/credentials/password.registry.github";
             };
           };
 
