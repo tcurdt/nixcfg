@@ -68,6 +68,11 @@
               # WATCHTOWER_NOTIFICATION_TITLE_TAG="[home-goe]"
               # WATCHTOWER_NOTIFICATIONS_LEVEL="info"
             ];
+            extraOptions = [
+              "--interval 60"
+              "--label-enable true"
+              "--rolling-restart true"
+            ];
             volumes = [
               "/var/run/docker.sock:/var/run/docker.sock"
             ];
@@ -86,9 +91,6 @@
             };
 
             extraOptions = [
-              "--interval 60"
-              "--label-enable true"
-              "--rolling-restart true"
               # "--network=testing"
             ];
 
