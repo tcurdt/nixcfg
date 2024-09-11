@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
-nixos-rebuild switch --flake .#${1:-utm-arm}
+nixos-rebuild switch --flake .#${1}
 
+# nix run nix-darwin -- switch --flake .#shodan
+
+# nix run nix-darwin -- --flake github:tcurdt/nixcfg#shodan
 # nix build .#darwinConfigurations.machine.config.system
 # nix run nix-darwin -- switch --flake ~/.config/nix-darwin
 # ./result/sw/bin/darwin-rebuild switch --flake .
+# nix flake update
+# darwin-rebuild switch --flake .
