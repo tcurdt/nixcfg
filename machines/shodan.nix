@@ -35,9 +35,9 @@
       # system.defaults.NSGlobalDomain.KeyRepeat = 1;
       # system.keyboard.enableKeyMapping = true;
       # system.keyboard.remapCapsLockToEscape = true;
-      system.defaults = {
-        dock.autohide = true;
-      };
+      # system.defaults = {
+      #   dock.autohide = true;
+      # };
     }
 
     inputs.home-manager.darwinModules.home-manager
@@ -46,14 +46,22 @@
         useGlobalPkgs = true;
         useUserPackages = true;
 
-        users.tcurdt = (import ../home/tcurdt.nix pkgs) // {
-          # home = "/Users/tcurdt";
+        users.tcurdt = {
+          imports = [
+            ../home/tcurdt.nix {
+              # home = {
+              #   homeDirectory = "/Users/tcurdt";
+              #   stateVersion = "23.11";
+              # };
+            }
+          ];
+          home = "/Users/tcurdt";
         };
-        # use extraSpecialArgs to pass arguments to home.nix
-      };
 
+      };
     }
 
+        # use extraSpecialArgs to pass arguments
 
     # {
     #   homebrew = {
