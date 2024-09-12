@@ -1,26 +1,64 @@
 { pkgs, ... }:
 {
 
+  home.packages = [
+    pkgs.nano
+    # pkgs.neovim # via config
+    # pkgs.oh-my-zsh # via config
+    # pkgs.tmux # via config
+    pkgs.curl
+    pkgs.jq
+    # pkgs.jo # json out
+    # pkgs.jp # json plot
+    pkgs.openssl
+    pkgs.unzip
+    pkgs.htop
+    pkgs.gitMinimal
+    pkgs.mmv
+    pkgs.file
+    pkgs.dnsutils # bind dig nslookup
+    pkgs.parallel
+    pkgs.just
+    pkgs.diceware
+    pkgs.xh # curl
+    pkgs.pv # pipe progress
+    pkgs.croc # whormhole
+    pkgs.sd # sed
+    pkgs.fd # find
+    pkgs.eza # ls
+    pkgs.bat # cat
+    pkgs.procs # ps
+    pkgs.ripgrep # grep
+    pkgs.ruplacer # find && replace
+    pkgs.du-dust # du
+    # pkgs.hyperfine # benchmarking
+  ];
+
   programs = {
 
     bash = {
       enable = true;
       # initExtra = ''
-      #   # Make Nix and home-manager installed things available in PATH.
       #   export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
       # '';
     };
 
     zsh = {
       enable = true;
-      # envExtra = ''
-      #   # Make Nix and home-manager installed things available in PATH.
-      #   export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
-      # '';
+      envExtra = ''
+        export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
+      '';
+      history = {
+        ignoreDups = true;
+        ignoreSpace = true;
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ ];
+        theme = "daveverwer";
+      };
     };
 
-
-    # https://github.com/nix-community/home-manager/blob/master/modules/programs/git.nix
     git = {
       enable = true;
 
@@ -134,7 +172,7 @@
         gist.private = 1;
         gits.browse = 1;
 
-        gpg.format = 1;
+        # gpg.format = 1;
 
         github.user = "tcurdt";
 
@@ -190,15 +228,23 @@
   home.shellAliases = {
     cat = "bat --style plain --paging=never";
     bat = "bat --style numbers --paging=never";
+
     ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
     ls = "eza";
+
     g = "git";
-    # lg = "lazygit";
+    lg = "lazygit";
+
+    tssh = "ssh -A -o UserKnownHostsFile=/dev/null ";
+    passphrase = "diceware --no-caps -n 7 -d -";
+
     systemtime = "chronyc makestep && chronyc tracking";
-    # dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
+
     k  = "kubectl";
     kall = "kubectl get all -A";
     # kdebug = "kubectl debug -it <pod-name> --image=busybox --target=<container-name> --namespace=<namespace>";
+
+    # dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
   };
 
   home.sessionVariables = {
@@ -206,38 +252,6 @@
     EDITOR = "nano";
     CLICOLOR = 1;
   };
-
-  home.packages = [
-    pkgs.nano
-    # pkgs.neovim
-    # pkgs.tmux
-    pkgs.curl
-    pkgs.jq
-    pkgs.openssl
-    pkgs.unzip
-    pkgs.htop
-    pkgs.gitMinimal
-    pkgs.mmv
-    pkgs.file
-    pkgs.dnsutils # bind dig nslookup
-    pkgs.parallel
-    pkgs.just
-    pkgs.diceware
-    pkgs.xh # curl
-    pkgs.pv # pipe progress
-    pkgs.croc # whormhole
-    pkgs.sd # sed
-    pkgs.fd # find
-    pkgs.eza # ls
-    pkgs.bat # cat
-    pkgs.procs # ps
-    pkgs.ripgrep # grep
-    pkgs.ruplacer # find && replace
-    pkgs.du-dust # du
-    # pkgs.hyperfine # benchmarking
-    # pkgs.jo # json out
-    # pkgs.jp # json plot
-  ];
 
   # home.file = {
   #   ".foo" = {

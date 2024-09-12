@@ -16,15 +16,16 @@
       '';
       # nix.package = pkgs.nix;
       # nix.linux-builder.enable = true;
+      # settings.trusted-users = [ "@admin" ];
       nix.gc.automatic = true;
     }
 
-    {
-      # nix-env -qaP | grep wget
-      environment.systemPackages = [
-        # pkgs.vim
-      ];
-    }
+    # {
+    #   # nix-env -qaP | grep wget
+    #   environment.systemPackages = [
+    #     # pkgs.vim
+    #   ];
+    # }
 
     {
       security.pam.enableSudoTouchIdAuth = true;
@@ -45,71 +46,60 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-
         users.tcurdt = {
-          imports = [
-            ../home/tcurdt.nix {
-              # home = {
-              #   homeDirectory = "/Users/tcurdt";
-              #   stateVersion = "23.11";
-              # };
-            }
-          ];
-          home = "/Users/tcurdt";
+          imports = [ ../home/tcurdt.nix ];
+
+          home.shellAliases = {
+            xallow = "f(){ xattr -cr $1 }; f";
+            xclear = "f(){ xattr -c $1 }; f";
+          };
+
+          home.sessionVariables = {
+            JAVA_HOME = "/opt/homebrew/opt/openjdk";
+          };
+
         };
-
       };
+      users.users.tcurdt.home = "/Users/tcurdt";
     }
-
-        # use extraSpecialArgs to pass arguments
 
     # {
     #   homebrew = {
     #     enable = true;
     #     casks = [
     #     ];
+    #     caskArgs.no_quarantine = true;
+    #     global.brewfile = true;
+    #     masApps = {};
+    #     casks = [];
+    #     taps = [];
+    #     brews = [];
     #   };
     # }
 
-    {
-      # programs.zsh.enable = true;
-      # programs.zsh.shellAliases = {
-      #   ls = "ls -la";
-      # };
-      # environment.shells = with pkgs; [
-      #   bash
-      #   zsh
-      # ];
-      # environment.loginShell = pkgs.zsh;
+    # {
+    #   environment.shells = [
+    #     pkgs.bash
+    #     pkgs.zsh
+    #   ];
+    #   environment.loginShell = pkgs.zsh;
+    #   environment.systemPath = [ "/opt/homebrew/bin" ];
+    # }
 
-      # environment.systemPath = [ "/opt/homebrew/bin" ];
-      # environment.systemPackages = with pkgs; [
-      #   coreutils
-      # ];
+    # {
+    #   fonts.fontDir.enable = true; # DANGER
+    #   fonts.fonts = with pkgs; [
+    #     (nerdfonts.override { fonts = [
+    #       Meslo
+    #     ];})
+    #   ];
+    # }
 
-      # fonts.fontDir.enable = true; # DANGER
-      # fonts.fonts = with pkgs; [
-      #   (nerdfonts.override { fonts = [
-      #     Meslo
-      #   ];})
-      # ];
-
-      # needs manual install
-      # homebrew = {
-      #   enable = true;
-      #   caskArgs.no_quarantine = true;
-      #   global.brewfile = true;
-      #   masApps = {};
-      #   casks = [];
-      #   taps = [];
-      #   brews = [];
-      # };
-
-      # home.file."foo".text = ''
-      # '';
-      # home.file."bar".source = ./some/path;
-
-    }
+    # {
+    #   home.file."foo".text = ''
+    #   '';
+    #   home.file."bar".source = ./some/path;
+    # }
 
   ];
 }
