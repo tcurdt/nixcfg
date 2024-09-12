@@ -108,7 +108,8 @@
             targetHost = "192.168.78.7";
             targetUser = "root";
           };
-          imports = [ self.nixosConfigurations.utm-arm ];
+          # imports = [ self.nixosConfigurations.utm-arm ];
+          imports = [ ./machines/utm-arm.nix ];
         };
 
         # utm-x86 = import self.nixosConfigurations.utm-x86 {
