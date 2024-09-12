@@ -19,8 +19,10 @@
         extra-platforms = x86_64-darwin aarch64-darwin
       '';
       # nix.package = pkgs.nix;
-      # nix.linux-builder.enable = true;
+
+      nix.linux-builder.enable = true;
       # settings.trusted-users = [ "@admin" ];
+
       nix.gc.automatic = true;
     }
 
