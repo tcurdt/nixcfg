@@ -1,8 +1,10 @@
-# utm
+# infect
 
 ```
 curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIX_CHANNEL=nixos-22.11 bash -x
 ```
+
+# switch
 
 ```
 nix-shell -p gitMinimal
@@ -10,15 +12,11 @@ cd && git clone git@github.com:tcurdt/nixcfg.git && cd nixcfg
 nixos-rebuild switch --flake .#utm-arm
 ```
 
-# hetzner
-
-
-
-# misc
-
 ```
 nixos-rebuild switch --option "tarball-ttl 0" --flake git+ssh://git@github.com/tcurdt/nixcfg.git#utm-arm
 ```
+
+# other
 
 ```
 nix run github:numtide/nixos-anywhere -- --flake '.#mysystem' root@foo.com

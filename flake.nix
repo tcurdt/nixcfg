@@ -51,7 +51,6 @@
           specialArgs = { inherit inputs; };
           modules = [ ./machines/shodan.nix ];
           system = "aarch64-darwin";
-          # boot.binfmt.emulatedSystems = [ "aarch64-linux" "x86_64-linux" ];
         };
       };
 
@@ -102,59 +101,35 @@
 
       };
 
-      # boot.binfmt.emulatedSystems = [];
-      # deploy.nodes = {
-
-      #   # nix run github:serokell/deploy-rs -- #app
-      #   app = {
-      #     hostname = "5.189.130.53";
-      #     remoteBuild = false;
-      #     # sshUser = "x";
-      #     profiles.system = {
-      #       user = "root";
-      #       path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.app;
-      #     };
-      #   };
-
-      #   # nix run github:serokell/deploy-rs -- #utm-arm
-      #   utm-arm = {
-      #     hostname = "192.168.71.3";
-      #     remoteBuild = false;
-      #     # sshUser = "x";
-      #     profiles.system = {
-      #       user = "root";
-      #       path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm-arm;
-      #     };
-      #   };
-
-      # };
-
-      # nix-shell -p colmena
       # colmena apply --on @vm
-      colema = {
-        # meta = {};
-        # meta.specialArgs.inputs = inputs;
-        # meta.specialArgs = { inherit inputs; };
-        # meta = {
-        #   nixpkgs = import nixpkgs {
-        #     system = "x86_64-linux";
-        #     overlays = [];
-        #   };
-        # };
+      colmena = {
+        meta = {
+          nixpkgs = nixpkgs-stable;
+          # nixpkgs = import nixpkgs-stable {
+          #   system = "x86_64-linux";
+          #   overlays = [];
+          # };
+          # nixpkgs = <nixpkgs-stable>;
+          # nixpkgs = import <nixpkgs-stable> {
+          #   system = "x86_64-linux";
+          #   overlays = [];
+          # };
+          # specialArgs = { inherit inputs; };
+        };
 
-        utm-arm = self.nixosConfigurations.utm-arm // {
+        utm-arm = import self.nixosConfigurations.utm-arm {
           deployment = {
             tags = [ "vm" ];
             keys = {
               foo = {
-                text = "";
+                text = "text";
                 # keyFile = "";
                 # keyCommand = [];
                 # user = "caddy"
                 # uploadAt = "post-activation";
               };
             };
-            targetHost = "192.168.71.3";
+            targetHost = "192.168.78.7";
             targetUser = "root";
             # healthChecks = {
             #   http = [
@@ -169,12 +144,12 @@
           };
         };
 
-        utm-x86 = self.nixosConfigurations.utm-x86 // {
+        utm-x86 = import self.nixosConfigurations.utm-x86 {
           deployment = {
             tags = [ "vm" ];
             keys = {
               foo = {
-                text = "";
+                text = "text";
                 # keyFile = "";
                 # keyCommand = [];
                 # user = "caddy"
@@ -198,8 +173,37 @@
 
       };
 
-      # nix build .#packages.aarch64-linux.utm-iso
-      # packages.aarch64-linux.utm-iso = self.nixosConfigurations.utm.config.formats.iso;
+      # deploy.nodes = {
+      #
+      #   # nix run github:serokell/deploy-rs -- #app
+      #   app = {
+      #     hostname = "5.189.130.53";
+      #     remoteBuild = false;
+      #     # sshUser = "x";
+      #     profiles.system = {
+      #       user = "root";
+      #       path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.app;
+      #     };
+      #   };
+      #
+      #   # nix run github:serokell/deploy-rs -- #utm-arm
+      #   utm-arm = {
+      #     hostname = "192.168.71.3";
+      #     remoteBuild = false;
+      #     # sshUser = "x";
+      #     profiles.system = {
+      #       user = "root";
+      #       path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm-arm;
+      #     };
+      #   };
+      #
+      # };
+
+      # nix build .#packages.aarch64-linux.utm
+      # packages.aarch64-linux.utm = self.nixosConfigurations.utm-arm.config.formats.iso;
+
+      # nix build .#packages.x86_64-linux.utm
+      # packages.x86_64-linux.utm = self.nixosConfigurations.utm-x86.config.formats.iso;
 
     };
 }
