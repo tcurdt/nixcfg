@@ -43,6 +43,9 @@
 
     inputs.home-manager.darwinModules.home-manager
     {
+      programs.zsh.enable = true;
+      programs.bash.enable = true;
+
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;

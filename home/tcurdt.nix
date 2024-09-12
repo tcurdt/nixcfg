@@ -45,9 +45,9 @@
 
     zsh = {
       enable = true;
-      envExtra = ''
-        export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
-      '';
+      # envExtra = ''
+      #   export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
+      # '';
       history = {
         ignoreDups = true;
         ignoreSpace = true;
@@ -85,9 +85,6 @@
         # "build"
         # "eclipse"
 
-        # "research"
-        # "Research"
-        # "_Research"
         "_research"
 
         # "_site"
@@ -171,8 +168,6 @@
 
         gist.private = 1;
         gits.browse = 1;
-
-        # gpg.format = 1;
 
         github.user = "tcurdt";
 
