@@ -101,14 +101,16 @@
           nixpkgs = import nixpkgs-stable {
             system = "aarch64-darwin";
           };
+          specialArgs = { inherit inputs; };
         };
 
         utm-arm = {
+          # nixpkgs.system = "aarch64-linux";
+          # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
           deployment = {
             targetHost = "192.168.78.7";
             targetUser = "root";
           };
-          # imports = [ self.nixosConfigurations.utm-arm ];
           imports = [ ./machines/utm-arm.nix ];
         };
 
