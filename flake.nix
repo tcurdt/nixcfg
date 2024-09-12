@@ -98,39 +98,17 @@
       # colmena apply --on @vm
       colmena = {
         meta = {
-          # nixpkgs = nixpkgs-stable;
           nixpkgs = import nixpkgs-stable {
-            system = "x86_64-linux"; # WTF?
-            overlays = [];
+            system = "aarch64-darwin";
           };
-          # specialArgs = { inherit inputs; };
         };
 
-        utm-arm = import self.nixosConfigurations.utm-arm {
+        utm-arm = {
           deployment = {
-            tags = [ "vm" ];
-            keys = {
-              foo = {
-                text = "text";
-                # keyFile = "";
-                # keyCommand = [];
-                # user = "caddy"
-                # uploadAt = "post-activation";
-              };
-            };
             targetHost = "192.168.78.7";
             targetUser = "root";
-            # healthChecks = {
-            #   http = [
-            #     {
-            #       scheme = "http";
-            #       port = 80;
-            #       path = "/";
-            #       description = "check for http ingres";
-            #     }
-            #   ];
-            # };
           };
+          imports = [ self.nixosConfigurations.utm-arm ];
         };
 
         # utm-x86 = import self.nixosConfigurations.utm-x86 {
