@@ -8,6 +8,10 @@
   imports = [
 
     {
+      nixpkgs.hostPlatform = "aarch64-darwin";
+    }
+
+    {
       services.nix-daemon.enable = true;
       nix.extraOptions = ''
         auto-optimise-store = true

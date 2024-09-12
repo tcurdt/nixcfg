@@ -50,19 +50,13 @@
         shodan = darwin.lib.darwinSystem {
           specialArgs = { inherit inputs; };
           modules = [ ./machines/shodan.nix ];
-          system = "aarch64-darwin";
         };
       };
 
       nixosConfigurations = {
 
         app = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            # inputs = inputs // {
-            #   home-manager = home-manager-stable;
-            # };
-          };
+          specialArgs = { inherit inputs; };
           modules = [ ./machines/app.nix ];
         };
 
@@ -105,11 +99,11 @@
       colmena = {
         meta = {
           nixpkgs = nixpkgs-stable;
+          # nixpkgs = <nixpkgs-stable>;
           # nixpkgs = import nixpkgs-stable {
           #   system = "x86_64-linux";
           #   overlays = [];
           # };
-          # nixpkgs = <nixpkgs-stable>;
           # nixpkgs = import <nixpkgs-stable> {
           #   system = "x86_64-linux";
           #   overlays = [];
