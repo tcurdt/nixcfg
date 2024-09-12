@@ -69,6 +69,7 @@
 
           home.packages = [
             pkgs.colmena
+            pkgs.deploy-rs
           ];
 
         };
