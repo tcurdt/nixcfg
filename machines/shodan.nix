@@ -61,6 +61,10 @@
             JAVA_HOME = "/opt/homebrew/opt/openjdk";
           };
 
+          home.packages = [
+            pkgs.colmena
+          ];
+
         };
       };
       users.users.tcurdt.home = "/Users/tcurdt";
@@ -69,8 +73,6 @@
     # {
     #   homebrew = {
     #     enable = true;
-    #     casks = [
-    #     ];
     #     caskArgs.no_quarantine = true;
     #     global.brewfile = true;
     #     masApps = {};
