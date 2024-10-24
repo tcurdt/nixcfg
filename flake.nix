@@ -93,17 +93,16 @@
           modules = [ ./machines/home-ber.nix ];
         };
 
-
-        rpi-zero = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
-          modules = [ ./machines/rpi-zero.nix ];
-        };
+        # rpi-zero = nixpkgs-stable.lib.nixosSystem {
+        #   specialArgs = { inherit inputs; };
+        #   modules = [ ./machines/rpi-zero.nix ];
+        # };
 
       };
 
-      images = {
-        rpi-zero = self.nixosConfigurations.rpi-zero.config.system.build.sdImage;
-      };
+      # images = {
+      #   rpi-zero = self.nixosConfigurations.rpi-zero.config.system.build.sdImage;
+      # };
 
       colmena = {
         meta = {
