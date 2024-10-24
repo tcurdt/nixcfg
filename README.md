@@ -16,6 +16,13 @@ nixos-rebuild switch --flake .#utm-arm
 nixos-rebuild switch --option "tarball-ttl 0" --flake git+ssh://git@github.com/tcurdt/nixcfg.git#utm-arm
 ```
 
+# image
+
+```
+nix build .#nixosConfigurations.rpi-zero.config.system.build.sdImage --show-trace -L -v
+
+```
+
 # other
 
 ```
