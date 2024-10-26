@@ -37,16 +37,17 @@
       darwin,
       # deploy-rs,
       ...
-    }@inputs: let
-        systems = [
+    }@inputs:
+    let
+      systems = [
         # "x86_64-darwin"
         "aarch64-darwin"
         "x86_64-linux"
         # "i686-linux"
-          # "aarch64-linux"
-        ];
-        forAllSystems = nixpkgs-stable.lib.genAttrs systems;
-      in
+        # "aarch64-linux"
+      ];
+      forAllSystems = nixpkgs-stable.lib.genAttrs systems;
+    in
     {
 
       darwinConfigurations = {
@@ -59,16 +60,9 @@
       };
 
       packages = forAllSystems (system: import ./packages nixpkgs-stable.legacyPackages.${system});
-      # legacyPackages.aarch64-darwin = (import nixpkgs-stable { system="aarch64-darwin"; } ).callPackages ./packages {};
+      # formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra)
 
-      overlays = import ./overlays {inherit inputs;};
-
-      # nixpkgs.overlays = [
-      #   (import ../overlays {
-      #       # inherit pkgs;
-      #       inherit (inputs) nixpkgs-unstable;
-      #   })
-      # ];
+      overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations = {
 

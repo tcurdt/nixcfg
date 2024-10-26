@@ -22,6 +22,7 @@
       # settings.trusted-users = [ "@admin" ];
 
       nix.gc.automatic = true;
+      nix.optimise.automatic = true;
     }
 
     # {
@@ -65,10 +66,10 @@
             JAVA_HOME = "/opt/homebrew/opt/openjdk";
           };
 
-          home.packages = [
-            pkgs.colmena
-            pkgs.deploy-rs
-          ];
+          # home.packages = [
+          #   pkgs.colmena
+          #   pkgs.deploy-rs
+          # ];
 
         };
       };

@@ -2,6 +2,7 @@
 
 nixos-rebuild switch --flake .#${1}
 
+# darwin-rebuild switch --flake .#shodan
 # nix run nix-darwin -- switch --flake .#shodan
 
 # nix run nix-darwin -- --flake github:tcurdt/nixcfg#shodan
