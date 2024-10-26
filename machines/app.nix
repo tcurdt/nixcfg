@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
 
   networking.hostName = "app";
@@ -20,16 +20,6 @@
     # {
     #   users.users.root.password = "secret";
     # }
-
-    # ../packages
-    # ../packages { inherit pkgs; }
-    # packages = import /./packages {inherit pkgs;};
-    # overlays = import ../overlays {
-    #   inherit pkgs-unstable;
-    #   inherit my-pkgs;
-    #   # inherit (inputs) nur;
-    #   # inherit (inputs) nixpkgs-terraform;
-    # };
 
     ../modules/docker.nix
     # ../modules/podman.nix
