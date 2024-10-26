@@ -1,4 +1,5 @@
 name: flake-update-lock
+
 on:
   workflow_dispatch: # allows manual triggering
   schedule:
