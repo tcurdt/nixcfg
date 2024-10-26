@@ -1,10 +1,8 @@
 {
-  description = "my machines";
-
   inputs = {
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -12,13 +10,10 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    # home-manager-unstable.url = "github:nix-community/home-manager/master";
-    # home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
     impermanence.url = "github:nix-community/impermanence";
 
-    deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # deploy-rs.url = "github:serokell/deploy-rs";
+    # deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # nixos-generators.url = "github:nix-community/nixos-generators";
     # nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -40,13 +35,20 @@
       home-manager,
       impermanence,
       darwin,
-      deploy-rs,
+      # deploy-rs,
       ...
-    }@inputs:
-
+    }@inputs: let
+        systems = [
+        # "x86_64-darwin"
+        "aarch64-darwin"
+        "x86_64-linux"
+        # "i686-linux"
+          # "aarch64-linux"
+        ];
+        forAllSystems = nixpkgs-stable.lib.genAttrs systems;
+      in
     {
 
-      # https://www.youtube.com/watch?v=LE5JR4JcvMg
       darwinConfigurations = {
         shodan = darwin.lib.darwinSystem {
           specialArgs = {
@@ -56,6 +58,10 @@
         };
       };
 
+      packages = forAllSystems (system: import ./packages nixpkgs-stable.legacyPackages.${system});
+      # legacyPackages.aarch64-darwin = (import nixpkgs-stable { system="aarch64-darwin"; } ).callPackages ./packages {};
+
+      overlays = import ./overlays {inherit inputs;};
 
       # nixpkgs.overlays = [
       #   (import ../overlays {
@@ -63,11 +69,6 @@
       #       inherit (inputs) nixpkgs-unstable;
       #   })
       # ];
-
-      # nixpkgs.packages = import ../packages { inherit pkgs; };
-
-
-      legacyPackages.aarch64-darwin = (import nixpkgs-stable { system="aarch64-darwin"; } ).callPackages ./packages {};
 
       nixosConfigurations = {
 
@@ -131,76 +132,70 @@
       #   rpi-zero = self.nixosConfigurations.rpi-zero.config.system.build.sdImage;
       # };
 
-      colmena = {
-        meta = {
-          nixpkgs = import nixpkgs-stable { system = "aarch64-darwin"; };
-          specialArgs = {
-            inherit inputs;
-          };
-        };
+      # colmena = {
+      #   meta = {
+      #     nixpkgs = import nixpkgs-stable { system = "aarch64-darwin"; };
+      #     specialArgs = {
+      #       inherit inputs;
+      #     };
+      #   };
+      #   utm-arm = {
+      #     deployment = {
+      #       targetHost = "192.168.78.7";
+      #       targetUser = "root";
+      #     };
+      #     imports = [ ./machines/utm-arm.nix ];
+      #   };
+      #   # utm-x86 = import self.nixosConfigurations.utm-x86 {
+      #   #   nixpkgs.system = "aarch64-linux";
+      #   #   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+      #   #   deployment = {
+      #   #     tags = [ "vm" ];
+      #   #     keys = {
+      #   #       foo = {
+      #   #         text = "text";
+      #   #         # keyFile = "";
+      #   #         # keyCommand = [];
+      #   #         # user = "caddy"
+      #   #         # uploadAt = "post-activation";
+      #   #       };
+      #   #     };
+      #   #     targetHost = "192.168.71.3";
+      #   #     targetUser = "root";
+      #   #     # healthChecks = {
+      #   #     #   http = [
+      #   #     #     {
+      #   #     #       scheme = "http";
+      #   #     #       port = 80;
+      #   #     #       path = "/";
+      #   #     #       description = "check for http ingres";
+      #   #     #     }
+      #   #     #   ];
+      #   #     # };
+      #   #   };
+      #   # };
+      # };
 
-        utm-arm = {
-          deployment = {
-            targetHost = "192.168.78.7";
-            targetUser = "root";
-          };
-          imports = [ ./machines/utm-arm.nix ];
-        };
-
-        # utm-x86 = import self.nixosConfigurations.utm-x86 {
-        #   nixpkgs.system = "aarch64-linux";
-        #   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-        #   deployment = {
-        #     tags = [ "vm" ];
-        #     keys = {
-        #       foo = {
-        #         text = "text";
-        #         # keyFile = "";
-        #         # keyCommand = [];
-        #         # user = "caddy"
-        #         # uploadAt = "post-activation";
-        #       };
-        #     };
-        #     targetHost = "192.168.71.3";
-        #     targetUser = "root";
-        #     # healthChecks = {
-        #     #   http = [
-        #     #     {
-        #     #       scheme = "http";
-        #     #       port = 80;
-        #     #       path = "/";
-        #     #       description = "check for http ingres";
-        #     #     }
-        #     #   ];
-        #     # };
-        #   };
-        # };
-
-      };
-
-      deploy.nodes = {
-
-        # nix run github:serokell/deploy-rs -- #utm-arm
-        utm-arm = {
-          hostname = "192.168.78.7";
-          sshUser = "root";
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm-arm;
-          };
-        };
-
-        # app = {
-        #   hostname = "5.189.130.53";
-        #   remoteBuild = false;
-        #   sshUser = "root";
-        #   profiles.system = {
-        #     user = "root";
-        #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.app;
-        #   };
-        # };
-
-      };
+      # deploy.nodes = {
+      #   # nix run github:serokell/deploy-rs -- #utm-arm
+      #   utm-arm = {
+      #     hostname = "192.168.78.7";
+      #     sshUser = "root";
+      #     profiles.system = {
+      #       user = "root";
+      #       path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.utm-arm;
+      #     };
+      #   };
+      #   # app = {
+      #   #   hostname = "5.189.130.53";
+      #   #   remoteBuild = false;
+      #   #   sshUser = "root";
+      #   #   profiles.system = {
+      #   #     user = "root";
+      #   #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.app;
+      #   #   };
+      #   # };
+      # };
 
       # nix build .#packages.aarch64-linux.utm
       # packages.aarch64-linux.utm = self.nixosConfigurations.utm-arm.config.formats.iso;

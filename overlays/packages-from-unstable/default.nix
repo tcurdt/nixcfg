@@ -1,4 +1,4 @@
 { nixpkgs-unstable, ... }:
 _final: _prev: {
-  # inherit (nixpkgs-unstable) jetbrains;
+  inherit (nixpkgs-unstable) hello;
 }

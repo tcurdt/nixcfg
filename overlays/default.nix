@@ -1,13 +1,17 @@
-{
-  nixpkgs-unstable,
-  my-pkgs,
-# nur,
-# nixpkgs-terraform,
-}:
-_final: _prev:
-{
-  # inherit (pkgs-unstable) jetbrains;
+{ inputs, ... }: {
+    additions = final: _prev: import ../packages final.pkgs;
+
+    modifications = final: prev: {
+      # example = prev.example.overrideAttrs (oldAttrs: rec {
+      # ...
+      # });
+    };
+
+    # nixpkgs-unstable will be accessible through 'pkgs.unstable'
+    unstable-packages = final: _prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        system = final.system;
+        config.allowUnfree = true;
+      };
+    };
 }
-// my-pkgs
-# // (nur.overlay _final _prev)
-# // (nixpkgs-terraform.overlays.default _final _prev)
