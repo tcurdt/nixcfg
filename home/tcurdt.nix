@@ -32,7 +32,7 @@
     pkgs.ruplacer # find && replace
     pkgs.du-dust # du
     # pkgs.hyperfine # benchmarking
-    # pkgs.nixpkgs-fmt
+    pkgs.nixfmt-rfc-style
   ];
 
   programs = {
