@@ -1,61 +1,65 @@
-
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
 
   # backup read PRIVATE
   # backup write PUBLIC
   backupScript = pkgs.writeScriptBin "backup" ''
-      #!${pkgs.bash}/bin/bash
-      set -e
+    #!${pkgs.bash}/bin/bash
+    set -e
 
-      handle_error() {
-        local exit_code="$?"
-        echo "error occurred in script at line $1 with exit code $exit_code" >&2
-        echo "backup failed"
-        exit $exit_code
-      }
+    handle_error() {
+      local exit_code="$?"
+      echo "error occurred in script at line $1 with exit code $exit_code" >&2
+      echo "backup failed"
+      exit $exit_code
+    }
 
-      trap 'handle_error $LINENO' ERR
+    trap 'handle_error $LINENO' ERR
 
-      backup_write() {
-        echo "backup write start"
+    backup_write() {
+      echo "backup write start"
 
-        KEY=$(cat /secrets/backup-key)
-        /run/wrappers/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall | ${lib.getExe' pkgs.bzip2 "bzip2"} | ${lib.getExe pkgs.age} -r "$KEY" > /tmp/sql.bzip2.age
+      KEY=$(cat /secrets/backup-key)
+      /run/wrappers/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall | ${lib.getExe' pkgs.bzip2 "bzip2"} | ${lib.getExe pkgs.age} -r "$KEY" > /tmp/sql.bzip2.age
 
-        stat -c "backup size: %s" /tmp/sql.bzip2.age
+      stat -c "backup size: %s" /tmp/sql.bzip2.age
 
-        ${lib.getExe pkgs.rclone} copy \
-          --dry-run \
-          --contimeout=10s \
-          --retries=2 \
-          --error-on-no-transfer \
-          --no-traverse \
-          --immutable \
-          --config /secrets/backup-bucket \
-          "/tmp/sql.bzip2.age" \
-          "backup:bucket/path"
+      ${lib.getExe pkgs.rclone} copy \
+        --dry-run \
+        --contimeout=10s \
+        --retries=2 \
+        --error-on-no-transfer \
+        --no-traverse \
+        --immutable \
+        --config /secrets/backup-bucket \
+        "/tmp/sql.bzip2.age" \
+        "backup:bucket/path"
 
-        echo "backup write success"
-      }
+      echo "backup write success"
+    }
 
-      backup_read() {
-        echo "backup read start"
-        echo "backup read success"
-      }
+    backup_read() {
+      echo "backup read start"
+      echo "backup read success"
+    }
 
-      if [ "$1" = "write" ]; then
-          backup_write $2
-      elif [ "$1" = "read" ]; then
-          backup_read $2
-      else
-          echo "Usage: $0 [write PUBLIC|read PRIVATE]"
-          exit 1
-      fi
-    '';
+    if [ "$1" = "write" ]; then
+        backup_write $2
+    elif [ "$1" = "read" ]; then
+        backup_read $2
+    else
+        echo "Usage: $0 [write PUBLIC|read PRIVATE]"
+        exit 1
+    fi
+  '';
 
-
-in {
+in
+{
 
   imports = [ ../scripts/bar.nix ];
 
@@ -97,7 +101,6 @@ in {
       "*-*-* 01:00:00" # daily at 1am
     ];
   };
-
 
   # systemd.services.stage2 = {
   #   enable = true;

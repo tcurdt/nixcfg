@@ -34,21 +34,24 @@
   };
 
   outputs =
-    { self
-    , nixpkgs-stable
-    , home-manager
-    , impermanence
-    , darwin
-    , deploy-rs
-    , ...
-    } @ inputs:
+    {
+      self,
+      nixpkgs-stable,
+      home-manager,
+      impermanence,
+      darwin,
+      deploy-rs,
+      ...
+    }@inputs:
 
     {
 
       # https://www.youtube.com/watch?v=LE5JR4JcvMg
       darwinConfigurations = {
         shodan = darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/shodan.nix ];
         };
       };
@@ -56,40 +59,51 @@
       nixosConfigurations = {
 
         app = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/app.nix ];
         };
 
-
         utm-arm = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/utm-arm.nix ];
         };
 
         utm-x86 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/utm-x86.nix ];
         };
 
-
         kube-edkimo = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/kube-edkimo.nix ];
         };
 
         kube-michael = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/kube-michael.nix ];
         };
 
-
         home-goe = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/home-goe.nix ];
         };
 
         home-ber = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ ./machines/home-ber.nix ];
         };
 
@@ -106,10 +120,10 @@
 
       colmena = {
         meta = {
-          nixpkgs = import nixpkgs-stable {
-            system = "aarch64-darwin";
+          nixpkgs = import nixpkgs-stable { system = "aarch64-darwin"; };
+          specialArgs = {
+            inherit inputs;
           };
-          specialArgs = { inherit inputs; };
         };
 
         utm-arm = {

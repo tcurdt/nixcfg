@@ -1,4 +1,9 @@
-{ pkgs, lib, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 {
 
   imports = [ inputs.impermanence.nixosModules.impermanence ];
@@ -9,14 +14,19 @@
   # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
 
-  boot.supportedFilesystems = lib.mkForce [ "vfat" "ext4" ];
+  boot.supportedFilesystems = lib.mkForce [
+    "vfat"
+    "ext4"
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   time.timeZone = "UTC";
 
@@ -150,7 +160,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.defaultPackages = pkgs.lib.mkForce []; # no default packages
+  environment.defaultPackages = pkgs.lib.mkForce [ ]; # no default packages
 
   environment.systemPackages = [
     pkgs.nano
@@ -164,8 +174,14 @@
 
   environment.persistence."/nix/persist" = {
     directories = [
-      { directory = "/secrets";         mode="0755"; } # secrets
-      { directory = "/var/lib/nixos";   mode="0755"; } # system service persistent data
+      {
+        directory = "/secrets";
+        mode = "0755";
+      } # secrets
+      {
+        directory = "/var/lib/nixos";
+        mode = "0755";
+      } # system service persistent data
     ];
   };
 

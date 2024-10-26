@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   networking.hostName = "kube-michael";
   networking.domain = "nixos";
@@ -15,14 +16,13 @@
 
     ../users/root.nix
     ../users/ops.nix
-    {
-      ops.keyFiles = [
-        ../keys/tcurdt.pub
-      ];
-    }
+    { ops.keyFiles = [ ../keys/tcurdt.pub ]; }
 
     {
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
     }
 
   ];

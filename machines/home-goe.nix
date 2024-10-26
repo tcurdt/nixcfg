@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   networking.hostName = "home-goe";
   networking.domain = "home";
@@ -13,15 +14,9 @@
 
     ../users/root.nix
     ../users/ops.nix
-    {
-      ops.keyFiles = [
-        ../keys/tcurdt.pub
-      ];
-    }
+    { ops.keyFiles = [ ../keys/tcurdt.pub ]; }
 
-    {
-      users.users.root.password = "secret";
-    }
+    { users.users.root.password = "secret"; }
 
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix
@@ -31,7 +26,10 @@
     # ../modules/tailscale.nix
 
     {
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
       services.caddy = {
         enable = true;
 
@@ -90,9 +88,7 @@
 
             ports = [ "127.0.0.1:2015:2015" ];
 
-            environmentFiles = [
-              "/run/credentials/env.test"
-            ];
+            environmentFiles = [ "/run/credentials/env.test" ];
 
             login = {
               registry = "ghcr.io";

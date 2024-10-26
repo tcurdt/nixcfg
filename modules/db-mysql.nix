@@ -11,13 +11,15 @@
     # ensureDatabases = [
     #   "bluesky"
     # ];
-    ensureUsers = [{
-      name = "root";
-      # ensureDBOwnership = true;
-      # ensurePermissions = {
-      #   "bluesky.*" = "ALL PRIVILEGES";
-      # };
-    }];
+    ensureUsers = [
+      {
+        name = "root";
+        # ensureDBOwnership = true;
+        # ensurePermissions = {
+        #   "bluesky.*" = "ALL PRIVILEGES";
+        # };
+      }
+    ];
     # initialScript = pkgs.writeText "setup.sql" ''
     #   ALTER USER 'root'@'localhost' IDENTIFIED BY 'secret';
     #   GRANT ALL PRIVILEGES ON bluesky.* TO 'root'@'localhost';

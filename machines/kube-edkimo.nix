@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   networking.hostName = "kube-edkimo";
   networking.domain = "nixos";
@@ -25,7 +26,10 @@
     }
 
     {
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
     }
 
   ];

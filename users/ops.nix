@@ -1,16 +1,24 @@
-{ config, pkgs, lib, inputs, ... }: let
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+let
 
   inherit (lib) mkOption;
   # inherit (lib.types) listOf str;
 
   cfg = config.ops;
 
-in {
+in
+{
 
   options = {
     ops = {
       keyFiles = mkOption {
-        default = [];
+        default = [ ];
         description = "...";
         # type = listOf str; # or whatever type these actually are
       };
@@ -30,7 +38,10 @@ in {
       openssh.authorizedKeys.keyFiles = cfg.keyFiles;
 
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" ];
+      extraGroups = [
+        "wheel"
+        "docker"
+      ];
       hashedPassword = "*"; # no password allowed
 
     };

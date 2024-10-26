@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   networking.hostName = "home-ber";
   networking.domain = "home";
@@ -13,16 +14,9 @@
 
     ../users/root.nix
     ../users/ops.nix
-    {
-      ops.keyFiles = [
-        ../keys/tcurdt.pub
-      ];
-    }
+    { ops.keyFiles = [ ../keys/tcurdt.pub ]; }
 
-    {
-      users.users.root.password = "secret";
-    }
-
+    { users.users.root.password = "secret"; }
 
     # ../modules/telegraf.nix
     # ../modules/db-influx.nix
@@ -32,7 +26,10 @@
     # ../modules/tailscale.nix
 
     {
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
       services.caddy = {
         enable = true;
 

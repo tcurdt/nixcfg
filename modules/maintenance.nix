@@ -1,4 +1,5 @@
-{ pkgs, ... }: let
+{ pkgs, ... }:
+let
 
   maintenanceScript = pkgs.writeScriptBin "maintenance" ''
     #!${pkgs.bash}/bin/bash
@@ -17,7 +18,8 @@
     exit 1
   '';
 
-in {
+in
+{
 
   users.users.ops = {
     packages = [ maintenanceScript ];

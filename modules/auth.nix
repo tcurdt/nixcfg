@@ -5,8 +5,7 @@
   #   pkgs.authelia
   # ];
 
-  services.authelia.instances =
-  {
+  services.authelia.instances = {
     main = {
       enable = true;
       secrets.storageEncryptionKeyFile = "/etc/authelia/storageEncryptionKeyFile";

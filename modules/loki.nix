@@ -69,6 +69,5 @@
     };
   };
 
-  environment.systemPackages = [
-  ];
+  environment.systemPackages = [ ];
 }

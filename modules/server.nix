@@ -3,7 +3,10 @@
 
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # time.timeZone = "Europe/Berlin";
   time.timeZone = "UTC";
@@ -112,7 +115,6 @@
   #   "ch.pool.ntp.org"
   # ];
 
-
   # caching
 
   # you’ll first need to populate /etc/cachix-agent.token with the previously generated agent token with the contents:CACHIX_AGENT_TOKEN=XXX.
@@ -120,7 +122,6 @@
   # agent name is inferred from the hostname
   # networking.hostName = "myhostname";
   # https://docs.cachix.org/deploy/deploying-to-agents/#deploying-to-agents
-
 
   # maintenance
 
@@ -230,7 +231,6 @@
 
   };
 
-
   # packages trim down
 
   documentation.enable = false;
@@ -243,7 +243,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.defaultPackages = pkgs.lib.mkForce []; # no default packages
+  environment.defaultPackages = pkgs.lib.mkForce [ ]; # no default packages
 
   environment.systemPackages = [
     pkgs.nano
@@ -275,8 +275,14 @@
 
   environment.persistence."/nix/persist" = {
     directories = [
-      { directory = "/secrets";         mode="0755"; } # secrets
-      { directory = "/var/lib/nixos";   mode="0755"; } # system service persistent data
+      {
+        directory = "/secrets";
+        mode = "0755";
+      } # secrets
+      {
+        directory = "/var/lib/nixos";
+        mode = "0755";
+      } # system service persistent data
       # { directory = "/etc/nixos";       mode="0755"; } # nixos system config files, can be considered optional
       # { directory = "/srv";             mode="0755"; } # service data
       # { directory = "/var/log";         mode="0755"; } # the place that journald dumps it logs to
@@ -303,7 +309,6 @@
   # ];
 
   # services.fstrim.enable = true;
-
 
   # ssh
 
@@ -346,7 +351,6 @@
       };
     };
   };
-
 
   # https://github.com/maralorn/nix-output-monitor
   # system.activationScripts.diff = {

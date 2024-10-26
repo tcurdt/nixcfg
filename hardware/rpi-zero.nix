@@ -1,4 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 {
   # imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
@@ -10,7 +16,10 @@
   #  "sr_mod"
   #];
   boot.initrd.includeDefaultModules = false;
-  boot.initrd.kernelModules = [ "ext4" "mmc_block" ];
+  boot.initrd.kernelModules = [
+    "ext4"
+    "mmc_block"
+  ];
   # boot.kernelModules = [ ];
   # boot.extraModulePackages = [ ];
 
@@ -29,12 +38,13 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/boot";
     fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
-  swapDevices = [ {
-    device = "/dev/disk/by-label/swap";
-  }];
+  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   hardware.firmware = [ pkgs.raspberrypiWirelessFirmware ];
   networking.networkmanager.wifi.powersave = false;

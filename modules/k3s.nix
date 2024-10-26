@@ -35,12 +35,10 @@
   # };
 
   environment.variables = {
-    KUBECONFIG="/etc/rancher/k3s/k3s.yaml";
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
-  systemd.tmpfiles.rules = [
-    "f /etc/rancher/k3s/k3s.yaml 0640 root wheel -"
-  ];
+  systemd.tmpfiles.rules = [ "f /etc/rancher/k3s/k3s.yaml 0640 root wheel -" ];
 
   environment.systemPackages = [
     pkgs.k3s

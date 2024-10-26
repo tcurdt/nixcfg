@@ -12,36 +12,49 @@
         hostname = "\${TELEGRAF_INFLUX_HOST}";
       };
       inputs = {
-        cpu = [{
-          taginclude = { cpu = [ "cpu-total" ]; };
-        }];
+        cpu = [
+          {
+            taginclude = {
+              cpu = [ "cpu-total" ];
+            };
+          }
+        ];
         # linux_cpu = {};
-        mem = [{}];
+        mem = [ { } ];
         # swap = [{}]; # covered in mem
-        kernel = [{}];
-        system = [{}];
+        kernel = [ { } ];
+        system = [ { } ];
         # sysstat = [{}];
-        processes = [{}];
+        processes = [ { } ];
         # procstat = [{}];
         # interrupts = [{}];
-        conntrack = [{}];
-        net = [{
-          # fieldexclude = [ "icmp*" "tcp*" "udp*" "ip*" ];
-        }];
-        netstat = [{}];
-        disk = [{ mount_points = [ "/" ]; }];
-        diskio = [{}];
-        prometheus = [{
-          urls = [ "http://127.0.0.1:2019/metrics" ]; # caddy
-          tags = { service = "caddy"; };
-          metric_version = 2;
-          # fieldinclude = [ "caddy_*" "process_*" ];
-        }{
-          urls = [ "http://127.0.0.1:8086/metrics" ]; # influxdb
-          tags = { service = "influxdb"; };
-          metric_version = 2;
-          # fieldinclude = [ "boltdb_*" "storage_*" ];
-        }];
+        conntrack = [ { } ];
+        net = [
+          {
+            # fieldexclude = [ "icmp*" "tcp*" "udp*" "ip*" ];
+          }
+        ];
+        netstat = [ { } ];
+        disk = [ { mount_points = [ "/" ]; } ];
+        diskio = [ { } ];
+        prometheus = [
+          {
+            urls = [ "http://127.0.0.1:2019/metrics" ]; # caddy
+            tags = {
+              service = "caddy";
+            };
+            metric_version = 2;
+            # fieldinclude = [ "caddy_*" "process_*" ];
+          }
+          {
+            urls = [ "http://127.0.0.1:8086/metrics" ]; # influxdb
+            tags = {
+              service = "influxdb";
+            };
+            metric_version = 2;
+            # fieldinclude = [ "boltdb_*" "storage_*" ];
+          }
+        ];
         # fail2ban = [{ # needs sudo configuration
         #   interval =
         # }];
@@ -91,12 +104,14 @@
         # file = [{
         #   files = [ "/dev/null" ];
         # }];
-        influxdb_v2 = [{
-          urls = [ "http://127.0.0.1:8086" ];
-          organization = "\${TELEGRAF_INFLUX_ORG}";
-          bucket = "\${TELEGRAF_INFLUX_BUCKET}";
-          token = "\${TELEGRAF_INFLUX_TOKEN}";
-        }];
+        influxdb_v2 = [
+          {
+            urls = [ "http://127.0.0.1:8086" ];
+            organization = "\${TELEGRAF_INFLUX_ORG}";
+            bucket = "\${TELEGRAF_INFLUX_BUCKET}";
+            token = "\${TELEGRAF_INFLUX_TOKEN}";
+          }
+        ];
       };
     };
     environmentFiles = [ "/secrets/telegraf.env" ];

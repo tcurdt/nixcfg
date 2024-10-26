@@ -1,4 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -26,12 +32,13 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/boot";
     fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
-  swapDevices = [ {
-    device = "/dev/disk/by-label/swap";
-  }];
+  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   networking.useDHCP = lib.mkDefault true;
 

@@ -15,13 +15,15 @@
     # ensureDatabases = [
     #   "bluesky"
     # ];
-    ensureUsers = [{
-      name = "postgres";
-      # ensureDBOwnership = true;
-      # ensurePermissions = {
-      #   "bluesky.*" = "ALL PRIVILEGES";
-      # };
-    }];
+    ensureUsers = [
+      {
+        name = "postgres";
+        # ensureDBOwnership = true;
+        # ensurePermissions = {
+        #   "bluesky.*" = "ALL PRIVILEGES";
+        # };
+      }
+    ];
     # initialScript = pkgs.writeText "setup.sql" ''
     #   ALTER USER postgres PASSWORD 'secret';
     #   GRANT ALL PRIVILEGES ON DATABASE "bluesky" to postgres;

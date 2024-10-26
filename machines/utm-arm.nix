@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   networking.hostName = "utm-arm";
   networking.domain = "utm";
@@ -13,15 +14,9 @@
 
     ../users/root.nix
     ../users/ops.nix
-    {
-      ops.keyFiles = [
-        ../keys/tcurdt.pub
-      ];
-    }
+    { ops.keyFiles = [ ../keys/tcurdt.pub ]; }
 
-    {
-      users.users.root.password = "secret";
-    }
+    { users.users.root.password = "secret"; }
 
   ];
 }

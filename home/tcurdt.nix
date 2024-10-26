@@ -32,6 +32,7 @@
     pkgs.ruplacer # find && replace
     pkgs.du-dust # du
     # pkgs.hyperfine # benchmarking
+    # pkgs.nixpkgs-fmt
   ];
 
   programs = {
@@ -205,8 +206,7 @@
       enable = true;
       viAlias = true;
       vimAlias = true;
-      extraConfig = ''
-      '';
+      extraConfig = '''';
       # extraConfig = lib.fileContents ../path/to/your/init.vim;
       plugins = [
         # pkgs.vimPlugins.nvim-treesitter.withAllGrammars
@@ -235,7 +235,7 @@
 
     systemtime = "chronyc makestep && chronyc tracking";
 
-    k  = "kubectl";
+    k = "kubectl";
     kall = "kubectl get all -A";
     # kdebug = "kubectl debug -it <pod-name> --image=busybox --target=<container-name> --namespace=<namespace>";
 

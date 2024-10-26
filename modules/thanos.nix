@@ -1,14 +1,14 @@
 { pkgs, ... }:
 {
   services.thanos = {
-    sidecar = {};
-    store = {};
-    query = {};
-    query-frontend = {};
-    rule = {};
-    compact = {};
-    downsample = {};
-    receive = {};
+    sidecar = { };
+    store = { };
+    query = { };
+    query-frontend = { };
+    rule = { };
+    compact = { };
+    downsample = { };
+    receive = { };
 
     # log = "error";
     # tracing = {};
@@ -16,6 +16,5 @@
     # objstore = {};
   };
 
-  environment.systemPackages = [
-  ];
+  environment.systemPackages = [ ];
 }

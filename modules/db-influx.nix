@@ -18,7 +18,5 @@
     };
   };
 
-  environment.systemPackages = [
-    pkgs.influxdb2-cli
-  ];
+  environment.systemPackages = [ pkgs.influxdb2-cli ];
 }

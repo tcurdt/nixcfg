@@ -29,6 +29,5 @@
     };
   };
 
-  environment.systemPackages = [
-  ];
+  environment.systemPackages = [ ];
 }

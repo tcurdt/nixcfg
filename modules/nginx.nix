@@ -59,7 +59,6 @@
     #   "example.com" = proxy 3000 // { default = true; };
     # };
 
-
   };
 
 }
