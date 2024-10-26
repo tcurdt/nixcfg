@@ -66,10 +66,11 @@
             JAVA_HOME = "/opt/homebrew/opt/openjdk";
           };
 
-          # home.packages = [
-          #   pkgs.colmena
-          #   pkgs.deploy-rs
-          # ];
+          home.packages = [
+            pkgs.nixd
+            # pkgs.colmena
+            # pkgs.deploy-rs
+          ];
 
         };
       };
