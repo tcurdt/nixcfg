@@ -56,6 +56,19 @@
         };
       };
 
+
+      # nixpkgs.overlays = [
+      #   (import ../overlays {
+      #       # inherit pkgs;
+      #       inherit (inputs) nixpkgs-unstable;
+      #   })
+      # ];
+
+      # nixpkgs.packages = import ../packages { inherit pkgs; };
+
+
+      legacyPackages.aarch64-darwin = (import nixpkgs-stable { system="aarch64-darwin"; } ).callPackages ./packages {};
+
       nixosConfigurations = {
 
         app = nixpkgs-stable.lib.nixosSystem {

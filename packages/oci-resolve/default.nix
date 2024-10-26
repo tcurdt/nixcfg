@@ -1,5 +1,6 @@
 { buildGoModule, fetchFromGitHub, ... }:
 # package that builds go binary
+# nix build .#oci-resolve
 buildGoModule rec {
   pname = "oci-resolve";
   version = "0.0.12";
@@ -7,7 +8,7 @@ buildGoModule rec {
     owner = "tcurdt";
     repo = pname;
     rev = "v${version}";
-    sha256 = "";
+    hash = "sha256-WrRzrq3SmBQfdb71cErr9wg3qHq7UQOjwfK0KL8ZNZI=";
   };
-  vendorHash = "";
+  vendorHash = "sha256-jaAgWbyiIzSn1mDJKoFn2bbwbu/0D646hdhfDlmP97k=";
 }
