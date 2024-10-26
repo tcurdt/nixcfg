@@ -12,6 +12,9 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    comin.url = "github:nlewo/comin";
+    comin.inputs.nixpkgs.follows = "nixpkgs-stable";
+
     # deploy-rs.url = "github:serokell/deploy-rs";
     # deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
 
@@ -35,6 +38,7 @@
       home-manager,
       impermanence,
       darwin,
+      comin,
       # deploy-rs,
       ...
     }@inputs:
@@ -70,7 +74,10 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./machines/app.nix ];
+          modules = [
+            ./machines/app.nix
+            # comin.nixosModules.comin(import ./modules/comin.nix)
+          ];
         };
 
         utm-arm = nixpkgs-stable.lib.nixosSystem {
