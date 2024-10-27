@@ -76,7 +76,8 @@
           };
           modules = [
             ./machines/app.nix
-            # comin.nixosModules.comin(import ./modules/comin.nix)
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
           ];
         };
 
