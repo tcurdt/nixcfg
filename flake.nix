@@ -70,17 +70,6 @@
 
       nixosConfigurations = {
 
-        app = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./machines/app.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
-          ];
-        };
-
         utm-arm = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
@@ -99,28 +88,55 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./machines/kube-edkimo.nix ];
+          modules = [
+            ./machines/kube-edkimo.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
         };
 
         kube-michael = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./machines/kube-michael.nix ];
+          modules = [
+            ./machines/kube-michael.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
+        };
+
+        app = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./machines/app.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
         };
 
         home-goe = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./machines/home-goe.nix ];
+          modules = [
+            ./machines/home-goe.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
         };
 
         home-ber = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./machines/home-ber.nix ];
+          modules = [
+            ./machines/home-ber.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
         };
 
         # rpi-zero = nixpkgs-stable.lib.nixosSystem {
