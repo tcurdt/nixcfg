@@ -10,6 +10,7 @@
     ../hardware/contabo.nix
 
     ../modules/server.nix
+    ../modules/smtp.nix
     ../modules/users.nix
 
     ../users/root.nix
