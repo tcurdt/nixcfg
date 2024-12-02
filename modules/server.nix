@@ -250,9 +250,9 @@
     pkgs.curl
     pkgs.gitMinimal
 
-    # pkgs.nh # not yet in stable
-    pkgs.nix-output-monitor
+    pkgs.nh
     pkgs.nvd
+    pkgs.nix-output-monitor
 
     # inputs.release-go.packages.${pkgs.system}.default
     # (import ../scripts/foo.nix { inherit pkgs; })

@@ -32,6 +32,7 @@
     pkgs.ruplacer # find && replace
     pkgs.du-dust # du
     # pkgs.hyperfine # benchmarking
+    pkgs.nh
     pkgs.nixfmt-rfc-style
   ];
 
