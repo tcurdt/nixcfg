@@ -25,13 +25,6 @@
       nix.optimise.automatic = true;
     }
 
-    # {
-    #   # nix-env -qaP | grep wget
-    #   environment.systemPackages = [
-    #     # pkgs.vim
-    #   ];
-    # }
-
     {
       security.pam.enableSudoTouchIdAuth = true;
 
@@ -44,6 +37,14 @@
       # system.defaults = {
       #   dock.autohide = true;
       # };
+    }
+
+    {
+      # nix-env -qaP | grep wget
+      environment.systemPackages = [
+        pkgs.ruby_3_2
+        pkgs.bundler
+      ];
     }
 
     inputs.home-manager.darwinModules.home-manager
