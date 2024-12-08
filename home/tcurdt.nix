@@ -243,6 +243,10 @@
     # dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
   };
 
+  home.sessionPath = [
+    "$HOME/go/bin"
+  ];
+
   home.sessionVariables = {
     PAGER = "less";
     EDITOR = "nano";
