@@ -131,6 +131,8 @@
         ci = "commit -v";
         co = "checkout";
 
+        clean = "!git restore . && git clean -fdx";
+
         a = "add";
         au = "add -u";
         aa = "add --all";
@@ -146,6 +148,9 @@
         la = "log --full-history --all --graph --abbrev-commit --pretty=format:'%Cred%h %Cblue%cN %Cgreen%cd%C(yellow)%d%Creset - %s' --date='format:%F %a'";
         lf = "log --graph --decorate --no-merges --oneline --name-status --pretty=format:'%Cred%h %Cblue%cN %Cgreen%cd%C(yellow)%d%Creset - %s %n' --date='format:%F %a'";
         lp = "log --abbrev-commit --date=relative -p";
+
+        standup = "!f() { git log --since=$1.days --author=tcurdt --pretty=format':%Cgreen%cd:%Creset %s' --date='format:%F %a' --all; }; f";
+        standupr = "!f() { git log --reverse --since=$1.days --author=tcurdt --pretty=format':%Cgreen%cd:%Creset %s' --date='format:%F %a' --all; }; f";
 
         export = "archive -o latest.tar.gz -9 --prefix=latest/";
 
