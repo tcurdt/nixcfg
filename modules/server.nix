@@ -239,7 +239,7 @@
   documentation.nixos.enable = false;
 
   fonts.fontconfig.enable = false;
-  sound.enable = false;
+  # sound.enable = false;
 
   nixpkgs.config.allowUnfree = true;
 
