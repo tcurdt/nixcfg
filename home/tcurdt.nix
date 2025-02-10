@@ -127,6 +127,7 @@
         rf = "pull --rebase --force";
 
         st = "status -s";
+        sha = "rev-parse --short HEAD";
 
         ci = "commit -v";
         co = "checkout";
