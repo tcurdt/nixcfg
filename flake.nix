@@ -84,6 +84,17 @@
           modules = [ ./machines/utm-x86.nix ];
         };
 
+        kube-flux = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./machines/kube-flux.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
+        };
+
         kube-edkimo = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
