@@ -77,6 +77,7 @@
 
           home.packages = [
             pkgs.nixd
+            pkgs.devbox
             # pkgs.colmena
             # pkgs.deploy-rs
           ];
