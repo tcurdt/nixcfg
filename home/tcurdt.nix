@@ -242,6 +242,7 @@
 
     systemtime = "chronyc makestep && chronyc tracking";
 
+    p = "pnpm";
     k = "kubectl";
     kall = "kubectl get all -A";
     # kdebug = "kubectl debug -it <pod-name> --image=busybox --target=<container-name> --namespace=<namespace>";
