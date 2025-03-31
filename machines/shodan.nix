@@ -73,6 +73,7 @@
 
           home.sessionVariables = {
             JAVA_HOME = "/opt/homebrew/opt/openjdk";
+            PATH = "$HOME/.cargo/bin:$PATH";
           };
 
           home.packages = [
@@ -92,11 +93,11 @@
     #   homebrew = {
     #     enable = true;
     #     caskArgs.no_quarantine = true;
-    #     global.brewfile = true;
-    #     masApps = {};
-    #     casks = [];
-    #     taps = [];
-    #     brews = [];
+    #     # global.brewfile = true;
+    #     # masApps = {};
+    #     # casks = [];
+    #     # taps = [];
+    #     # brews = [];
     #   };
     # }
 
