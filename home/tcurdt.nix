@@ -252,6 +252,7 @@
 
   home.sessionPath = [
     "$HOME/go/bin"
+    "$HOME/.bin"
   ];
 
   home.sessionVariables = {
