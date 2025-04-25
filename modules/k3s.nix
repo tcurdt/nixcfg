@@ -25,6 +25,13 @@
       # "--disable-network-policy"
       # "--disable-helm-controller"
     ];
+
+    # https://0to1.nl/post/k3s-kubectl-permission/
+    # environmentFile = pkgs.writeText "environment" ''
+    #   K3S_KUBECONFIG_MODE="644"
+    # '';
+
+    # sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && sudo chown $USER ~/.kube/config && chmod 600 ~/.kube/config
   };
 
   # networking.nameservers = [ "10.43.0.10" ];
@@ -34,11 +41,11 @@
   #   kall = "kubectl get all -A";
   # };
 
-  environment.variables = {
-    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-  };
+  # environment.variables = {
+  #   KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  # };
 
-  systemd.tmpfiles.rules = [ "f /etc/rancher/k3s/k3s.yaml 0640 root wheel -" ];
+  # systemd.tmpfiles.rules = [ "f /etc/rancher/k3s/k3s.yaml 0640 root wheel -" ];
 
   environment.systemPackages = [
     pkgs.k3s

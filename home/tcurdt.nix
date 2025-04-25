@@ -259,6 +259,7 @@
     PAGER = "less";
     EDITOR = "nano";
     CLICOLOR = 1;
+    KUBECONFIG = "~/.kube/config";
   };
 
   # home.file = {
