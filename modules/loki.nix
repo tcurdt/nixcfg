@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  # pkgs,
+  ...
+}:
 {
   services.loki = {
     enable = true;

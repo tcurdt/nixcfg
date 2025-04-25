@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  # pkgs,
+  ...
+}:
 {
   # sudo -u postgres psql
   # \l

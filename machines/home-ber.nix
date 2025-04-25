@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  # pkgs,
+  ...
+}:
 {
 
   networking.hostName = "home-ber";

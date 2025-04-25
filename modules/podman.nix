@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  # pkgs,
+  ...
+}:
 {
 
   # https://carjorvaz.com/posts/rootless-podman-and-docker-compose-on-nixos/

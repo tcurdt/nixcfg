@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  # pkgs,
+  ...
+}:
 {
   # https://github.com/influxdata/telegraf/blob/master/docs/CONFIGURATION.md
   services.telegraf = {
