@@ -30,11 +30,6 @@
       "--write-kubeconfig-mode 00640"
       "--write-kubeconfig-group wheel"
     ];
-    # https://0to1.nl/post/k3s-kubectl-permission/
-    # environmentFile = pkgs.writeText "environment" ''
-    #   K3S_KUBECONFIG_MODE="644"
-    # '';
-
     # sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && sudo chown $USER ~/.kube/config && chmod 600 ~/.kube/config
   };
 
