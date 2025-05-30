@@ -228,8 +228,8 @@
   };
 
   home.shellAliases = {
-    cat = "bat --style plain --paging=never";
-    bat = "bat --style numbers --paging=never";
+    cat = "bat --style=plain --color=never --paging=never";
+    bat = "bat --style=numbers --color=never --paging=never";
 
     ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
     ls = "eza";
