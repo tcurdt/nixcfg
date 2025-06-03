@@ -7,6 +7,7 @@
     # pkgs.oh-my-zsh # via config
     # pkgs.tmux # via config
     pkgs.curl
+    pkgs.yq
     pkgs.jq
     # pkgs.jo # json out
     # pkgs.jp # json plot
@@ -34,6 +35,9 @@
     # pkgs.hyperfine # benchmarking
     pkgs.nh
     pkgs.nixfmt-rfc-style
+
+    # pkgs.delta # git diff
+    # pkgs.git-lfs
   ];
 
   programs = {
@@ -67,56 +71,20 @@
       userName = "Torsten Curdt";
       userEmail = "tcurdt@vafer.org";
 
+      # signing = {
+      #   key = "/Users/tcurdt/.ssh/id_rsa.pub";
+      #   signByDefault = true;
+      # };
+
       package = pkgs.gitMinimal;
 
       ignores = [
-        # ".SyncID"
-        # ".SyncArchive"
-        # ".SyncIgnore"
         ".sync"
         ".DS_Store"
-        # ".classpath"
-        # ".settings"
-        # ".testflight"
-        # ".awestruct"
-        # ".sass-cache"
-        # ".release"
-        # ".godeps"
-        # ".idea"
-        # "target"
-        # "build"
-        # "eclipse"
-
         "_research"
-
-        # "_site"
-        # "_tmp"
-        # "_old"
-        # "dsa_priv.pem"
-        # "node_modules"
-        # "jspm_packages"
-
         "*~"
         ".#*"
-        # "*.orig"
-        # "*.rej"
-        # "*.swp"
-        # "*.obj"
-        # "*.o"
-
-        # "Pods"
-        # "*.pbxproj -crlf -diff -merge"
-        # "*~.nib"
-        # "*.mode1v3"
-        # "*.mode1"
-        # "*.mode2"
-        # "*.pbxuser"
-        # "*.perspective"
-        # "*.perspectivev3"
-        # "xcuserdata"
-
         ".env"
-        ".dev.vars"
       ];
 
       aliases = {
@@ -161,7 +129,22 @@
 
       extraConfig = {
 
+        github.user = "tcurdt";
+        gpg.format = "ssh";
+
         init.defaultBranch = "main";
+
+        branch.sort = "-committerdate";
+        branch.autosetuprebase = "always";
+        branch.autosetupmerge = "always";
+
+        push.autosetupremote = true;
+        push.default = "current";
+        push.followTags = 1;
+
+        remote.origin.tagopt = "--tags";
+        remote.origin.prune = true;
+        remote.origin.prunetags = true;
 
         pull.rebase = 1;
         pull.ff-only = 1;
@@ -169,42 +152,24 @@
         rerere.enabled = 1;
         rebase.updateRefs = true;
 
-        push.default = "current";
-        push.followTags = 1;
-
         log.oneline = 1;
 
         gist.private = 1;
         gits.browse = 1;
 
-        github.user = "tcurdt";
-
-        branch.sort = "-committerdate";
-
-        # [remote "origin"]
-        #   tagopt = --tags
-        #   prune = true
-        #   pruneTags = true
+        # filter.lfs.clean = "git-lfs clean -- %f";
+        # filter.lfs.smudge = "git-lfs smudge -- %f";
+        # filter.lfs.process = "git-lfs filter-process";
+        # filter.lfs.required = true;
       };
     };
 
     bat.config = {
       enable = true;
-
-      # map-syntax = [
-      #   "*.jenkinsfile:Groovy"
-      #   "*.props:Java Properties"
-      # ];
-
-      # pager = "less -FR";
-      # theme = "TwoDark";
-
-      # bat-extras = [
-      #   pkgs.bat-extras.batdiff
-      #   pkgs.bat-extras.batman
-      #   pkgs.bat-extras.batgrep
-      #   pkgs.bat-extras.batwatch
-      # ];
+      config = {
+        color = "never";
+        paging = "never";
+      };
     };
 
     lazygit.enable = true;
@@ -223,13 +188,12 @@
     tmux = {
       enable = true;
       clock24 = true;
-      # mouse = true;
     };
   };
 
   home.shellAliases = {
-    cat = "bat --style=plain --color=never --paging=never";
-    bat = "bat --style=numbers --color=never --paging=never";
+    cat = "bat --style=plain";
+    bat = "bat --style=numbers";
 
     ll = "eza -la --group --octal-permissions --no-permissions --time-style long-iso";
     ls = "eza";
@@ -240,14 +204,24 @@
     tssh = "ssh -A -o UserKnownHostsFile=/dev/null ";
     passphrase = "diceware --no-caps -n 7 -d -";
 
-    systemtime = "chronyc makestep && chronyc tracking";
-
     p = "pnpm";
+
     k = "kubectl";
     kall = "kubectl get all -A";
-    # kdebug = "kubectl debug -it <pod-name> --image=busybox --target=<container-name> --namespace=<namespace>";
 
-    # dp = "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}'";
+    date_utc = "date -u -Iseconds";
+    date_berlin = "TZ=Europe/Berlin date -Iseconds";
+    dates = "date_utc && date_berlin";
+
+    systemtime = "chronyc makestep && chronyc tracking";
+
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true; # makes integration much faster
   };
 
   home.sessionPath = [
