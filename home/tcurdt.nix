@@ -152,6 +152,8 @@
         rerere.enabled = 1;
         rebase.updateRefs = true;
 
+        merge.ff = "only";
+
         log.oneline = 1;
 
         gist.private = 1;
