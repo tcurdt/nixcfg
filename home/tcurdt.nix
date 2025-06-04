@@ -222,6 +222,11 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
     nix-direnv.enable = true; # makes integration much faster
+    config = {
+      global = {
+        load_dotenv = false;
+      };
+    };
   };
 
   home.sessionPath = [
