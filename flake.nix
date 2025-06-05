@@ -33,10 +33,10 @@
 
   outputs =
     {
-      self,
+      # self,
       nixpkgs-stable,
-      home-manager,
-      impermanence,
+      # home-manager,
+      # impermanence,
       darwin,
       comin,
       # deploy-rs,
@@ -84,27 +84,27 @@
           modules = [ ./machines/utm-x86.nix ];
         };
 
-        kube-base = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./machines/kube-base.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
-          ];
-        };
+        # kube-base = nixpkgs-stable.lib.nixosSystem {
+        #   specialArgs = {
+        #     inherit inputs;
+        #   };
+        #   modules = [
+        #     ./machines/kube-base.nix
+        #     comin.nixosModules.comin
+        #     (import ./modules/comin.nix)
+        #   ];
+        # };
 
-        kube-edkimo = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./machines/kube-edkimo.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
-          ];
-        };
+        # kube-edkimo = nixpkgs-stable.lib.nixosSystem {
+        #   specialArgs = {
+        #     inherit inputs;
+        #   };
+        #   modules = [
+        #     ./machines/kube-edkimo.nix
+        #     comin.nixosModules.comin
+        #     (import ./modules/comin.nix)
+        #   ];
+        # };
 
         kube-michael = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
