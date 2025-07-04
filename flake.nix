@@ -70,19 +70,19 @@
 
       nixosConfigurations = {
 
-        # utm-arm = nixpkgs-stable.lib.nixosSystem {
-        #   specialArgs = {
-        #     inherit inputs;
-        #   };
-        #   modules = [ ./machines/utm-arm.nix ];
-        # };
+        utm-arm = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./machines/utm-arm.nix ];
+        };
 
-        # utm-x86 = nixpkgs-stable.lib.nixosSystem {
-        #   specialArgs = {
-        #     inherit inputs;
-        #   };
-        #   modules = [ ./machines/utm-x86.nix ];
-        # };
+        utm-x86 = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./machines/utm-x86.nix ];
+        };
 
         kube-michael = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
