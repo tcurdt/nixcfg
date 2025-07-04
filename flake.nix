@@ -1,13 +1,13 @@
 {
   inputs = {
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     impermanence.url = "github:nix-community/impermanence";
@@ -70,40 +70,18 @@
 
       nixosConfigurations = {
 
-        utm-arm = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./machines/utm-arm.nix ];
-        };
-
-        utm-x86 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./machines/utm-x86.nix ];
-        };
-
-        # kube-base = nixpkgs-stable.lib.nixosSystem {
+        # utm-arm = nixpkgs-stable.lib.nixosSystem {
         #   specialArgs = {
         #     inherit inputs;
         #   };
-        #   modules = [
-        #     ./machines/kube-base.nix
-        #     comin.nixosModules.comin
-        #     (import ./modules/comin.nix)
-        #   ];
+        #   modules = [ ./machines/utm-arm.nix ];
         # };
 
-        # kube-edkimo = nixpkgs-stable.lib.nixosSystem {
+        # utm-x86 = nixpkgs-stable.lib.nixosSystem {
         #   specialArgs = {
         #     inherit inputs;
         #   };
-        #   modules = [
-        #     ./machines/kube-edkimo.nix
-        #     comin.nixosModules.comin
-        #     (import ./modules/comin.nix)
-        #   ];
+        #   modules = [ ./machines/utm-x86.nix ];
         # };
 
         kube-michael = nixpkgs-stable.lib.nixosSystem {
@@ -128,27 +106,27 @@
           ];
         };
 
-        home-goe = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./machines/home-goe.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
-          ];
-        };
+        # home-goe = nixpkgs-stable.lib.nixosSystem {
+        #   specialArgs = {
+        #     inherit inputs;
+        #   };
+        #   modules = [
+        #     ./machines/home-goe.nix
+        #     comin.nixosModules.comin
+        #     (import ./modules/comin.nix)
+        #   ];
+        # };
 
-        home-ber = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./machines/home-ber.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
-          ];
-        };
+        # home-ber = nixpkgs-stable.lib.nixosSystem {
+        #   specialArgs = {
+        #     inherit inputs;
+        #   };
+        #   modules = [
+        #     ./machines/home-ber.nix
+        #     comin.nixosModules.comin
+        #     (import ./modules/comin.nix)
+        #   ];
+        # };
 
         # rpi-zero = nixpkgs-stable.lib.nixosSystem {
         #   specialArgs = { inherit inputs; };
@@ -156,54 +134,6 @@
         # };
 
       };
-
-      # images = {
-      #   rpi-zero = self.nixosConfigurations.rpi-zero.config.system.build.sdImage;
-      # };
-
-      # colmena = {
-      #   meta = {
-      #     nixpkgs = import nixpkgs-stable { system = "aarch64-darwin"; };
-      #     specialArgs = {
-      #       inherit inputs;
-      #     };
-      #   };
-      #   utm-arm = {
-      #     deployment = {
-      #       targetHost = "192.168.78.7";
-      #       targetUser = "root";
-      #     };
-      #     imports = [ ./machines/utm-arm.nix ];
-      #   };
-      #   # utm-x86 = import self.nixosConfigurations.utm-x86 {
-      #   #   nixpkgs.system = "aarch64-linux";
-      #   #   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-      #   #   deployment = {
-      #   #     tags = [ "vm" ];
-      #   #     keys = {
-      #   #       foo = {
-      #   #         text = "text";
-      #   #         # keyFile = "";
-      #   #         # keyCommand = [];
-      #   #         # user = "caddy"
-      #   #         # uploadAt = "post-activation";
-      #   #       };
-      #   #     };
-      #   #     targetHost = "192.168.71.3";
-      #   #     targetUser = "root";
-      #   #     # healthChecks = {
-      #   #     #   http = [
-      #   #     #     {
-      #   #     #       scheme = "http";
-      #   #     #       port = 80;
-      #   #     #       path = "/";
-      #   #     #       description = "check for http ingres";
-      #   #     #     }
-      #   #     #   ];
-      #   #     # };
-      #   #   };
-      #   # };
-      # };
 
       # deploy.nodes = {
       #   # nix run github:serokell/deploy-rs -- #utm-arm
@@ -224,6 +154,10 @@
       #   #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.app;
       #   #   };
       #   # };
+      # };
+
+      # images = {
+      #   rpi-zero = self.nixosConfigurations.rpi-zero.config.system.build.sdImage;
       # };
 
       # nix build .#packages.aarch64-linux.utm
