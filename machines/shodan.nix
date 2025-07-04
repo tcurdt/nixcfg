@@ -11,7 +11,6 @@
     { nixpkgs.hostPlatform = "aarch64-darwin"; }
 
     {
-      services.nix-daemon.enable = true;
       nix.extraOptions = ''
         experimental-features = nix-command flakes
         extra-platforms = x86_64-darwin aarch64-darwin
@@ -34,7 +33,7 @@
     }
 
     {
-      security.pam.enableSudoTouchIdAuth = true;
+      security.pam.services.sudo_local.touchIdAuth = true;
 
       # system.defaults.finder.AppleShowAllExtensions = true;
       # system.defaults.dock.autohide = true;
