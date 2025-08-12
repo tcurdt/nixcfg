@@ -6,9 +6,14 @@
     # pkgs.neovim # via config
     # pkgs.oh-my-zsh # via config
     # pkgs.tmux # via config
+    pkgs.zellij
     pkgs.curl
     pkgs.yq
     pkgs.jq
+    # pkgs.jqp
+    # pkgs.up
+    # pkgs.fq
+    # pkgs.sq
     # pkgs.jo # json out
     # pkgs.jp # json plot
     pkgs.openssl
@@ -18,6 +23,7 @@
     pkgs.mmv
     pkgs.file
     pkgs.dnsutils # bind dig nslookup
+    pkgs.doggo # dig
     pkgs.parallel
     pkgs.just
     pkgs.diceware
@@ -35,7 +41,7 @@
     # pkgs.hyperfine # benchmarking
     pkgs.nh
     pkgs.nixfmt-rfc-style
-
+    # pkgs.miller # data processing
     # pkgs.delta # git diff
     # pkgs.git-lfs
   ];
