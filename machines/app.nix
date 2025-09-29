@@ -69,6 +69,13 @@
           # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
         '';
 
+        virtualHosts."files.vafer.org" = {
+          extraConfig = ''
+            root * /srv/files
+            file_server
+          '';
+        };
+
         virtualHosts."dev.vafer.org" = {
           extraConfig = ''
             reverse_proxy http://127.0.0.1:8080
