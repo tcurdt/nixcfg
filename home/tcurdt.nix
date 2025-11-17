@@ -41,6 +41,7 @@
     # pkgs.hyperfine # benchmarking
     pkgs.nh
     pkgs.nixfmt-rfc-style
+    # pkgs.yazi # file manager
     # pkgs.miller # data processing
     # pkgs.delta # git diff
     # pkgs.git-lfs
@@ -216,7 +217,7 @@
 
     date_utc = "date -u -Iseconds";
     date_berlin = "TZ=Europe/Berlin date -Iseconds";
-    dates = "date_utc && date_berlin";
+    dates = "echo -n 'UTC: ' && date_utc && echo -n 'BER: ' && date_berlin";
 
     systemtime = "chronyc makestep && chronyc tracking";
 

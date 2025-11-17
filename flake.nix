@@ -84,6 +84,13 @@
           modules = [ ./machines/utm-x86.nix ];
         };
 
+        utm-x86-desktop = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./machines/utm-x86-desktop.nix ];
+        };
+
         kube-michael = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
