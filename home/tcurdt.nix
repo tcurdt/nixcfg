@@ -247,6 +247,8 @@
     # KUBECONFIG = "$HOME/.kube/config";
   };
 
+  xdg.configFile."niri/config.kdl".source = ./niri.kdl;
+
   # home.file = {
   #   ".foo" = {
   #     text = ''
