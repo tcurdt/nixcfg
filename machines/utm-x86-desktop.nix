@@ -40,10 +40,7 @@
       };
       boot.initrd.kernelModules = [ "virtio_gpu" ];
 
-      environment.variables = {
-        LIBGL_ALWAYS_SOFTWARE = "1";
-        WLR_RENDERER_ALLOW_SOFTWARE = "1";
-      };
+      services.seatd.enable = true;
 
       programs.niri.enable = true;
       programs.sway.enable = true;
@@ -73,7 +70,16 @@
         vt = 1;
       };
 
-      users.groups.video.members = [ "greeter" ];
+      users.groups.video.members = [
+        "greeter"
+        "root"
+        "ops"
+      ];
+      users.groups.seat.members = [
+        "greeter"
+        "root"
+        "ops"
+      ];
 
       environment.systemPackages = [
         pkgs.alacritty
