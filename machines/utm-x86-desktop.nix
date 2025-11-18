@@ -25,8 +25,17 @@
       hardware.graphics = {
         enable = true;
         enable32Bit = true;
+        extraPackages = with pkgs; [
+          mesa
+          mesa.drivers
+        ];
       };
       boot.initrd.kernelModules = [ "virtio_gpu" ];
+
+      environment.variables = {
+        LIBGL_ALWAYS_SOFTWARE = "1";
+        WLR_RENDERER_ALLOW_SOFTWARE = "1";
+      };
 
       programs.niri.enable = true;
       programs.waybar.enable = true; # top bar
@@ -52,7 +61,10 @@
             user = "greeter";
           };
         };
+        vt = 1;
       };
+
+      users.groups.video.members = [ "greeter" ];
 
       environment.systemPackages = [
         pkgs.alacritty
