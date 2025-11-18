@@ -1,8 +1,12 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
+let
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+in
 {
 
   networking.hostName = "utm-x86-desktop";
@@ -42,7 +46,10 @@
 
       services.seatd.enable = true;
 
-      programs.niri.enable = true;
+      programs.niri = {
+        enable = true;
+        package = pkgs-unstable.niri;
+      };
       programs.sway.enable = true;
       programs.waybar.enable = true; # top bar
 
