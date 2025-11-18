@@ -1,11 +1,11 @@
 {
   pkgs,
   lib,
-  inputs,
+  # inputs,
   ...
 }:
 let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  # pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in
 {
 
@@ -48,21 +48,21 @@ in
 
       programs.niri = {
         enable = true;
-        package = pkgs-unstable.niri;
+        # package = pkgs-unstable.niri;
       };
-      programs.sway.enable = true;
-      programs.waybar.enable = true; # top bar
+      # programs.sway.enable = true;
 
       # programs.alacritty.enable = true; # Super+T in the default setting (terminal)
       # programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
       # programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
-      # programs.waybar.enable = true; # launch on startup in the default setting (bar)
+      programs.waybar.enable = true; # launch on startup in the default setting (bar)
 
       # services.mako.enable = true; # notification daemon
       # services.swayidle.enable = true; # idle management daemon
-      # services.polkit-gnome.enable = true; # polkit
 
+      # services.polkit-gnome.enable = true; # polkit
       security.polkit.enable = true; # polkit
+
       security.pam.services.swaylock = { };
       services.gnome.gnome-keyring.enable = true; # secret service
 
@@ -77,16 +77,16 @@ in
         vt = 1;
       };
 
-      users.groups.video.members = [
-        "greeter"
-        "root"
-        "ops"
-      ];
-      users.groups.seat.members = [
-        "greeter"
-        "root"
-        "ops"
-      ];
+      # users.groups.video.members = [
+      #   "greeter"
+      #   "root"
+      #   "ops"
+      # ];
+      # users.groups.seat.members = [
+      #   "greeter"
+      #   "root"
+      #   "ops"
+      # ];
 
       environment.systemPackages = [
         pkgs.alacritty
@@ -96,7 +96,7 @@ in
         pkgs.swayidle
         pkgs.xwayland-satellite
         pkgs.swaybg # wallpaper
-        pkgs.mesa-demos # for glxinfo/eglinfo debugging
+        # pkgs.mesa-demos # for glxinfo/eglinfo debugging
       ];
     }
   ];
