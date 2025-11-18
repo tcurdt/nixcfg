@@ -46,6 +46,7 @@
       };
 
       programs.niri.enable = true;
+      programs.sway.enable = true;
       programs.waybar.enable = true; # top bar
 
       # programs.alacritty.enable = true; # Super+T in the default setting (terminal)
