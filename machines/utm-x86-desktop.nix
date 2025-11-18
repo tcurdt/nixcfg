@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -19,7 +20,13 @@
     ../users/ops.nix
     { ops.keyFiles = [ ../keys/tcurdt.pub ]; }
 
-    { users.users.root.password = "secret"; }
+    {
+      users.users.ops.hashedPassword = lib.mkForce null;
+      users.users.ops.password = "secret";
+
+      users.users.root.hashedPassword = lib.mkForce null;
+      users.users.root.password = "secret";
+    }
 
     {
       hardware.graphics = {
@@ -27,7 +34,8 @@
         enable32Bit = true;
         extraPackages = with pkgs; [
           mesa
-          mesa.drivers
+          libglvnd
+          egl-wayland
         ];
       };
       boot.initrd.kernelModules = [ "virtio_gpu" ];
@@ -74,6 +82,7 @@
         pkgs.swayidle
         pkgs.xwayland-satellite
         pkgs.swaybg # wallpaper
+        pkgs.mesa-demos # for glxinfo/eglinfo debugging
       ];
     }
   ];

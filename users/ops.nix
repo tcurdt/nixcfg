@@ -33,6 +33,10 @@ in
 
   config = {
 
+    # Optimize Home Manager
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+
     users.users.ops = (import ./default.nix pkgs) // {
 
       openssh.authorizedKeys.keyFiles = cfg.keyFiles;
