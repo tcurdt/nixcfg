@@ -22,6 +22,12 @@
     { users.users.root.password = "secret"; }
 
     {
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
+      boot.initrd.kernelModules = [ "virtio_gpu" ];
+
       programs.niri.enable = true;
       programs.waybar.enable = true; # top bar
 
@@ -37,6 +43,16 @@
       security.polkit.enable = true; # polkit
       security.pam.services.swaylock = { };
       services.gnome.gnome-keyring.enable = true; # secret service
+
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+            user = "greeter";
+          };
+        };
+      };
 
       environment.systemPackages = [
         pkgs.alacritty
