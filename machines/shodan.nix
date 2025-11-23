@@ -17,14 +17,17 @@
       '';
       # nix.package = pkgs.nix;
 
-      nix.linux-builder = {
-        enable = true;
-        maxJobs = 2;
-        # systems = ["x86_64-linux" "aarch64-linux"];
-        # config = {
-        #   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-        # };
-      };
+      # nix.linux-builder = {
+      #   enable = true;
+      #   maxJobs = 2;
+      #   systems = [
+      #     "x86_64-linux"
+      #     "aarch64-linux"
+      #   ];
+      #   config = {
+      #     boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+      #   };
+      # };
 
       # settings.trusted-users = [ "@admin" ];
 
