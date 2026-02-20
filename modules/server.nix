@@ -243,14 +243,13 @@
   documentation.man.enable = false;
   documentation.nixos.enable = false;
 
-  programs.command-not-found.enable = lib.mkDefault false;
+  programs.command-not-found.enable = false;
 
-  # freedesktop xdg files
-  xdg.autostart.enable = lib.mkDefault false;
-  xdg.icons.enable = lib.mkDefault false;
-  xdg.menus.enable = lib.mkDefault false;
-  xdg.mime.enable = lib.mkDefault false;
-  xdg.sounds.enable = lib.mkDefault false;
+  xdg.autostart.enable = false;
+  xdg.icons.enable = false;
+  xdg.menus.enable = false;
+  xdg.mime.enable = false;
+  xdg.sounds.enable = false;
 
   fonts.fontconfig.enable = false;
   # sound.enable = false;
