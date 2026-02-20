@@ -35,6 +35,11 @@
   boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelModules = [ "tcp_bbr" ];
 
+  # boot.initrd.systemd.suppressedUnits = lib.mkIf config.systemd.enableEmergencyMode [
+  #   "emergency.service"
+  #   "emergency.target"
+  # ];
+
   # boot.supportedFilesystems = lib.mkForce [
   #   "btrfs"
   #   "reiserfs"
@@ -237,6 +242,15 @@
   documentation.info.enable = false;
   documentation.man.enable = false;
   documentation.nixos.enable = false;
+
+  programs.command-not-found.enable = lib.mkDefault false;
+
+  # freedesktop xdg files
+  xdg.autostart.enable = lib.mkDefault false;
+  xdg.icons.enable = lib.mkDefault false;
+  xdg.menus.enable = lib.mkDefault false;
+  xdg.mime.enable = lib.mkDefault false;
+  xdg.sounds.enable = lib.mkDefault false;
 
   fonts.fontconfig.enable = false;
   # sound.enable = false;
