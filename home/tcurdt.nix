@@ -105,6 +105,7 @@
       ci = "commit -v";
       co = "checkout";
 
+      # go back to the pure branch and remove files that don't belong
       clean = "!git restore . && git clean -fdx";
 
       a = "add";
@@ -112,15 +113,33 @@
       aa = "add --all";
 
       t = "tag";
+
+      # delete a tag
       td = "!f() { git tag -d $1; git push --delete origin $1; }; f";
+
+      # force a tag
       tf = "!f() { git tag -f $1; git push --force origin HEAD:refs/tags/$1; }; f";
 
       b = "branch -av";
+
+      # delete a branch
       bd = "branch -D";
 
+      # apply a branch as local changes
+      ba = "!f() { git diff --binary HEAD...$1 | git apply; }; f";
+
+      # only show the files changed
+      df = "diff --name-only";
+
       l = "log --graph --decorate --no-merges --pretty=format:'%Cred%h %Cblue%cN %Cgreen%cd%C(yellow)%d%Creset - %s' --date='format:%F %a'";
+
+      # like l, but across all refs/branches with full history
       la = "log --full-history --all --graph --abbrev-commit --pretty=format:'%Cred%h %Cblue%cN %Cgreen%cd%C(yellow)%d%Creset - %s' --date='format:%F %a'";
+
+      # compact log with changed files per commit (name-status), no merges
       lf = "log --graph --decorate --no-merges --oneline --name-status --pretty=format:'%Cred%h %Cblue%cN %Cgreen%cd%C(yellow)%d%Creset - %s %n' --date='format:%F %a'";
+
+      # log with full patch output (-p) and relative dates
       lp = "log --abbrev-commit --date=relative -p";
 
       standup = "!f() { git log --since=$1.days --author=tcurdt --pretty=format':%Cgreen%cd:%Creset %s' --date='format:%F %a' --all; }; f";
