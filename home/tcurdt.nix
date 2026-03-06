@@ -142,6 +142,9 @@
       # log with full patch output (-p) and relative dates
       lp = "log --abbrev-commit --date=relative -p";
 
+      # merge a feature branch
+      m = "!f() { git merge --squash \"$1\" && git commit && git branch -d \"$1\"; }; f";
+
       standup = "!f() { git log --since=$1.days --author=tcurdt --pretty=format':%Cgreen%cd:%Creset %s' --date='format:%F %a' --all; }; f";
       standupr = "!f() { git log --reverse --since=$1.days --author=tcurdt --pretty=format':%Cgreen%cd:%Creset %s' --date='format:%F %a' --all; }; f";
 
