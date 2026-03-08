@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  additions = final: _prev: import ../packages final.pkgs;
+  additions = final: _prev: import ../packages { pkgs = final; };
 
   modifications = final: prev: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
