@@ -41,6 +41,7 @@
     # pkgs.hyperfine # benchmarking
     pkgs.nh
     pkgs.nixfmt-rfc-style
+    pkgs.nil
     # pkgs.yazi # file manager
     # pkgs.miller # data processing
     # pkgs.delta # git diff
