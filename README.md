@@ -1,3 +1,5 @@
+nix run nix-darwin -- switch --flake .#shodan
+
 # infect
 
 ```
@@ -58,3 +60,4 @@ $ shutdown -r now
 docker-compose -p pc_prod up -d
 docker-compose -p pc_test up -d
 ```
+````

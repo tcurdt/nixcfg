@@ -29,7 +29,7 @@
       #   };
       # };
 
-      # settings.trusted-users = [ "@admin" ];
+      nix.settings.trusted-users = [ "@admin" ];
 
       nix.gc.automatic = true;
       nix.optimise.automatic = true;
