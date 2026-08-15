@@ -18,10 +18,10 @@ jobs:
         configuration: [
             # "app",
             # "utm-arm",
-            "utm-x86",
+            # "utm-x86",
             # "kube-edkimo",
-            # "kube-michael",
-            # "home-goe",
+            "kube-michael",
+            "home-goe",
             # "home-ber",
             # "rpi-zero,",
           ]
