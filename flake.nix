@@ -12,7 +12,7 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    comin.url = "github:nlewo/comin";
+    comin.url = "github:nlewo/comin/v0.11.0";
     comin.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # deploy-rs.url = "github:serokell/deploy-rs";
@@ -127,8 +127,8 @@
         home-ber = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
-         };
-         modules = [
+          };
+          modules = [
             ./machines/home-ber.nix
             comin.nixosModules.comin
             (import ./modules/comin.nix)
