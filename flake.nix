@@ -124,16 +124,16 @@
         #   ];
         # };
 
-        # home-ber = nixpkgs-stable.lib.nixosSystem {
-        #   specialArgs = {
-        #     inherit inputs;
-        #   };
-        #   modules = [
-        #     ./machines/home-ber.nix
-        #     comin.nixosModules.comin
-        #     (import ./modules/comin.nix)
-        #   ];
-        # };
+        home-ber = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+         };
+         modules = [
+            ./machines/home-ber.nix
+            comin.nixosModules.comin
+            (import ./modules/comin.nix)
+          ];
+        };
 
         # rpi-zero = nixpkgs-stable.lib.nixosSystem {
         #   specialArgs = { inherit inputs; };
