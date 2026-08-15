@@ -37,7 +37,6 @@
 
   # kernel
 
-  boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelModules = [ "tcp_bbr" ];
 
   # sysctl

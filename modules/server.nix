@@ -32,7 +32,6 @@
 
   # kernel
 
-  boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelModules = [ "tcp_bbr" ];
 
   # boot.initrd.systemd.suppressedUnits = lib.mkIf config.systemd.enableEmergencyMode [
