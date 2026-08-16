@@ -10,6 +10,14 @@ on:
       - "README.md"
 
 jobs:
+  check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+      - run: nix flake check
+
   build-x86:
     name: build x86 systems
     runs-on: ubuntu-latest
@@ -21,15 +29,14 @@ jobs:
             # "utm-x86",
             # "kube-edkimo",
             "kube-michael",
-            "home-goe",
+            # "home-goe",
             # "home-ber",
             # "rpi-zero,",
           ]
     steps:
-      - name: free disk space
-        uses: jlumbroso/free-disk-space@main
+      # - uses: jlumbroso/free-disk-space@main
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: cachix/install-nix-action@v31
       - run: nix build .#nixosConfigurations.${{ matrix.configuration }}.config.system.build.toplevel
 
   # build-arm:
@@ -39,34 +46,18 @@ jobs:
   #     matrix:
   #       # architecture: [arm64]
   #       configuration: [
-  #           # "app",
   #           "utm-arm",
-  #           # "utm-x86",
-  #           # "kube-edkimo",
-  #           # "kube-michael",
-  #           # "home-goe",
-  #           # "home-ber",
   #           # "rpi-zero,",
   #         ]
   #   steps:
-  #     - name: free disk space
-  #       uses: jlumbroso/free-disk-space@main
-  #     - uses: actions/checkout@v4
-  #     - uses: DeterminateSystems/nix-installer-action@main
+  #     - uses: actions/checkout@v7
+  #     - uses: cachix/install-nix-action@v31
   #     - run: nix build .#nixosConfigurations.${{ matrix.configuration }}.config.system.build.toplevel
-
-  # build-iso:
-  #   name: build iso images
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: DeterminateSystems/nix-installer-action@main
-  #     - run: nix build .#nixosConfigurations.minimal-server-iso.config.system.build.isoImage
 
   # build-darwin:
   #   name: build darwin systems
   #   runs-on: macos-latest
   #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: DeterminateSystems/nix-installer-action@main
+  #     - uses: actions/checkout@v7
+  #     - uses: cachix/install-nix-action@v31
   #     - run: nix build .#darwinConfigurations.WQ0C6FWJ1W.config.system.build.toplevel
