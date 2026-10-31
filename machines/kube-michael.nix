@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
 
   networking.hostName = "kube-michael";
@@ -12,9 +12,7 @@
     ../modules/users.nix
 
     ../modules/k3s.nix
-    {
-      services.k3s.package = inputs.nixpkgs-2505.legacyPackages.${pkgs.stdenv.hostPlatform.system}.k3s_1_33;
-    }
+    # { services.k3s.package = pkgs.k3s_1_35; }
     ../modules/maintenance.nix
 
     ../users/root.nix
