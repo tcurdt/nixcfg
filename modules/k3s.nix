@@ -13,6 +13,10 @@
   #   # 8472 # k3s, flannel: required if using multi-node for inter-node networking
   # ];
 
+  # let pods reach the API server on the host (pod -> 10.43.0.1 -> host:6443)
+  # without opening 6443 to the internet
+  networking.firewall.trustedInterfaces = [ "cni0" ];
+
   services.k3s = {
     enable = true;
     role = "server";
