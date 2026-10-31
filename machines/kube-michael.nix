@@ -22,7 +22,7 @@
     {
       # create: nix run nixpkgs#mkpasswd -- -m sha-512
       # verify: su - root
-      users.users.root.hashedPassword = "$6$/OBNw1chITrkLuVU$sZeOSyjQLGRdcm1DiOtKME8b9.odIJNlfXN8O/zQJL8uWYzUUYNmErApPc4eswfBDiFYHnrcpWuKpAFPZY99d1";
+      users.users.root.hashedPassword = "$6$Eozf9e/DlpROw8Jb$sfOqOMwgH9fp5hOtUysCTRNdcA1/twTZ8BzosZ3hp8.BGFZG3Ga2z3G3Yq6PWI8F3fpEzpDkNJ.g7ceysygS00";
     }
 
     {
