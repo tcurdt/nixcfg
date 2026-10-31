@@ -1,17 +1,20 @@
 {
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+    darwin.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
     # darwin.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     # home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # temporary: k3s 1.33 for the 26.05 transition (not cached in 26.05, EOL)
+    nixpkgs-2505.url = "github:nixos/nixpkgs/nixos-25.05";
 
     impermanence.url = "github:nix-community/impermanence";
 

@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -51,7 +52,7 @@
   # systemd.tmpfiles.rules = [ "f /etc/rancher/k3s/k3s.yaml 0640 root wheel -" ];
 
   environment.systemPackages = [
-    pkgs.k3s
+    config.services.k3s.package
     pkgs.k9s
     pkgs.kubetail
     pkgs.kubernetes-helm

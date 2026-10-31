@@ -11,11 +11,16 @@
     { nixpkgs.hostPlatform = "aarch64-darwin"; }
 
     {
-      nix.extraOptions = ''
-        experimental-features = nix-command flakes
-        extra-platforms = x86_64-darwin aarch64-darwin
-      '';
-      # nix.package = pkgs.nix;
+      nix.enable = true;
+      nix.package = pkgs.nix;
+
+      nix.settings = {
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        trusted-users = [ "@admin" ];
+      };
 
       # nix.linux-builder = {
       #   enable = true;
@@ -28,8 +33,6 @@
       #     boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
       #   };
       # };
-
-      nix.settings.trusted-users = [ "@admin" ];
 
       nix.gc.automatic = true;
       nix.optimise.automatic = true;
@@ -52,7 +55,7 @@
     {
       # nix-env -qaP | grep wget
       environment.systemPackages = [
-        pkgs.ruby_3_2
+        pkgs.ruby_3_4
         pkgs.bundler
       ];
     }

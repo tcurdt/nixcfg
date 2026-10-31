@@ -169,9 +169,9 @@
     services.systemd-resolved.stopIfChanged = false;
 
     enableEmergencyMode = false;
-    watchdog = {
-      runtimeTime = "20s";
-      rebootTime = "30s";
+    settings.Manager = {
+      RuntimeWatchdogSec = "20s";
+      RebootWatchdogSec = "30s";
     };
 
     targets = {
