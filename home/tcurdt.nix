@@ -211,6 +211,7 @@
     withRuby = false;
     withPython3 = false;
     extraConfig = '''';
+    initLua = ''require("tcurdt")'';
     # extraConfig = lib.fileContents ../path/to/your/init.vim;
     plugins = [
       # pkgs.vimPlugins.nvim-treesitter.withAllGrammars

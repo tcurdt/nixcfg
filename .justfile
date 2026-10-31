@@ -21,3 +21,6 @@ test machine:
 
 switch machine:
     nix run --inputs-from . nixpkgs#nixos-rebuild -- switch --no-reexec --sudo --flake .#{{ machine }} --build-host {{ machine }} --target-host {{ machine }}
+
+darwin:
+    sudo darwin-rebuild switch --flake .#shodan
