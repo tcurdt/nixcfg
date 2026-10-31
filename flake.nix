@@ -1,32 +1,36 @@
 {
   inputs = {
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # darwin.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager/release-25.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # home-manager.url = "github:nix-community/home-manager/release-26.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     impermanence.url = "github:nix-community/impermanence";
 
-    comin.url = "github:nlewo/comin/v0.11.0";
-    comin.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # comin.url = "github:nlewo/comin/v0.11.0";
+    # comin.url = "github:nlewo/comin";
+    # comin.inputs.nixpkgs.follows = "nixpkgs";
 
     # deploy-rs.url = "github:serokell/deploy-rs";
-    # deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     # nixos-generators.url = "github:nix-community/nixos-generators";
-    # nixos-generators.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     # agenix.url = "github:ryantm/agenix";
-    # agenix.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # agenix.inputs.nixpkgs.follows = "nixpkgs";
     # agenix.inputs.darwin.follows = "";
 
     # release-go.url = "github:tcurdt/release-go";
-    # release-go.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # release-go.inputs.nixpkgs.follows = "nixpkgs";
     # sshhook.url = "git+file:///Users/tcurdt/Desktop/nix/flake-sshhook/";
 
   };
@@ -34,11 +38,11 @@
   outputs =
     {
       # self,
-      nixpkgs-stable,
+      nixpkgs,
       # home-manager,
       # impermanence,
       darwin,
-      comin,
+      # comin,
       # deploy-rs,
       ...
     }@inputs:
@@ -50,7 +54,7 @@
         # "i686-linux"
         # "aarch64-linux"
       ];
-      forAllSystems = nixpkgs-stable.lib.genAttrs systems;
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
 
@@ -63,57 +67,57 @@
         };
       };
 
-      packages = forAllSystems (system: import ./packages nixpkgs-stable.legacyPackages.${system});
+      packages = forAllSystems (system: import ./packages nixpkgs.legacyPackages.${system});
       # formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra)
 
       overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations = {
 
-        utm-arm = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./machines/utm-arm.nix ];
-        };
+        #         utm-arm = nixpkgs.lib.nixosSystem {
+        #           specialArgs = {
+        #             inherit inputs;
+        #           };
+        #           modules = [ ./machines/utm-arm.nix ];
+        #         };
+        #
+        #         utm-x86 = nixpkgs.lib.nixosSystem {
+        #           specialArgs = {
+        #             inherit inputs;
+        #           };
+        #           modules = [ ./machines/utm-x86.nix ];
+        #         };
 
-        utm-x86 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./machines/utm-x86.nix ];
-        };
-
-        # utm-x86-desktop = nixpkgs-stable.lib.nixosSystem {
+        # utm-x86-desktop = nixpkgs.lib.nixosSystem {
         #   specialArgs = {
         #     inherit inputs;
         #   };
         #   modules = [ ./machines/utm-x86-desktop.nix ];
         # };
 
-        kube-michael = nixpkgs-stable.lib.nixosSystem {
+        kube-michael = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
           };
           modules = [
             ./machines/kube-michael.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
+            # comin.nixosModules.comin
+            # (import ./modules/comin.nix)
           ];
         };
 
-        app = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./machines/app.nix
-            comin.nixosModules.comin
-            (import ./modules/comin.nix)
-          ];
-        };
+        # app = nixpkgs.lib.nixosSystem {
+        #   specialArgs = {
+        #     inherit inputs;
+        #   };
+        #   modules = [
+        #     ./machines/app.nix
+        #     comin.nixosModules.comin
+        #     (import ./modules/comin.nix)
+        #   ];
+        # };
 
-        # home-goe = nixpkgs-stable.lib.nixosSystem {
+        # home-goe = nixpkgs.lib.nixosSystem {
         #   specialArgs = {
         #     inherit inputs;
         #   };
@@ -124,7 +128,7 @@
         #   ];
         # };
 
-        # home-ber = nixpkgs-stable.lib.nixosSystem {
+        # home-ber = nixpkgs.lib.nixosSystem {
         #   specialArgs = {
         #     inherit inputs;
         #   };
@@ -135,7 +139,7 @@
         #   ];
         # };
 
-        # rpi-zero = nixpkgs-stable.lib.nixosSystem {
+        # rpi-zero = nixpkgs.lib.nixosSystem {
         #   specialArgs = { inherit inputs; };
         #   modules = [ ./machines/rpi-zero.nix ];
         # };
