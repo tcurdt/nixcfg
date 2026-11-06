@@ -1,7 +1,3 @@
-    just build blue-c-1
-    just diff blue-c-1
-    just switch blue-c-1
-
 nix run nix-darwin -- switch --flake .#shodan
 
 # infect
