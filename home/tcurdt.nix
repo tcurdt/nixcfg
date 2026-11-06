@@ -27,6 +27,7 @@
     pkgs.parallel
     pkgs.just
     pkgs.diceware
+    pkgs.openssl
     pkgs.xh # curl
     pkgs.pv # pipe progress
     pkgs.croc # whormhole
@@ -210,7 +211,7 @@
     vimAlias = true;
     withRuby = false;
     withPython3 = false;
-    extraConfig = '''';
+    extraConfig = "";
     initLua = ''require("tcurdt")'';
     # extraConfig = lib.fileContents ../path/to/your/init.vim;
     plugins = [
